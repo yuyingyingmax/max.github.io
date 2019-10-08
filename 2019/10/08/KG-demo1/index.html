@@ -3,26 +3,22 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>LeetCode 142.环形链表2 | Fishwinwin</title>
+  <title>KG-demo1 | Fishwinwin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="Fishwinwin">
   
-  <meta name="description" content="142.环形链表2给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 说明：不允许修改给定的链表。 示例 1：输入：head = [3,2,0,-4], pos = 1输出：tail connects to node inde">
-<meta name="keywords" content="链表,LeetCode">
+  <meta name="description" content="Fishwinwin��blog">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 142.环形链表2">
-<meta property="og:url" content="/2019/09/28/leetcode-cycle-list-2/index.html">
+<meta property="og:title" content="KG-demo1">
+<meta property="og:url" content="/2019/10/08/KG-demo1/index.html">
 <meta property="og:site_name" content="Fishwinwin">
-<meta property="og:description" content="142.环形链表2给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 说明：不允许修改给定的链表。 示例 1：输入：head = [3,2,0,-4], pos = 1输出：tail connects to node inde">
+<meta property="og:description" content="Fishwinwin��blog">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://github.com/yuyingyingmax/Images/blob/master/circularlinkedlist.png?raw=true">
-<meta property="og:image" content="https://github.com/yuyingyingmax/Images/blob/master/circularlinkedlist2.png?raw=true">
-<meta property="og:updated_time" content="2019-09-28T14:03:50.503Z">
+<meta property="og:updated_time" content="2019-10-08T07:53:25.418Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode 142.环形链表2">
-<meta name="twitter:description" content="142.环形链表2给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 说明：不允许修改给定的链表。 示例 1：输入：head = [3,2,0,-4], pos = 1输出：tail connects to node inde">
-<meta name="twitter:image" content="https://github.com/yuyingyingmax/Images/blob/master/circularlinkedlist.png?raw=true">
+<meta name="twitter:title" content="KG-demo1">
+<meta name="twitter:description" content="Fishwinwin��blog">
   
   
     <link rel="icon" href="images/head2.jpeg">
@@ -113,27 +109,20 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-leetcode-cycle-list-2" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="post-KG-demo1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      LeetCode 142.环形链表2
+      KG-demo1
     </h1>
     <div class="post-title-bar">
       <ul>
           
-              <li>
-                  <i class="fa fa-book"></i>
-                  
-                      <a href="/categories/Leetcode/">Leetcode</a>
-                  
-              </li>
-          
         <li>
-          <i class="fa fa-calendar"></i>  2019-09-28
+          <i class="fa fa-calendar"></i>  2019-10-08
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -149,26 +138,11 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h1 id="142-环形链表2"><a href="#142-环形链表2" class="headerlink" title="142.环形链表2"></a>142.环形链表2</h1><p>给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。</p>
-<p>为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。</p>
-<p>说明：不允许修改给定的链表。</p>
-<p>示例 1：<br><img src="https://github.com/yuyingyingmax/Images/blob/master/circularlinkedlist.png?raw=true" alt><br>输入：head = [3,2,0,-4], pos = 1<br>输出：tail connects to node index 1<br>解释：链表中有一个环，其尾部连接到第二个节点。</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>141题是判断链表是否有环，142题是判断入环的第一个节点。</p>
-<p><strong>判断链表有环的方法是：快慢指针。</strong></p>
-<p>那么对于入环的第一个节点怎么去找？<br><img src="https://github.com/yuyingyingmax/Images/blob/master/circularlinkedlist2.png?raw=true" alt></p>
-<p>假设从链表头部走到环的入口需要<code>F</code>步</p>
-<p>假设两个指针相遇的时候，慢指针走了 <code>a</code> 步，快指针走了 <code>a + b + a</code> 步</p>
-<p>由快慢的定义，我们知道<code>f = 2s</code>，因为快指针每次都走2步，慢指针走1步，快指针走了慢指针的两倍路程。</p>
-<p>那么可以推出：<br><code>2 (F + a) = F + a + b + a</code><br><code>F = b</code></p>
-<p>说明，入环之前这一段路程和b相同，那就意味着，我们用一个指针从头走F步，另一个指针从第一次相遇处走F步，当他们再次相遇时，说明这个点就是入口。</p>
-<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>1.快慢指针找到第一次相遇的位置<br>2.快指针fast重新从<code>head</code>开始,slow继续从第一次相遇处，fast 和 slow 每次都只走一步，相遇时的位置就是环开始的位置。返回<code>slow</code>或者<code>fast</code>即可。</p>
-<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">detectCycle</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(head==<span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        ListNode fast = head;</span><br><span class="line">        ListNode slow = head;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(fast == <span class="keyword">null</span> || fast.next == <span class="keyword">null</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            fast = fast.next.next;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            <span class="keyword">if</span>(fast == slow) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        fast = head;</span><br><span class="line">        <span class="keyword">while</span>(fast != slow)&#123;</span><br><span class="line">            fast = fast.next;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fast;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
+            
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年09月28日 22:03</p>
-        <p>原始链接： <a class="post-url" href="/2019/09/28/leetcode-cycle-list-2/" title="LeetCode 142.环形链表2">/2019/09/28/leetcode-cycle-list-2/</a></p>
+        <p>最后更新： 2019年10月08日 15:53</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/08/KG-demo1/" title="KG-demo1">/2019/10/08/KG-demo1/</a></p>
         <footer>
             <a href="">
                 <img src="/images/head2.jpeg" alt="MaxYu">
@@ -194,7 +168,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/09/28/leetcode-cycle-list-2/&title=《LeetCode 142.环形链表2》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/circularlinkedlist.png?raw=true" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/08/KG-demo1/&title=《KG-demo1》 — Fishwinwin&pic=images/head2.jpeg" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -204,22 +178,22 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/09/28/leetcode-cycle-list-2/&title=《LeetCode 142.环形链表2》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/08/KG-demo1/&title=《KG-demo1》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/09/28/leetcode-cycle-list-2/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/08/KG-demo1/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LeetCode 142.环形链表2》 — Fishwinwin&url=/2019/09/28/leetcode-cycle-list-2/&via=" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《KG-demo1》 — Fishwinwin&url=/2019/10/08/KG-demo1/&via=" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/09/28/leetcode-cycle-list-2/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/08/KG-demo1/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -229,7 +203,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/09/28/leetcode-cycle-list-2/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/08/KG-demo1/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -238,15 +212,6 @@
         <ul class="article-footer-menu">
             
             
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/链表/" class="color3">链表</a>
-      
-    <a href="/tags/LeetCode/" class="color4">LeetCode</a>
-      
-  </li>
-
         </ul>
         
     </footer>
@@ -254,28 +219,12 @@
 </article>
 
 
-    <aside class="post-toc-pos post-toc-top" id="post-toc">
-        <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#142-环形链表2"><span class="post-toc-text">142.环形链表2</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-text">题解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分析"><span class="post-toc-text">分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#步骤"><span class="post-toc-text">步骤</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#编码"><span class="post-toc-text">编码</span></a></li></ol></li></ol></li></ol>
-        </nav>
-    </aside>
-    
 
 <nav id="article-nav">
   
-    <a href="/2019/09/29/2019-9-29-mobile-web-note-1/" id="article-nav-newer" class="article-nav-link-wrap">
-
-      <span class="article-nav-title">
-        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
-        
-          Mobile Web 1
-        
-      </span>
-    </a>
   
-  
-    <a href="/2019/09/28/Mysql-Summary/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">Mysql总结</span>
+    <a href="/2019/10/08/KG-basic/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">知识图谱基础</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   

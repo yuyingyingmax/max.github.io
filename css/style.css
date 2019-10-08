@@ -2563,6 +2563,9 @@ pre .javascript .function {
   color: rgba(0,0,0,0.4);
   text-decoration: none;
 }
+.image-size-80 img {
+  width: 80%;
+}
 .pace {
   -webkit-pointer-events: none;
   pointer-events: none;
