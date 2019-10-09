@@ -3,21 +3,23 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Tag: MySQL | Fishwinwin</title>
+  <title>【关系抽取】相关概念-1 | Fishwinwin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="Fishwinwin">
   
-  <meta name="description" content="Fishwinwin��blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Fishwinwin">
-<meta property="og:url" content="/tags/MySQL/index.html">
+  <meta name="description" content="概述阿呆的paper：  关系抽取有两种框架，一种是pipeline方法，另一种是联合抽取方法。 传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。 为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。  基于深度学习的关系">
+<meta name="keywords" content="学习笔记,论文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【关系抽取】相关概念-1">
+<meta property="og:url" content="/2019/10/08/related-work-for-relations-extraction-adai/index.html">
 <meta property="og:site_name" content="Fishwinwin">
-<meta property="og:description" content="Fishwinwin��blog">
+<meta property="og:description" content="概述阿呆的paper：  关系抽取有两种框架，一种是pipeline方法，另一种是联合抽取方法。 传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。 为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。  基于深度学习的关系">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-09T01:43:19.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fishwinwin">
-<meta name="twitter:description" content="Fishwinwin��blog">
+<meta name="twitter:title" content="【关系抽取】相关概念-1">
+<meta name="twitter:description" content="概述阿呆的paper：  关系抽取有两种框架，一种是pipeline方法，另一种是联合抽取方法。 传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。 为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。  基于深度学习的关系">
   
   
     <link rel="icon" href="images/head2.jpeg">
@@ -108,54 +110,176 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap">
-  
-  
+        <section id="main" class="body-wrap"><article id="post-related-work-for-relations-extraction-adai" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/09/28/Mysql-Summary/" class="archive-article-date">
-  <time datetime="2019-09-28T10:52:22.000Z" itemprop="datePublished">09-28</time>
-</a>
-      
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/28/Mysql-Summary/"  >【MySQL】MySQL总结</a>
+    <h1 class="post-title" itemprop="name">
+      【关系抽取】相关概念-1
     </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-08
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
   
 
-    </header>
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
       
-        <div class="archive-post-footer">
+            
+            <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>阿呆的paper：</p>
+<blockquote>
+<p>关系抽取有两种框架，一种是pipeline方法，另一种是联合抽取方法。</p>
+<p>传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。</p>
+<p>为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。</p>
+</blockquote>
+<p><a href="http://www.cipsc.org.cn/qngw/?p=890" title="CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取" target="_blank" rel="noopener">基于深度学习的关系抽取</a></p>
+<p><a href="https://blog.csdn.net/qq_35203425/article/details/81138978" target="_blank" rel="noopener">https://blog.csdn.net/qq_35203425/article/details/81138978</a></p>
+<p>现有主流的关系抽取技术分为<strong>有监督的学习方法</strong>、<strong>半监督的学习方法</strong>和<strong>无监督的学习方法</strong>三种：</p>
+<p>1、有监督的学习方法将关系抽取任务当做分类问题，根据训练数据设计有效的特征，从而学习各种分类模型，然后使用训练好的分类器预测关系。该方法的问题在于需要大量的人工标注训练语料，而语料标注工作通常非常耗时耗力。</p>
+<p>2、半监督的学习方法主要采用Bootstrapping进行关系抽取。对于要抽取的关系，该方法首先手工设定若干种子实例，然后迭代地从数据从抽取关系对应的关系模板和更多的实例。</p>
+<p>3、无监督的学习方法假设拥有相同语义关系的实体对拥有相似的上下文信息。因此可以利用每个实体对对应上下文信息来代表该实体对的语义关系，并对所有实体对的语义关系进行聚类。</p>
+<p>与其他两种方法相比，有监督的学习方法能够抽取更有效的特征，其准确率和召回率都更高。因此有监督的学习方法受到了越来越多学者的关注，本文也将重点介绍该类方法。</p>
+<h3 id="相关论文整理"><a href="#相关论文整理" class="headerlink" title="相关论文整理"></a>相关论文整理</h3><p>mintz[5]首先提出了利用远程监控进行关系抽取。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月09日 09:43</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/08/related-work-for-relations-extraction-adai/" title="【关系抽取】相关概念-1">/2019/10/08/related-work-for-relations-extraction-adai/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/08/related-work-for-relations-extraction-adai/&title=《【关系抽取】相关概念-1》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/7.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/08/related-work-for-relations-extraction-adai/&title=《【关系抽取】相关概念-1》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/08/related-work-for-relations-extraction-adai/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【关系抽取】相关概念-1》 — Fishwinwin&url=/2019/10/08/related-work-for-relations-extraction-adai/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/08/related-work-for-relations-extraction-adai/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/08/related-work-for-relations-extraction-adai/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
             
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/调优/" class="color3">调优</a>
+    <a href="/tags/学习笔记/" class="color5">学习笔记</a>
       
-    <a href="/tags/MySQL/" class="color1">MySQL</a>
+    <a href="/tags/论文/" class="color3">论文</a>
       
   </li>
 
-        </div>
-      
+        </ul>
+        
+    </footer>
   </div>
 </article>
 
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#概述"><span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#相关论文整理"><span class="post-toc-text">相关论文整理</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/09/leetcode-283/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【leetCode】283.移动零
+        
+      </span>
+    </a>
   
   
-    </div></section>
+    <a href="/2019/10/08/KG-basic/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【知识图谱】基础-1</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
   
+</nav>
+
+
+
+    
 
 </section>
         

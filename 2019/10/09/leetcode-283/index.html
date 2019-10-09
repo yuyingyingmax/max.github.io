@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【leetCode】283.移动零 | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法 - 使用">
+<meta name="keywords" content="LeetCode,数组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【leetCode】283.移动零">
+<meta property="og:url" content="/2019/10/09/leetcode-283/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法 - 使用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-09T02:33:43.594Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【leetCode】283.移动零">
+<meta name="twitter:description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法 - 使用">
+  
+  
+    <link rel="icon" href="images/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-leetcode-283" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【leetCode】283.移动零
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/LeetCode/">LeetCode</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-09
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="283-移动零"><a href="#283-移动零" class="headerlink" title="283.移动零"></a>283.移动零</h1><p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
+<p>示例:</p>
+<blockquote>
+<p>输入: [0,1,0,3,12]</p>
+<p>输出: [1,3,12,0,0]</p>
+</blockquote>
+<p>说明:</p>
+<p>必须在原数组上操作，不能拷贝额外的数组。<br>尽量减少操作次数。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？</p>
+<h4 id="原始做法-使用辅助数组"><a href="#原始做法-使用辅助数组" class="headerlink" title="原始做法 - 使用辅助数组"></a>原始做法 - 使用辅助数组</h4><p>我们可以将原数组中非0的元素复制到新数组中，然后将新数组的元素赋值给旧数组。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span>[] newArray = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//step1 : 复制非0元素</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] != <span class="number">0</span>)&#123;</span><br><span class="line">            newArray[index++] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//step2：更新原数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; newArray.length; i++)&#123;</span><br><span class="line">        nums[i] = newArray[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<blockquote>
+<p>时间复杂度：O(n)<br>空间复杂度：O(n)</p>
+</blockquote>
+<p>这种方法不符合题目的要求，因为使用了辅助数组。</p>
+<h4 id="改进1-将非0元素填充到前一个0的位置，最后用0填充后面的位置"><a href="#改进1-将非0元素填充到前一个0的位置，最后用0填充后面的位置" class="headerlink" title="改进1 - 将非0元素填充到前一个0的位置，最后用0填充后面的位置"></a>改进1 - 将非0元素填充到前一个0的位置，最后用0填充后面的位置</h4><p>由上一种方法可以想到，我们可以遍历一遍数组的时候，用<code>index</code>记录0元素的位置，遇到非0元素就将它填充到前一个0的位置上，使得<code>[0,index)</code>区间内都是非0元素，<code>[index,nums.length)</code>区间用0填充。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;<span class="comment">//0元素初始位置</span></span><br><span class="line">    <span class="comment">//step1:复制非0元素到前一个0元素位置</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] != <span class="number">0</span>)&#123;</span><br><span class="line">            nums[index++] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//step2：将index之后的元素全部填充为0</span></span><br><span class="line">    <span class="keyword">while</span>(index &lt; nums.length)&#123;</span><br><span class="line">        nums[index++] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<blockquote>
+<p>时间复杂度：O(n)<br>空间复杂度：O(1)</p>
+</blockquote>
+<p>考虑到最终还需要填充0，是否可以减少操作次数呢？</p>
+<h4 id="改进2-将0元素与非0元素交换"><a href="#改进2-将0元素与非0元素交换" class="headerlink" title="改进2-将0元素与非0元素交换"></a>改进2-将0元素与非0元素交换</h4><p>可以将0元素与非0元素交换，那么，就不存在最后一步<code>填充0</code>了。</p>
+<p>这里还需要考虑到的一个极端情况是，数组没有0元素时，不管是<code>改进1</code>还是<code>改进2</code>都会对当前非0元素与自身进行复制/交换，可以通过添加一个小判断，减少操作的次数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] != <span class="number">0</span>)&#123;<span class="comment">//非0元素</span></span><br><span class="line">            <span class="keyword">if</span>(i != index)&#123;<span class="comment">//如果i不等于index，才交换</span></span><br><span class="line">                swap(nums,i,index++);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;<span class="comment">//否则index++</span></span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">    nums[i] = nums[j];</span><br><span class="line">    nums[j] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<blockquote>
+<p>时间复杂度：O(n)<br>空间复杂度：O(1)</p>
+</blockquote>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月09日 10:33</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/09/leetcode-283/" title="【leetCode】283.移动零">/2019/10/09/leetcode-283/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/09/leetcode-283/&title=《【leetCode】283.移动零》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/8.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/09/leetcode-283/&title=《【leetCode】283.移动零》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/09/leetcode-283/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【leetCode】283.移动零》 — Fishwinwin&url=/2019/10/09/leetcode-283/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/09/leetcode-283/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/09/leetcode-283/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/LeetCode/" class="color4">LeetCode</a>
+      
+    <a href="/tags/数组/" class="color3">数组</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#283-移动零"><span class="post-toc-text">283.移动零</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-text">题解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分析"><span class="post-toc-text">分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#原始做法-使用辅助数组"><span class="post-toc-text">原始做法 - 使用辅助数组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#改进1-将非0元素填充到前一个0的位置，最后用0填充后面的位置"><span class="post-toc-text">改进1 - 将非0元素填充到前一个0的位置，最后用0填充后面的位置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#改进2-将0元素与非0元素交换"><span class="post-toc-text">改进2-将0元素与非0元素交换</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/08/related-work-for-relations-extraction-adai/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【关系抽取】相关概念-1</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
