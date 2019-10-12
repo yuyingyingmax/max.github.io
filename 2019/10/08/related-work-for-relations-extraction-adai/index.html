@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="Fishwinwin">
   
-  <meta name="description" content="概述阿呆的paper：  关系抽取有两种框架，一种是pipeline方法，另一种是联合抽取方法。 传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。 为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。  基于深度学习的关系">
+  <meta name="description" content="CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取基于深度学习的关系抽取 https://blog.csdn.net/qq_35203425/article/details/81138978 现有主流的关系抽取技术分为有监督的学习方法、半监督的学习方法和无监督的学习方法三种： 1、有监督的学习方法将关系抽取任务当做分类问题，根据训练数据设计有效的特征，从而学习各种分类模型，然后使用训练好的分">
 <meta name="keywords" content="学习笔记,论文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【关系抽取】相关概念-1">
 <meta property="og:url" content="/2019/10/08/related-work-for-relations-extraction-adai/index.html">
 <meta property="og:site_name" content="Fishwinwin">
-<meta property="og:description" content="概述阿呆的paper：  关系抽取有两种框架，一种是pipeline方法，另一种是联合抽取方法。 传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。 为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。  基于深度学习的关系">
+<meta property="og:description" content="CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取基于深度学习的关系抽取 https://blog.csdn.net/qq_35203425/article/details/81138978 现有主流的关系抽取技术分为有监督的学习方法、半监督的学习方法和无监督的学习方法三种： 1、有监督的学习方法将关系抽取任务当做分类问题，根据训练数据设计有效的特征，从而学习各种分类模型，然后使用训练好的分">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-09T01:43:19.505Z">
+<meta property="og:updated_time" content="2019-10-11T13:49:58.624Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【关系抽取】相关概念-1">
-<meta name="twitter:description" content="概述阿呆的paper：  关系抽取有两种框架，一种是pipeline方法，另一种是联合抽取方法。 传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。 为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。  基于深度学习的关系">
+<meta name="twitter:description" content="CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取基于深度学习的关系抽取 https://blog.csdn.net/qq_35203425/article/details/81138978 现有主流的关系抽取技术分为有监督的学习方法、半监督的学习方法和无监督的学习方法三种： 1、有监督的学习方法将关系抽取任务当做分类问题，根据训练数据设计有效的特征，从而学习各种分类模型，然后使用训练好的分">
   
   
     <link rel="icon" href="images/head2.jpeg">
@@ -146,24 +146,60 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>阿呆的paper：</p>
-<blockquote>
-<p>关系抽取有两种框架，一种是pipeline方法，另一种是联合抽取方法。</p>
-<p>传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。</p>
-<p>为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。</p>
-</blockquote>
-<p><a href="http://www.cipsc.org.cn/qngw/?p=890" title="CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取" target="_blank" rel="noopener">基于深度学习的关系抽取</a></p>
+            <h3 id="CIPS青工委学术专栏第3期-基于深度学习的关系抽取"><a href="#CIPS青工委学术专栏第3期-基于深度学习的关系抽取" class="headerlink" title="CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取"></a>CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取</h3><p><a href="http://www.cipsc.org.cn/qngw/?p=890" title="CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取" target="_blank" rel="noopener">基于深度学习的关系抽取</a></p>
 <p><a href="https://blog.csdn.net/qq_35203425/article/details/81138978" target="_blank" rel="noopener">https://blog.csdn.net/qq_35203425/article/details/81138978</a></p>
 <p>现有主流的关系抽取技术分为<strong>有监督的学习方法</strong>、<strong>半监督的学习方法</strong>和<strong>无监督的学习方法</strong>三种：</p>
 <p>1、有监督的学习方法将关系抽取任务当做分类问题，根据训练数据设计有效的特征，从而学习各种分类模型，然后使用训练好的分类器预测关系。该方法的问题在于需要大量的人工标注训练语料，而语料标注工作通常非常耗时耗力。</p>
-<p>2、半监督的学习方法主要采用Bootstrapping进行关系抽取。对于要抽取的关系，该方法首先手工设定若干种子实例，然后迭代地从数据从抽取关系对应的关系模板和更多的实例。</p>
+<p>2、半监督的学习方法主要采用Bootstrapping进行关系抽取。对于要抽取的关系，该方法首先手工设定若干种子实例，然后迭代地从数据中抽取关系对应的关系模板和更多的实例。</p>
 <p>3、无监督的学习方法假设拥有相同语义关系的实体对拥有相似的上下文信息。因此可以利用每个实体对对应上下文信息来代表该实体对的语义关系，并对所有实体对的语义关系进行聚类。</p>
 <p>与其他两种方法相比，有监督的学习方法能够抽取更有效的特征，其准确率和召回率都更高。因此有监督的学习方法受到了越来越多学者的关注，本文也将重点介绍该类方法。</p>
-<h3 id="相关论文整理"><a href="#相关论文整理" class="headerlink" title="相关论文整理"></a>相关论文整理</h3><p>mintz[5]首先提出了利用远程监控进行关系抽取。</p>
+<p><strong>【基于有监督学习的关系抽取】</strong></p>
+<p>有监督的关系抽取系统通常需要大量人工标注的训练数据，从训练数据中自动学习关系对应的抽取模式。有监督关系抽取方法主要包括：基于核函数的方法[Zhao and Grishman 2005; Bunescu and Mooney 2006]，基于逻辑回归的方法[Kambhatla 2004]，基于句法解析增强的方法[Miller et al. 2000]和基于条件随机场的方法[Culotta et al. 2006]。然而，阻碍这些系统效果继续提升的主要问题在于，人工标注训练数据需要花费大量的时间和精力。</p>
+<p>针对这个局限性，Mintz等人[Mintz et al. 2009]提出了<strong>远程监督</strong>（Distant Supervision）的思想。作者们将纽约时报新闻文本与大规模知识图谱Freebase（包含7300多个关系和超过9亿的实体）进行实体对齐。远程监督假设，一个同时包含两个实体的句子蕴含了该实体对在Freebase中的关系，并将该句子作为该实体对所对应关系的训练正例。作者在远程监督标注的数据上提取文本特征并训练关系分类模型，有效解决了关系抽取的标注数据规模问题。之后许多研究者从各个角度对远程监督技术提出了改进方案。例如Takamatsu等人[Takamatsu et al. 2012]改进了实体对齐的技术，降低了数据噪音，提高了关系抽取的总体效果。Yao等人[Yao et al. 2010]提出了基于无向图模型的关系抽取方法。Riedel等人[Riedel et al. 2010]则增强了远程监督的假设，与 [Mintz et al.2009]相比错误率减少了31%。</p>
+<p>以上远程监督技术都假设一个实体对只对应一种关系。但是，很多实体之间具有多种关系。例如，“Steve Jobs founded Apple”和“Steve Jobs is the CEO of Apple”。因此，Hoffmann等人[Hoffmann et al. 2011]提出采用<strong>多实例多标签</strong>（Multi-Instance Multi-label）方法来对关系抽取进行建模，刻画一个实体对可能存在多种关系的情况。类似地，Surdeanu等人[Surdeanu et al. 2012]也提出利用多实例多标签和贝叶斯网络来进行关系抽取。</p>
+<p><strong>【基于深度学习的关系抽取】</strong><br>现有的有监督学习关系抽取方法已经取得了较好的效果，但它们严重依赖词性标注、句法解析等自然语言处理标注提供分类特征。而自然语言处理标注工具往往存在大量错误，这些错误将会在关系抽取系统中不断传播放大，最终影响关系抽取的效果。</p>
+<p>最近，很多研究人员开始将深度学习的技术应用到关系抽取中。[Socher et al. 2012] 提出使用递归神经网络来解决关系抽取问题。该方法首先对句子进行句法解析，然后为句法树上的每个节点学习向量表示。通过递归神经网络，可以从句法树最低端的词向量开始，按照句子的句法结构迭代合并，最终得到该句子的向量表示，并用于关系分类。该方法能够有效地考虑句子的句法结构信息，但同时该方法无法很好地考虑两个实体在句子中的位置和语义信息。</p>
+<p>[Zeng et al. 2014] 提出采用卷积神经网络进行关系抽取。他们采用词汇向量和词的位置向量作为卷积神经网络的输入，通过卷积层、池化层和非线性层得到句子表示。通过考虑实体的位置向量和其他相关的词汇特征，句子中的实体信息能够被较好地考虑到关系抽取中。后来，[Santos et al. 2015]还提出了一种新的卷积神经网络进行关系抽取，其中采用了新的损失函数，能够有效地提高不同关系类别之间的区分性。</p>
+<p>[Miwa et al. 2016] 提出了一种基于端到端神经网络的关系抽取模型。该模型使用双向LSTM（Long-Short Term Memory，长短时记忆模型）和树形LSTM同时对实体和句子进行建模。目前，基于卷积神经网络的方法在关系抽取的标准数据集SemEval-2010 Task 8上取得了最好的效果。</p>
+<p>上面介绍的神经网络模型在人工标注的数据集上取得了巨大成功。然而，与之前基于特征的关系抽取系统类似，神经网络关系抽取模型也面临着人工标注数据较少的问题。对此，[Zeng et al. 2015]尝试将基于卷积神经网络的关系抽取模型扩展到远程监督数据上。[Zeng et al. 2015]假设每个实体对的所有句子中至少存在一个句子反映该实体对的关系，提出了一种新的学习框架：以实体对为单位，对于每个实体对只考虑最能反映其关系的那个句子。该方法在一定程度上解决了神经网络关系抽取模型在远程监督数据上的应用，在NYT10数据集上取得了远远高于基于特征的关系抽取模型的预测效果。但是，该方法仍然存在一定的缺陷：该模型对于每个实体对只能选用一个句子进行学习和预测，损失了来自其他大量的有效句子的信息。</p>
+<p>我们有没有可能把实体对对应的有噪音的句子过滤掉，然后利用所有有效句子进行学习和预测呢？ [Lin et al. 2016] 提出了一种基于句子级别注意力机制的神经网络模型来解决这个问题，该方法能够根据特定关系为实体对的每个句子分配权重，通过不断学习能够使有效句子获得较高的权重，而有噪音的句子获得较小的权重。与之前的模型相比，该方法效果取得较大提升。我们也将相关代码发布在Github上：<a href="https://github.com/thunlp/NRE。" target="_blank" rel="noopener">https://github.com/thunlp/NRE。</a></p>
+<p><strong>【总结及未来趋势】</strong></p>
+<p>近年来，深度学习在自然语言处理领域的很多方向取得了巨大成功，本文以关系抽取为例，介绍了如何利用深度学习的语义表示和学习能力，自动地从训练数据中学习分类特征，从而取得比传统方法更好的关系抽取效果。当然，关系抽取系统性能还有很大提升空间，仍然有很多问题亟待解决。</p>
+<p>首先，基于句法树的树形LSTM神经网络模型在关系抽取上取得了不错的效果，这说明句法信息的引入对于关系抽取有一定帮助。然而，目前的句法分析仍然存在较多错误，在考虑句法信息的同时也引入了大量错误噪音。有研究表明，如果对于一个句子考虑其最可能的多个句法分析树，分析结果准确率可以得到较大提升。因此，一个重要的研究方向是，如何有效地将句子的多个可能句法树信息结合起来，用于关系抽取。</p>
+<p>其次，目前的神经网络关系抽取主要用于预先设定好的关系集合。而面向开放领域的关系抽取，仍然是基于模板等比较传统的方法。因此，我们需要探索如何将神经网络引入开放领域的关系抽取，自动发现新的关系及其事实。此外，对现有神经网络模型如何对新增关系和样例进行快速学习也是值得探索的实用问题。</p>
+<p>最后，目前关系抽取主要基于单语言文本。事实上，人类知识蕴藏于不同模态和类型的信息源中。我们需要探索如何利用多语言文本、图像和音频信息进行关系抽取。</p>
+<h3 id="ADai的Related-Work"><a href="#ADai的Related-Work" class="headerlink" title="ADai的Related-Work"></a>ADai的Related-Work</h3><blockquote>
+<p>关系抽取有两种框架，一种是pipeline方法，另一种是<strong>联合抽取方法</strong>（主要做的）。</p>
+<p>传统的pipeline方法把抽取任务看作两个独立的抽取任务。首先利用然语言处理工具对文本中的实体进行识别，然后对实体之间的关系进行分类。</p>
+<p>为了解决人工标注问题，神经模型在关系分类中得到了广泛的应用，包括卷积神经网络（CNN）、循环神经网络（RNN）和长期短期记忆网络（LSTM）。</p>
+</blockquote>
+<p><em>mintz[5]</em>首先提出了利用远程监控进行关系抽取。Zeng[6]提出了多实例学习来解决数据标注错误问题。近年来，强化学习也被应用于信息抽取领域。Qin[7]提出了一个强化学习框架，并重建了一个更为纯粹的训练集。此外，<em>hoffmann[8]</em>使用弱监督方法提取重叠关系。yu[9]提出了一个具有任意图形结构的联合判别概率模型来同时优化所有相关子任务。li[10]采用基于特征工程的结构化系统方法提取关系。yu[9]和li[10]应用非常复杂的特征工程方法提取关系。虽然pipeline方法使得每个提取组件更灵活，但下游结果容易受到上游任务的影响，导致错误的累积。</p>
+<p>为了解决这一问题，人们提出了许多联合提取模型。miwa[11]采用了一种树形结构来联合提取实体和关系，并通过参数共享进行联合学习。Zheng[12]还分享了用于联合学习的神经网络的基本参数。Zheng[1]提出将关系抽取问题转化为序列标注问题，利用递归神经网络联合抽取实体和关系。但是，该模型仅在三元组没有重叠实体，并且具有重叠实体的三元组不能很好地处理的情况下使用。针对这一问题，Zeng[3]提出利用复制机制来解决重叠关系，将重叠实体复制到多个解码器中，解码器生成不同的三元组，但这种方法很大程度上依赖于训练数据的标注。该方法无法处理具有多个单词的实体。takanobu[13]使用强化学习来提取关系，并将关系提取任务视为半马尔可夫决策过程，通过高级强化学习（RL）过程检测关系，并通过低级rl过程来识别关系的参与实体。该模型在NYT数据集上取得了很好的效果。</p>
+<p>在编码器的使用中，由于Bi-LSTM在语义提取方面的优越性能，大多数模型都采用Bi-LSTM进行编码。但是除了获取词义信息外，语义单元信息的提取也非常重要。多级扩展卷积[17]用于捕获词与词之间的局部和长期依赖关系，生成语义单元的表示，在文本情感分析中表现出优异的性能[2]。扩张卷积可以增加接收场，而不需要汇聚层，从而造成信息丢失，使得每个卷积的输出包含了大量的信息。扩展卷积，例如图像分割、语音合成[18]和机器翻译[16]，可以很好地应用于需要全局信息的图像处理任务或需要依赖长序列信息的语音和文本处理。</p>
+<p>在上述的联合提取方法中，只有Zeng[3]和Takanobu[13]考虑重叠关系问题。在关系抽取中，Zeng[3]使用解码器直接解码并添加全连接层来获得关系类型，Takanobu[13]是基于强化学习来获得关系类型的。与这些方法不同的是，我们将关系的提取看作是一个多标签分类问题，并利用分类器链的方法来获取关系类型。并利用扩展卷积结合Bi-LSTM对文本进行编码，更充分地提取文本中的语义。</p>
+<h3 id="论文整理"><a href="#论文整理" class="headerlink" title="论文整理"></a>论文整理</h3><p>Relation Classification via Convolutional Deep Neural Network（2014）</p>
+<h4 id="远程监督"><a href="#远程监督" class="headerlink" title="远程监督"></a>远程监督</h4><p>pipeline方法</p>
+<p><strong>远程监督：</strong></p>
+<blockquote>
+<p>Distant supervision for relation extraction without labeled data （2009）</p>
+</blockquote>
+<p>本文提出不依赖人工标注，将远程监督应用在关系抽取中。<br>使用Freebase提供远程监督。<br>训练阶段一开始是NET标记实体，然后拿这两个实体去freebase中找，找到了就提取特征（词法特征：词性标签是由宾夕法尼亚大学训练的<code>最大熵标记器</code>分配，然后简化为7类，句法特征：依存句法解析器MINIPAR)，然后再把这些特征扔到LR里去训练分类器。</p>
+<p>wrong label问题：基于给定的假设，训练集会产生大量wrong label<br>产生一个改进方向：<strong>多实例多标签。</strong></p>
+<p>误差传播问题：在特征提取的过程中由于使用了NLP工具，工具在标注和解析中产生的误差会影响到特征的准确性，也就是说会产生误差，造成误差传播问题。<br>产生一个改进方向：<strong>用深度学习思路代替特征工程，也就是用神经网络模型来做特征的提取。</strong></p>
+<hr>
+<p><strong>多实例-多标签</strong><br>上面的远程监督假设一对实体对应一种关系，但是，很多实体之间具有多种关系。因此这两篇采用多实例-多标签进行关系抽取：</p>
+<blockquote>
+<p>Knowledge-Based Weak Supervision for Information Extraction（2011）</p>
+</blockquote>
+<p>使用弱监督方法处理重叠关系。引入多实例学习的概率图模型，可用来处理重叠关系。</p>
+<blockquote>
+<p>Multi-instance Multi-label Learning for Relation Extraction（2012）</p>
+</blockquote>
+<p>利用多实例多标签和贝叶斯网络来进行关系抽取。</p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年10月09日 09:43</p>
+        <p>最后更新： 2019年10月11日 21:49</p>
         <p>原始链接： <a class="post-url" href="/2019/10/08/related-work-for-relations-extraction-adai/" title="【关系抽取】相关概念-1">/2019/10/08/related-work-for-relations-extraction-adai/</a></p>
         <footer>
             <a href="">
@@ -252,7 +288,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#概述"><span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#相关论文整理"><span class="post-toc-text">相关论文整理</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CIPS青工委学术专栏第3期-基于深度学习的关系抽取"><span class="post-toc-text">CIPS青工委学术专栏第3期 | 基于深度学习的关系抽取</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ADai的Related-Work"><span class="post-toc-text">ADai的Related-Work</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#论文整理"><span class="post-toc-text">论文整理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#远程监督"><span class="post-toc-text">远程监督</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -337,7 +373,7 @@
             <a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -370,7 +406,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
         </div>
     </div>
 </div>
@@ -425,6 +461,24 @@
 <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
 <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
 <script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>

@@ -9,7 +9,7 @@
     <meta name="keywords" content="Fishwinwin">
   
   <meta name="description" content="142.环形链表2给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 说明：不允许修改给定的链表。 示例 1：输入：head = [3,2,0,-4], pos = 1输出：tail connects to node inde">
-<meta name="keywords" content="链表,LeetCode">
+<meta name="keywords" content="LeetCode,链表,中等">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【LeetCode】 142.环形链表2">
 <meta property="og:url" content="/2019/09/28/leetcode-cycle-list-2/index.html">
@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://github.com/yuyingyingmax/Images/blob/master/circularlinkedlist.png?raw=true">
 <meta property="og:image" content="https://github.com/yuyingyingmax/Images/blob/master/circularlinkedlist2.png?raw=true">
-<meta property="og:updated_time" content="2019-10-09T02:04:21.407Z">
+<meta property="og:updated_time" content="2019-10-10T02:26:45.030Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【LeetCode】 142.环形链表2">
 <meta name="twitter:description" content="142.环形链表2给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 说明：不允许修改给定的链表。 示例 1：输入：head = [3,2,0,-4], pos = 1输出：tail connects to node inde">
@@ -164,10 +164,9 @@
 <h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>1.快慢指针找到第一次相遇的位置<br>2.快指针fast重新从<code>head</code>开始,slow继续从第一次相遇处，fast 和 slow 每次都只走一步，相遇时的位置就是环开始的位置。返回<code>slow</code>或者<code>fast</code>即可。</p>
 <h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">detectCycle</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(head==<span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        ListNode fast = head;</span><br><span class="line">        ListNode slow = head;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(fast == <span class="keyword">null</span> || fast.next == <span class="keyword">null</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            fast = fast.next.next;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            <span class="keyword">if</span>(fast == slow) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        fast = head;</span><br><span class="line">        <span class="keyword">while</span>(fast != slow)&#123;</span><br><span class="line">            fast = fast.next;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fast;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年10月09日 10:04</p>
+        <p>最后更新： 2019年10月10日 10:26</p>
         <p>原始链接： <a class="post-url" href="/2019/09/28/leetcode-cycle-list-2/" title="【LeetCode】 142.环形链表2">/2019/09/28/leetcode-cycle-list-2/</a></p>
         <footer>
             <a href="">
@@ -241,9 +240,11 @@
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
+    <a href="/tags/LeetCode/" class="color4">LeetCode</a>
+      
     <a href="/tags/链表/" class="color3">链表</a>
       
-    <a href="/tags/LeetCode/" class="color4">LeetCode</a>
+    <a href="/tags/中等/" class="color3">中等</a>
       
   </li>
 
@@ -341,7 +342,7 @@
             <a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -374,7 +375,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
         </div>
     </div>
 </div>
@@ -429,6 +430,24 @@
 <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
 <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
 <script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>

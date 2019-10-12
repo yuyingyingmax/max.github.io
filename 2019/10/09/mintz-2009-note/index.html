@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Distant supervision for relation extraction without labeled data | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="关系抽取关系抽取就是抽取一个句子中实体对之间的关系。要训练一个关系抽取器，给它一个句子两个实体，首先它需要知道为这两个实体之间的关系打什么标签，模型无法自己为关系取名，因此就需要人工标注这两个实体之间的关系是什么。当模型训练好之后，再遇到这样的实体对，就会知道是这个关系并把它抽取出来。 但问题是，人工标注是耗时耗力的一件事，而且数量实在有限，数据规模对模型训练又有影响，因此本篇论文的作者mintz">
+<meta name="keywords" content="论文,NLP,关系抽取,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Distant supervision for relation extraction without labeled data">
+<meta property="og:url" content="/2019/10/09/mintz-2009-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="关系抽取关系抽取就是抽取一个句子中实体对之间的关系。要训练一个关系抽取器，给它一个句子两个实体，首先它需要知道为这两个实体之间的关系打什么标签，模型无法自己为关系取名，因此就需要人工标注这两个实体之间的关系是什么。当模型训练好之后，再遇到这样的实体对，就会知道是这个关系并把它抽取出来。 但问题是，人工标注是耗时耗力的一件事，而且数量实在有限，数据规模对模型训练又有影响，因此本篇论文的作者mintz">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/10/09/mintz-2009-note/5.png">
+<meta property="og:image" content="/2019/10/09/mintz-2009-note/1.png">
+<meta property="og:image" content="/2019/10/09/mintz-2009-note/2.png">
+<meta property="og:image" content="/2019/10/09/mintz-2009-note/3.png">
+<meta property="og:image" content="/2019/10/09/mintz-2009-note/4.png">
+<meta property="og:image" content="/2019/10/09/mintz-2009-note/1.png">
+<meta property="og:image" content="/2019/10/09/mintz-2009-note/2.png">
+<meta property="og:updated_time" content="2019-10-11T13:30:24.123Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Distant supervision for relation extraction without labeled data">
+<meta name="twitter:description" content="关系抽取关系抽取就是抽取一个句子中实体对之间的关系。要训练一个关系抽取器，给它一个句子两个实体，首先它需要知道为这两个实体之间的关系打什么标签，模型无法自己为关系取名，因此就需要人工标注这两个实体之间的关系是什么。当模型训练好之后，再遇到这样的实体对，就会知道是这个关系并把它抽取出来。 但问题是，人工标注是耗时耗力的一件事，而且数量实在有限，数据规模对模型训练又有影响，因此本篇论文的作者mintz">
+<meta name="twitter:image" content="/2019/10/09/mintz-2009-note/5.png">
+  
+  
+    <link rel="icon" href="images/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-mintz-2009-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Distant supervision for relation extraction without labeled data
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-09
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="关系抽取"><a href="#关系抽取" class="headerlink" title="关系抽取"></a>关系抽取</h2><p>关系抽取就是抽取一个句子中实体对之间的关系。要训练一个关系抽取器，给它一个句子两个实体，首先它需要知道为这两个实体之间的关系打什么标签，模型无法自己为关系取名，因此就需要人工标注这两个实体之间的关系是什么。当模型训练好之后，再遇到这样的实体对，就会知道是这个关系并把它抽取出来。</p>
+<p>但问题是，人工标注是耗时耗力的一件事，而且数量实在有限，数据规模对模型训练又有影响，因此本篇论文的作者mintz<strong>首次提出了不依赖人工标注的关系抽取，也就是将远程监督应用到关系抽取上</strong>。</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>对于像ACE这样的任务，关系抽取的现代模型是基于<strong>关系的有监督学习</strong>，使用小型人工标注的语料库。</p>
+<p><strong>本文提出不依赖人工标注，将远程监督应用在关系抽取中。</strong></p>
+<p>实验使用Freebase数据集（大型语义数据集，有数千个关系）提供远程监督。对于出现在Freebase关系中的每一对实体，我们在大型未标注语料库中寻找包含这些实体的所有句子，并且提取文本特征以训练关系分类器。</p>
+<p>算法结合了监督IE（在概率分类器中结合400,000个噪声模式特征）和无监督IE（从任何域的大型语料库中提取大量关系)的优点。模型能够以67.6%的精度提取102个关系中的10000个实例。</p>
+<p>论文还分析了feature performance，表明语法分析特征对于表达中含糊不清或者此法遥远的关系特别有用。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在有监督学习中，语料库中的句子首先被标记为实体的存在以及他们之间的关系。例如，NIST ACE RDC2003和2004语料库，包含超过1000个文档，其中实体对由5-7个主要关系类型以及23-24个子类型，共计16771个关系实例。ACE系统提取各种各样的词汇、句法和语义特征，并使用监督分类器来标记测试集句子中给定的一对实体之间的关系。</p>
+<p><strong>然而有监督的关系抽取也存在问题</strong></p>
+<ol>
+<li>人工标注代价昂贵，因此数量有限</li>
+<li>关系被标注在特定语料库上，因此产生的分类器往往偏向于该文本域。</li>
+</ol>
+<p>另一种方法是<strong>纯粹的无监督信息抽取</strong>，在大量文本的实体之间提取单词串，聚类并简化这些单词串以产生关系串。**无监督的方法可以使用非常大的数据，并且抽取非常大量的关系，但是产生的关系可能不容易映射到特定知识库所需要的关系。</p>
+<p>第三种方法就是<strong>半监督学习</strong>，使用Bootstrapping进行关系抽取。对于要抽取的关系，该方法首先手工设定若干种子实例，然后迭代地从数据中抽取关系对应的关系模板和更多的实例。这种方法产生的模板往往是低精度且语义漂移的。</p>
+<blockquote>
+<p><strong>语义漂移</strong>：在迭代过程中会产生一些与种子不相关的实例，然后这些不相关实例再次进入迭代，频繁产生其他不相关实例。<br><strong>参考文献</strong>：<br>Komachi M, Kudo T, Shimbo M, et al. Graph-based Analysis of Semantic Drift in Espresso-like Bootstrapping Algorithms.[C]// Conference on Empirical Methods in Natural Language Processing, EMNLP 2008, Proceedings of the Conference, 25-27 October 2008, Honolulu, Hawaii, Usa, A Meeting of Sigdat, A Special Interest Group of the ACL. 2008:1011-1020.</p>
+</blockquote>
+<p>本文提出另一种范例-远程监督，他结合了这些方法的一些优点。本文的算法使用Freebase为关系抽取提供远程监督。Freebase包含900万个实体之间的7300个关系的1.16亿个实例。<br><strong>远程监督的假设是，任何包含一对在Freebase关系中的实体的句子都可以以某种方式表达这种关系。</strong></p>
+<blockquote>
+<p>也就是说，如果两个实体在某个知识图谱中存在关系，那么所有包含这两个实体的句子都已某种方式表述这种关系</p>
+</blockquote>
+<p>由于可能有许多含有给定实体对的句子，因此我们可以提取非常大量的（可能有噪声的）特征，这些特征被合并到逻辑回归分类器中。</p>
+<p>我们的范例提供了整合多个句子数据的自然方式，以决定两个实体之间是否存在关系。由于我们的算法可能会使用大量未标记的数据，因此一对实体可能会在测试集中多次出现。<strong>对于每一对实体，我们将来自许多不同语句的特征汇总到一个特征向量中，从而使我们能够为分类器提供更多信息，从而产生更准确的标签。</strong></p>
+<h2 id="Freebase"><a href="#Freebase" class="headerlink" title="Freebase"></a>Freebase</h2><p>后文中，使用‘relation’来指代实体之间的有序二元关系，我们将这个关系中的单个有序对称为’relation instance’。</p>
+<p>例如，在实体’John Steinbeck’和 ‘United States’之间存在关系’person-nationality’，因此将(John Steinbeck, United States)作为一个instance。</p>
+<p>我们使用Freebase的关系和关系实例，Freebase是一个免费的结构化语义数据在线数据库。Freebase中的数据是从各种来源收集的。一个主要来源是维基百科的文本框和其他表格数据。数据还来自NNDB（传记信息），MusicBrainz（音乐），SEC（财务和公司数据）以及直接的维基风格用户编辑。经过对2008年7月链接导出的一些基本处理，将Freebase的数据表示转换为二元关系后，我们有900万个实体之间的7,300个关系，有1.16亿个实例。接下来我们将筛选出无用和不感兴趣的的实体，例如用户配置文件和音乐曲目。</p>
+<p>Freebase也包含了许多关系的逆转（bookauthor v.author-book），并将这些关系合并。</p>
+<p>过滤和删除除最大关系以外的所有关系，筛选出了94万个实体，102种关系和180万实体对。</p>
+<div class="image-size-80">
+  <img src="/2019/10/09/mintz-2009-note/5.png" title="graph5">
+</div>
+
+<blockquote>
+<p>关系种类相当于分类的类别，那么有102类；<br>每种关系对应的所有实体对就是样本；<br>从Wikipedia中所有包含某实体对的句子中抽取特征，拼接成这个样本的特征向量。<br>最后训练LR多分类器，用One-vs-Rest，而不是softmax，也就是训练102个LR二分类器——把某种关系视为正类，把其他所有的关系视为负类。<br><strong>补充</strong>：在One-vs-Rest策略中，假设有n个类别，那么就会建立n个二项分类器，每个分类器针对其中一个类别和剩余类别进行分类。进行预测时，利用这n个二项分类器进行分类，得到数据属于当前类的概率，选择其中概率最大的一个类别作为最终的预测结果。</p>
+</blockquote>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p>我们的远程监督方法的核心是使用Freebase构建我们关系的训练集，以及参与这些关系的实体对。</p>
+<p><strong>训练阶段</strong></p>
+<blockquote>
+<p>1.在训练阶段，所有实体都使用标记persons，organizations和locations的命名实体标记器(NET)在句子中标识。<br><em>也就是用命名实体识别工具把语料库中句子的实体识别出来。</em></p>
+<p>2.如果句子包含两个实体，并且这些实体是Freebase关系之一的实例，则从该句子中<strong>提取特征</strong>并将其添加到关系的特征向量中。<br>训练多类逻辑回归分类器，在训练中，来自不同句子的相同元组（关系，实体1，实体2）的特征相结合，创建更丰富的特征向量。<br><em>也就是从这些包含这俩实体的句子中提取文本特征，拼接成一个向量，作为这种关系的一个样本的特征向量，用来训练分类器。</em></p>
+</blockquote>
+<p><strong>远程监督的假设是</strong>,如果两个实体之间存在一种关系，那么包含这两个实体的任何句子都可能表达这种关系。因为任何一个单独的句子都可能给出错误提示，所以我们的算法会训练一个多类逻辑回归分类器，为每个噪音特征学习权重。在训练中，来自不同句子的相同元组<code>（关系，实体1，实体2）</code>的特征相结合，创造更丰富的特征向量。</p>
+<p><strong>测试阶段</strong></p>
+<blockquote>
+<p>再次使用NET标记实体，这一次，在句子中同时出现的每对实体都被认为是潜在的关系实例，并且当这些实体同时出现时，将在该句子上提取特征并且添加到该实体对的特征向量中。<br>例如，如果一组实体出现在测试集的10个句子中，并且每个句子都有3个特征是从它里边提取的，那么这个实体对将有30个关联特征。测试语料中的每个句子中的每个实体对都通过特征提取运行，回归分类器根据每个实体对出现的所有句子的特征预测一个关系名称。</p>
+</blockquote>
+<p>考虑<code>位置包含（location-contains)</code>关系，假设Freebase中我们有两个这种关系的实例：<br><code>(Virginia,Richmond)</code><br><code>(France,Nantes)</code><br>当我们遇到句子<code>&#39;Richmond, the capital of Virginia&#39;</code>以及<code>&#39;Henry&#39;s Edict of Nantes helped the Protestants of France&#39;</code>（亨利的南特诏书帮助了法国的新教徒）,我们将从这些句子中提取特征。<br>有的特征可能会非常有用，例如<code>Richmond</code>这个句子中的特征；有的可能不那么有用，例如<code>Nantes</code>这个句子中的特征。在测试中，如果我们能够发现<code>&#39;Vienna, the capital of Austria&#39;</code>这样的句子，它的一个或多个特征将会匹配到<code>Richond</code>句子的特征，从而证明<code>(Austria, Vieena)</code>属于<code>位置包含</code>关系。</p>
+<p>请注意，我们体系结构的主要<strong>优点之一</strong>是它能够将来自许多不同mention（描述）的相同关系的信息结合起来。<br>从以下两个句子中考虑实体对<code>(Steven Spielberg, Saving Private Ryan)</code>，作为<em>film-director</em>关系的证据。</p>
+<ol>
+<li>[Steven Spielberg]’s film [Saving Private Ryan] is loosely based on the brothers’ stroy.<br>([史蒂文·斯皮尔伯格]的电影[拯救大兵瑞恩]大致是根据兄弟俩的故事改编的。)</li>
+<li>Allison co-produced the Academy Award-winning [Saving Private Ryan], directed by [Steven Spielberg]<br>(艾莉森联合制作了奥斯卡获奖影片《拯救大兵瑞恩》，导演是史蒂文·斯皮尔伯格)</li>
+</ol>
+<p>第一句虽然为<code>film-director 电影导演</code>提供了证据，但却可以作为<code>filmwrite电影编剧</code>或<code>film-producer 电影制片人</code>的证据。<br>第二句话并没有提到拯救大兵瑞恩是个电影，因此可以成为CEO关系的证据（考虑，’Robert Mueller directed the FBI’).孤立的说，这些特征都不是决定性的，但他们组合起来则是决定性的。</p>
+<h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><p>特征提取中用到的特征包含<strong>词法特征、句法特征和命名实体标签特征</strong>。</p>
+<p><strong>词法特征：</strong></p>
+<p>词法特征描述了出现在句子中两个实体之间和周围的<em>特定词语</em>，这些特定词语出现在：</p>
+<ul>
+<li>两个实体之间的单词序列</li>
+<li>这些单词的词性标签</li>
+<li>标志位表示哪个实体出现在前面</li>
+<li>实体1左侧的k个单词及其词性标签</li>
+<li>实体2右侧的k个单词及其词性标签 $ k \in {0,1,2} $</li>
+</ul>
+<p>每个词法特征由所有这些组件连接而成。我们为每个$k \in {0,1,2} $生成一个连接特征。<strong>词性标签</strong>由宾夕法尼亚州立大学训练的最大熵标记器分配，然后简化为7类：nouns名词，verbs动词，adverbs副词，adjectives形容词，numbers数词，foreign words外来词以及其他。</p>
+<p>为了逼近句法特征，我们还测试了词法特征的变化：<br>（1）忽略所有不是动词的词<br>（2）省略所有的功能词<br>结合其他词汇特征，它们对精度有了小的提升，但还不足以证明对计算资源的需求增加。</p>
+<blockquote>
+<p><strong>这里就是获取这些特征，然后把这些特征表示成向量再拼接起来，比如词袋模型，把词语和词性都标识为向量。</strong></p>
+</blockquote>
+<p><strong>句法特征</strong></p>
+<p>参照：<a href="https://blog.csdn.net/u014422406/article/details/53954530" target="_blank" rel="noopener">https://blog.csdn.net/u014422406/article/details/53954530</a><br>利用依存句法解析器MINIPAR对句子进行解析，然后从解析树中提取实体的依赖路径。<br>    a) 两个实体之间的最短依存路径；<br>    b) 两个实体的左右窗口。</p>
+<p><strong>命名实体标注特征</strong><br>使用斯坦福的NET进行命名实体标记（人名、地名、组织名和其他）</p>
+<blockquote>
+<p>NET是一个标记器，只是用来对实体进行标记的。</p>
+<p><strong>总结，论文中使用的特征不是单个特征，而是多种特征拼接起来的。有多个句子包含某实体对，可以从每个句子中抽取出词法特征、句法特征和实体特征，拼接起来，得到一个句子的特征向量，最后把多个句子的特征向量再拼接起来，得到某实体对（一个样本）的特征向量。</strong></p>
+</blockquote>
+<h3 id="训练阶段"><a href="#训练阶段" class="headerlink" title="训练阶段"></a>训练阶段</h3><p>假设freebase中存在（ Edwin Hubble，Marshfield，place of birth ）这一实例。</p>
+<p>  训练数据句子为“Astronomer Edwin Hubble was born in Marshfield, Missouri.”</p>
+<p>1）首先使用NET将‘Edwin Hubble’标记为person，将‘Marshfield’标记为location.</p>
+<p>2）实体Edwin Hubble和实体Marshfield是freebase关系之一的实例。所以对句子进行特征提取：</p>
+<p><strong>词汇特征与命名实体标注特征：</strong></p>
+<div class="image-size-80">
+  <img src="/2019/10/09/mintz-2009-note/1.png" title="graph1">
+</div>
+
+<p><strong>句法特征：</strong></p>
+<div class="image-size-80">
+  <img src="/2019/10/09/mintz-2009-note/2.png" title="graph2">
+</div>
+
+<p>3）使用联合特征训练多类逻辑回归分类器。</p>
+<h3 id="测试阶段"><a href="#测试阶段" class="headerlink" title="测试阶段"></a>测试阶段</h3><p>测试数据句子为“Galileo was born in Pisa.”</p>
+<p>1）首先使用NET将‘Galileo’标记为person，将‘Pisa’标记为location.</p>
+<p>2）对句子进行特征提取</p>
+<div class="image-size-80">
+  <img src="/2019/10/09/mintz-2009-note/3.png" title="graph3">
+</div>
+
+<div class="image-size-80">
+  <img src="/2019/10/09/mintz-2009-note/4.png" title="graph4">
+</div>
+
+<div class="image-size-80">
+  <img src="/2019/10/09/mintz-2009-note/1.png" title="graph1">
+</div>
+
+<div class="image-size-80">
+  <img src="/2019/10/09/mintz-2009-note/2.png" title="graph2">
+</div>
+
+<p>3）判断‘Galileo’与‘Pisa’是place of birth 关系。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="Text-文本"><a href="#Text-文本" class="headerlink" title="Text 文本"></a>Text 文本</h3><p>对于非结构化文本，我们使用Freebase Wikipedia Extraction，它是所有维基百科文章（不包括讨论和用户页面）全文的转储，由Freebase（Metaweb，2008）的开发者Metaweb Technologies进行了句子标记。这个转储包含大约180万篇文章，平均每篇文章14.3个句子。单词总数（标点符号）为601,600,703。对于我们的实验，我们使用大约一半的文章：训练集80万和测试集40万。(留出法进行自动模型评估，一半实体用来训练，另一半实体用于对模型评估）</p>
+<h3 id="构造负样本"><a href="#构造负样本" class="headerlink" title="构造负样本"></a>构造负样本</h3><p>由于有102种关系，每种关系都需要训练一个LR二分类器，所以需要构造负样本。这里的负样本不是其他101种关系的训练样本，而是从训练集中的句子中抽取实体时，如果实体不在Freebase中，那么就随机挑选这样的句子作为负样本。</p>
+<h3 id="解析和分块"><a href="#解析和分块" class="headerlink" title="解析和分块"></a>解析和分块</h3><p>这个非结构化文本的每个句子都是由MINIPAR解析的依存关系来产生一个依存关系图。</p>
+<h3 id="训练和测试"><a href="#训练和测试" class="headerlink" title="训练和测试"></a>训练和测试</h3><p><strong>训练过程</strong></p>
+<p>LR分类器以实体对的特征向量作为输入，输出关系名和概率。每种关系训练一个二分类器，一共训练102个分类器。</p>
+<p>训练好分类器，对测试集中的所有实体对的关系进行预测，并得到概率值。然后对所有实体对按概率降序排列，从中挑选出概率最高的N个实体对（概率值&gt;0.5)作为发现的新实体对。</p>
+<p><strong>测试方法</strong></p>
+<p>指标是准确率，方法采用留出法（自动评估）和人工评估两种方法。留出法的做法是，将Freebase中180万实体对的一半作为测试集（另一半用于训练）。新发现的N个实体对中，如果有n对在Freebase的测试集中，那么准确率为$\frac nN$.人工评估则采用多数投票的方式。</p>
+<p>模型评估结果表明远程监督是一种较好的方法。在文本特征的比较上，词法特征和句法特征拼接而成的特征向量，优于单独使用其中一种特征的情况。此外，句法特征在远程监督中比词法特征更有效，尤其对于依存句法结构比较短而实体对之间的词语非常多的句子。</p>
+<h2 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h2><p>这篇论文把远程监督的思想引入了关系抽取中，充分利用未标注的非结构化文本，从词法、句法和实体三方面构造特征，最后用留出法和人工校验两种方法进行模型评估，是一种非常完整规范的关系抽取范式。 </p>
+<p><strong>优点</strong></p>
+<p>1.使用知识库提供训练数据来取代人工标注获取训练数据，没有过拟合的问题和领域依赖的问题，而且不需要很多已经标注好的数据，可以使用更大的数据集；</p>
+<p>2.综合一种关系的多种描述<br>instance：(Steven Spielberg, Saving Private Ryan)<br>relation: film-director<br>这个例子（可以参考前面<code>架构</code>一节的介绍）</p>
+<p><strong>缺点</strong></p>
+<p>1.基于给出的假设，训练集会产生大量的 <strong>wrong labels（噪声问题）</strong>，比如两个实体有多种关系或者根本在这句话中没有任何关系。这样的训练数据会对关系抽取器产生影响。（例如，”Steve Jobs”, “Apple”在 Freebase 中存在 founder 的关系，如”Steven Jobs passed away the day before Apple unveiled iPhone 4s in late 2011.”句话中并没有表示出 Steven Jobs 与 Apple 之间存在 founder 的关系）</p>
+<p>2.NLP 工具带来的误差，比如 实体标注器和依存句法解析器，<strong>中间过程出错会造成错误传播问题</strong>,也就是说越多的 feature engineering 就会带来越多的误差，在整个任务的 pipeline 上会产生误差的传播和积累，从而影响后续关系抽取的精度。</p>
+<p>关于问题1中 wrong labels 的问题，有的工作将关系抽取定义为一个 Multi-instance Multi-label 学习问题，比如工作 <strong>Multi-instance Multi-label Learning for Relation Extraction</strong>，训练集中的每个 instance 都可能是一种 label。</p>
+<p>而有的工作（本文的工作）则是将问题定义为 Multi-instance Single-label 问题，假设共现的 entity 对之间只存在一种关系或者没有关系，一组包括同一对 entities 的 instances 定义为一个 Bag，每一个 Bag 具有一个 label，最终训练的目标是优化 Bag Label 的准确率。<strong>第一种假设更加接近于实际情况，研究难度也相对更大一些。</strong></p>
+<p>关于问题2中的 pipeline 问题，用深度学习的思路来替代特征工程是一个非常自然的想法，用 word embedding 来表示句子中的 entity 和 word，用 RNN 或者 CNN 以及各种 RNN 和 CNN 的变种模型来对句子进行建模，将训练句子表示成一个 sentence vector，然后进行关系分类，近几年有几个工作都是类似的思路，比如：<br>[3] Relation Classification via Convolutional Deep Neural Network</p>
+<p>[4] Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks</p>
+<p>[5] Neural Relation Extraction with Selective Attention over Instances</p>
+<p>[6] Distant Supervision for Relation Extraction with Sentence-Level Attention and Entity Deions</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p><a href="https://blog.csdn.net/lzw17750614592/article/details/88908018" title="远程监督浅谈" target="_blank" rel="noopener">远程监督浅谈</a><br><a href="https://blog.csdn.net/hagen666/article/details/54838454" title="Freebase Data Dump结构初探" target="_blank" rel="noopener">Freebase Data Dump结构初探</a><br><a href="https://www.sohu.com/a/165856071_465975" title="关于远程监督，我们来推荐几篇值得读的论文" target="_blank" rel="noopener">一周论文 | 关于远程监督，我们来推荐几篇值得读的论文 </a><br><a href="https://www.cnblogs.com/Luv-GEM/p/11598294.html" target="_blank" rel="noopener">关系抽取之远程监督算法</a></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月11日 21:30</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/09/mintz-2009-note/" title="【论文笔记】Distant supervision for relation extraction without labeled data">/2019/10/09/mintz-2009-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/09/mintz-2009-note/&title=《【论文笔记】Distant supervision for relation extraction without labeled data》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/10.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/09/mintz-2009-note/&title=《【论文笔记】Distant supervision for relation extraction without labeled data》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/09/mintz-2009-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Distant supervision for relation extraction without labeled data》 — Fishwinwin&url=/2019/10/09/mintz-2009-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/09/mintz-2009-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/09/mintz-2009-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关系抽取"><span class="post-toc-text">关系抽取</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Freebase"><span class="post-toc-text">Freebase</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#架构"><span class="post-toc-text">架构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#特征"><span class="post-toc-text">特征</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#训练阶段"><span class="post-toc-text">训练阶段</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#测试阶段"><span class="post-toc-text">测试阶段</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现"><span class="post-toc-text">实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Text-文本"><span class="post-toc-text">Text 文本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#构造负样本"><span class="post-toc-text">构造负样本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解析和分块"><span class="post-toc-text">解析和分块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#训练和测试"><span class="post-toc-text">训练和测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#评价"><span class="post-toc-text">评价</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考博客"><span class="post-toc-text">参考博客</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/09/hoffmann-2011-note/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【论文笔记】Knowledge-Based Weak Supervision for Information Extraction
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/09/leetcode-283/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【leetCode】283.移动零</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

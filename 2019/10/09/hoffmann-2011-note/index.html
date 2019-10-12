@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Knowledge-Based Weak Supervision for Information Extraction | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要基于知识的弱监督（远程监督），使用结构化的数据启发性地标记训练语料库，最近，研究人员开发了多实例学习算法来对抗可能来自启发式标签的嘈杂训练数据，但是他们的模型假定关系是不相交的，例如，他们无法提取成对的Founded(Jobs, Apple) 和 CEO-of（Jobs,Apple). 本文提出一种具有重叠关系的多实例学习的新方法，该方法将句子级的抽取模型和简单的语料库级的组件结合，以汇总单个">
+<meta name="keywords" content="论文,NLP,关系抽取,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Knowledge-Based Weak Supervision for Information Extraction">
+<meta property="og:url" content="/2019/10/09/hoffmann-2011-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要基于知识的弱监督（远程监督），使用结构化的数据启发性地标记训练语料库，最近，研究人员开发了多实例学习算法来对抗可能来自启发式标签的嘈杂训练数据，但是他们的模型假定关系是不相交的，例如，他们无法提取成对的Founded(Jobs, Apple) 和 CEO-of（Jobs,Apple). 本文提出一种具有重叠关系的多实例学习的新方法，该方法将句子级的抽取模型和简单的语料库级的组件结合，以汇总单个">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/10/09/hoffmann-2011-note/1.png">
+<meta property="og:image" content="/2019/10/09/hoffmann-2011-note/2.png">
+<meta property="og:updated_time" content="2019-10-10T08:35:11.397Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Knowledge-Based Weak Supervision for Information Extraction">
+<meta name="twitter:description" content="摘要基于知识的弱监督（远程监督），使用结构化的数据启发性地标记训练语料库，最近，研究人员开发了多实例学习算法来对抗可能来自启发式标签的嘈杂训练数据，但是他们的模型假定关系是不相交的，例如，他们无法提取成对的Founded(Jobs, Apple) 和 CEO-of（Jobs,Apple). 本文提出一种具有重叠关系的多实例学习的新方法，该方法将句子级的抽取模型和简单的语料库级的组件结合，以汇总单个">
+<meta name="twitter:image" content="/2019/10/09/hoffmann-2011-note/1.png">
+  
+  
+    <link rel="icon" href="images/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-hoffmann-2011-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Knowledge-Based Weak Supervision for Information Extraction
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-09
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>基于知识的弱监督（远程监督），使用结构化的数据启发性地标记训练语料库，最近，研究人员开发了多实例学习算法来对抗可能来自启发式标签的嘈杂训练数据，但是他们的模型假定关系是不相交的，例如，他们无法提取成对的<code>Founded(Jobs, Apple)</code> 和 <code>CEO-of（Jobs,Apple)</code>.</p>
+<p>本文提出一种具有重叠关系的多实例学习的新方法，该方法将句子级的抽取模型和简单的语料库级的组件结合，以汇总单个情况。我们使用Freebase的弱监督，将模型应用于学习纽约时报文本的抽取器上。实验表明，该方法可以快速运行，并且在汇总和句子级别都有令人惊讶的准确率。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>弱监督（or 远程监督）方法通过启发式地将数据库内容与相应文本进行匹配来创建自己的训练数据，例如假设<code>r(e1,e2） = Founded(Jobs, Apple)</code>是数据库中的3元组，而<code>s = &quot;Steve Jobs founded Apple, Inc.&quot;</code>是包含<code>e1=Jobs</code> 和 <code>e2=Apple</code>的同义词的句子,则<code>s</code>可能是<code>r(e1,e2)</code>事实的自然语言表达，并可能是一个有用的训练样例。</p>
+<p>当文本语料库和数据库内容紧密对齐时，弱监督能很好地工作，Riedel et al.(2010)观察到，当该方法被广泛应用时（例如，将Freebase记录与纽约时报文章相匹配),会产生大量的噪声数据和较差的抽取性能。为了解决这个问题，为了解决这个问题，他们将弱监督作为多实例学习的一种形式，假设包含e1和e2的句子中至少有一个表示r（e1，e2），并且他们的方法在提取性能上有了实质性的改进。</p>
+<p>但是，Riedel等人的模型（如先前系统的模型（Mintz等人，2009））假设关系不重叠，即不能存在两个事实<code>r(e1,e2)</code>和<code>q(e1,e2)</code>，对任何一对实体都正确。不幸的是，这个假设经常被违反，例如， <code>Founded(Jobs, Apple)</code> 和  <code>CEO-of（Jobs,Apple)</code>都是正确的，事实上，Freebase与纽约时报2007年语料库匹配的句子中，有18.3%存在重叠关系。</p>
+<p><strong>本文介绍了MULTIR，这是一种新型的弱监督模型，有以下作用</strong>：</p>
+<ul>
+<li>MULTIR引入了多实例学习的概率图形模型，该模型可以处理重叠的关系。</li>
+<li>MULTIR还可以产生准确的句子级别预测，解码单个句子以及进行语料库级别提取。</li>
+<li>MULTIR在计算上易于处理。推理归结为加权集覆盖，为此它使用贪婪近似，并使用最坏情况下的运行时间O(|R| · |S|)，其中R是可能的关系的集合，S是任何实体对的最大句子集合。实际上，MULTIR运行非常快。</li>
+<li>我们提出的实验表明MULTIR优于Riedel等人的重新实现。额外的实验可以表征MULTIR的性能。</li>
+</ul>
+<h2 id="来自数据库的弱监督"><a href="#来自数据库的弱监督" class="headerlink" title="来自数据库的弱监督"></a>来自数据库的弱监督</h2><p>给定语料库，我们从中抽取有关实体的事实，例如公司<em>Apple</em>，城市<em>Boston</em>。基本的事实（或者说是关系实例），是一个表达式 $r(e)$,其中<code>r</code>是关系名，$e = e_1,…,e_n$是实体列表。</p>
+<p>entity mention是表示一个实体的文本标记的连续序列。在本文中，我们假设有一个预言家能够识别语料库中所有entity mentions，但预言家并没有规范或者消除这些mentions的歧义，我们用$e_i\in E$来表示实体及其名称。</p>
+<p>relation mention是一连串的文本（包括一个或多个entity mentions）,它说明一些基本事实$r(e)$是真实的。例如，”Steve Ballmer, CEO of Microsoft, spoke recently at CES.”对于<code>CEO-of(Steve Ballmer, Microsoft)</code>包含3个entity mention和一个relation mention，在本文中，我们将关注二元关系，此外，我们假设两个实体mention都在单个句子中显示为名词短语。</p>
+<p>聚合抽取的任务需要两个输入。$\sum$,一组由语料组成的句子和一个抽取模型；作为输出，它应该产生一组基础事实，$I$,以便每个事实$r(e)\in I$都在语料库中有所表达。</p>
+<p>句法抽取采用相同的输入，并产生同样的$I$,但除此之外他还会产生函数$\Gamma:I \to P(\sum)$,该函数为每个$r(e)\in I$标识$\sum$中包含的mention（描述为$r(e)$）的句子集合。通常语料库级别的抽取问题比较容易，因为它只需要进行聚合预测即可，也许使用语料库范围的统计信息即可。相反，句子级别的抽取必须用表达事实的每个句子来证明每次抽取的合理性。</p>
+<p><strong>总结</strong><br>基于知识的弱监督学习问题由<br>(1)$\sum$,训练语料库<br>(2)$ E $, 一组在该语料库中提到的实体<br>(3)$ R $, 一组关系名称<br>(4)$ \Delta $, R中一组关系的基本事实<br>作为输入。</p>
+<p>抽取模型作为输出。</p>
+<h2 id="重叠关系建模"><a href="#重叠关系建模" class="headerlink" title="重叠关系建模"></a>重叠关系建模</h2><p>定义了一个无向图模型，允许对汇总（语料库级）和句子级抽取决策进行联合推理。图(a)显示了模型。</p>
+<div class="image-size-80">
+  <img src="/2019/10/09/hoffmann-2011-note/1.png" title="graph1">
+</div>
+
+<h3 id="随机变量"><a href="#随机变量" class="headerlink" title="随机变量"></a>随机变量</h3><p>每对实体$ e = (e_1,e_2)  \in E \times E$都有一个连接的组件，该组件为该对实体的所有提取决策建模。每个关系名称$ r \in R $都有一个布尔输出变量 $ Y^r $ ，它表示$r(e)$是否为真。包括这组二值随机变量使我们的模型能够提取重叠关系。</p>
+<p>令 $ S_(e_1,e_2) \subset \sum $为包含e1、e2 mention的句子集合，对每个句子$ x_i \in S_(e_1,e_2)$，都存在一个隐变量$Z_i$，该变量在关系名称$r \in R $范围内。仅当$x_i$表达基本事实$r(e)$时才应为$Z_i$分配值$r \in R$，从而对句子级抽取进行建模。</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><div class="image-size-80">
+  <img src="/2019/10/09/hoffmann-2011-note/2.png" title="graph2">
+</div>
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>针对wrong label问题，使用弱监督方法提取重叠关系。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月10日 16:35</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/09/hoffmann-2011-note/" title="【论文笔记】Knowledge-Based Weak Supervision for Information Extraction">/2019/10/09/hoffmann-2011-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/09/hoffmann-2011-note/&title=《【论文笔记】Knowledge-Based Weak Supervision for Information Extraction》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/11.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/09/hoffmann-2011-note/&title=《【论文笔记】Knowledge-Based Weak Supervision for Information Extraction》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/09/hoffmann-2011-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Knowledge-Based Weak Supervision for Information Extraction》 — Fishwinwin&url=/2019/10/09/hoffmann-2011-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/09/hoffmann-2011-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/09/hoffmann-2011-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#来自数据库的弱监督"><span class="post-toc-text">来自数据库的弱监督</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重叠关系建模"><span class="post-toc-text">重叠关系建模</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#随机变量"><span class="post-toc-text">随机变量</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#算法"><span class="post-toc-text">算法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/10/leetcode-27/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【leetCode】27.移动元素
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/09/mintz-2009-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【论文笔记】Distant supervision for relation extraction without labeled data</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

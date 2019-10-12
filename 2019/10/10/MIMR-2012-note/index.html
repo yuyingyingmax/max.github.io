@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Multi-instance Multi-label Learning for Relation Extraction | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要提出了一种用于关系抽取的多实例-多标签学习方法，该方法使用具有隐变量的图模型共同对文本中一对实体的所有实例及其所有标签进行建模。该模型在两个困难领域具有竞争优势。 引言远程监督在关系抽取中，主要解决的是训练数据标注的问题，可以通过将文本与知识库对齐来自动生成训练数据。        在本文中，我们关注关系抽取中的远程监督，这是信息抽取的一个子问题，用于解决两个命名实体间关系的抽取。上面的图1展">
+<meta name="keywords" content="论文,NLP,关系抽取,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Multi-instance Multi-label Learning for Relation Extraction">
+<meta property="og:url" content="/2019/10/10/MIMR-2012-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要提出了一种用于关系抽取的多实例-多标签学习方法，该方法使用具有隐变量的图模型共同对文本中一对实体的所有实例及其所有标签进行建模。该模型在两个困难领域具有竞争优势。 引言远程监督在关系抽取中，主要解决的是训练数据标注的问题，可以通过将文本与知识库对齐来自动生成训练数据。        在本文中，我们关注关系抽取中的远程监督，这是信息抽取的一个子问题，用于解决两个命名实体间关系的抽取。上面的图1展">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/10/10/MIMR-2012-note/1.png">
+<meta property="og:image" content="/2019/10/10/MIMR-2012-note/2.png">
+<meta property="og:updated_time" content="2019-10-11T07:43:41.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Multi-instance Multi-label Learning for Relation Extraction">
+<meta name="twitter:description" content="摘要提出了一种用于关系抽取的多实例-多标签学习方法，该方法使用具有隐变量的图模型共同对文本中一对实体的所有实例及其所有标签进行建模。该模型在两个困难领域具有竞争优势。 引言远程监督在关系抽取中，主要解决的是训练数据标注的问题，可以通过将文本与知识库对齐来自动生成训练数据。        在本文中，我们关注关系抽取中的远程监督，这是信息抽取的一个子问题，用于解决两个命名实体间关系的抽取。上面的图1展">
+<meta name="twitter:image" content="/2019/10/10/MIMR-2012-note/1.png">
+  
+  
+    <link rel="icon" href="images/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-MIMR-2012-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Multi-instance Multi-label Learning for Relation Extraction
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-10
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>提出了一种用于关系抽取的多实例-多标签学习方法，该方法使用具有隐变量的图模型共同对文本中一对实体的所有实例及其所有标签进行建模。该模型在两个困难领域具有竞争优势。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>远程监督在关系抽取中，主要解决的是训练数据标注的问题，可以通过将文本与知识库对齐来自动生成训练数据。</p>
+<div class="image-size-80">
+  <img src="/2019/10/10/MIMR-2012-note/1.png" title="graph1">
+</div>
+
+
+<p>在本文中，我们关注关系抽取中的<strong>远程监督</strong>，这是信息抽取的一个子问题，用于解决两个命名实体间关系的抽取。上面的图1展示了带有两个标签的关系抽取域的简单示例。</p>
+<p>远程监督带来两个建模挑战：<br>（1）通过这种方式获取的一些训练实例是无效的，例如图1，最后一句对于元组的任何已知标签都不是正确的。此类误报的百分比可能很高，Riedel et al.(2010)报告了Freebase中的关系与纽约时报文章语料库对气候的误报率高达31%。<br>（2）一组相同的实体可能会有多个标签，并且不清楚哪个标签是由给定元组的任何文本描述实例化的。例如，图1中元组<code>(Barack Obama, United States)</code>有两个有效标签：<code>BornIn</code>和<code>EmployedBy</code>，每个（潜在的）被实例化成不同的句子。在Riedel语料库中，训练分区中7.5%的实体元组具有多个标签。</p>
+<p><div class="image-size-80">
+  <img src="/2019/10/10/MIMR-2012-note/2.png" title="graph2">
+</div></p>
+<blockquote>
+<p>多实例多标签学习概述，传统监督学习中，一个对象只有一个实例和一个标签，对于关系抽取，对象是一个包含两个命名实体的元组，文本中对于这个元组的每个描述都会生成一个不同的实例。</p>
+</blockquote>
+<p>图2中总结了这个多实例多标签（MIML)学习问题.在本文中，我们提出一种新颖的图模型，称为MIML-RE，该模型针对MIML学习进行关系抽取。我们的工作做出以下贡献:</p>
+<p>(1)MIML-RE是第一个将多个实例（通过对分配给实例的潜在标签建模）和多标签（通过提供一种简单的方法来捕获标签之间的依赖关系）联合建模的RE方法。例如，我们的模型能学习某些标签倾向与联合生成，而其他标签则不能联合联合分配给同一元组。<br>(2)我们证明MIML-RE在两个困难领域中有竞争性。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月11日 15:43</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/10/MIMR-2012-note/" title="【论文笔记】Multi-instance Multi-label Learning for Relation Extraction">/2019/10/10/MIMR-2012-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/10/MIMR-2012-note/&title=《【论文笔记】Multi-instance Multi-label Learning for Relation Extraction》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/12.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/10/MIMR-2012-note/&title=《【论文笔记】Multi-instance Multi-label Learning for Relation Extraction》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/10/MIMR-2012-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Multi-instance Multi-label Learning for Relation Extraction》 — Fishwinwin&url=/2019/10/10/MIMR-2012-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/10/MIMR-2012-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/10/MIMR-2012-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/11/Zeng-2014-note/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【论文笔记】Relation Classification via Convolutional Deep Neural Network
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/10/leetcode-27/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【leetCode】27.移动元素</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

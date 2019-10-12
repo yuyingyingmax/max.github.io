@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="Fishwinwin">
   
-  <meta name="description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法 - 使用">
-<meta name="keywords" content="LeetCode,数组">
+  <meta name="description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:&amp;gt;  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法">
+<meta name="keywords" content="数组,LeetCode,简单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【leetCode】283.移动零">
 <meta property="og:url" content="/2019/10/09/leetcode-283/index.html">
 <meta property="og:site_name" content="Fishwinwin">
-<meta property="og:description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法 - 使用">
+<meta property="og:description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:&amp;gt;  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-09T02:33:43.594Z">
+<meta property="og:updated_time" content="2019-10-10T02:27:32.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【leetCode】283.移动零">
-<meta name="twitter:description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法 - 使用">
+<meta name="twitter:description" content="283.移动零给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 示例:&amp;gt;  输入: [0,1,0,3,12] 输出: [1,3,12,0,0]  说明: 必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。 题解分析题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？ 原始做法">
   
   
     <link rel="icon" href="images/head2.jpeg">
@@ -147,7 +147,7 @@
       
             
             <h1 id="283-移动零"><a href="#283-移动零" class="headerlink" title="283.移动零"></a>283.移动零</h1><p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
-<p>示例:</p>
+<p>示例:<br>&gt;</p>
 <blockquote>
 <p>输入: [0,1,0,3,12]</p>
 <p>输出: [1,3,12,0,0]</p>
@@ -157,15 +157,12 @@
 <h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>题目要求把0移动到数组末尾，那么我们很自然就可以想到，可以将非0元素都移动到数组左端，剩下的就填0，那么怎么做呢？</p>
 <h4 id="原始做法-使用辅助数组"><a href="#原始做法-使用辅助数组" class="headerlink" title="原始做法 - 使用辅助数组"></a>原始做法 - 使用辅助数组</h4><p>我们可以将原数组中非0的元素复制到新数组中，然后将新数组的元素赋值给旧数组。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span>[] newArray = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//step1 : 复制非0元素</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] != <span class="number">0</span>)&#123;</span><br><span class="line">            newArray[index++] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//step2：更新原数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; newArray.length; i++)&#123;</span><br><span class="line">        nums[i] = newArray[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>复杂度分析：</p>
+<p>复杂度分析：<br>&gt;</p>
 <blockquote>
 <p>时间复杂度：O(n)<br>空间复杂度：O(n)</p>
 </blockquote>
 <p>这种方法不符合题目的要求，因为使用了辅助数组。</p>
-<h4 id="改进1-将非0元素填充到前一个0的位置，最后用0填充后面的位置"><a href="#改进1-将非0元素填充到前一个0的位置，最后用0填充后面的位置" class="headerlink" title="改进1 - 将非0元素填充到前一个0的位置，最后用0填充后面的位置"></a>改进1 - 将非0元素填充到前一个0的位置，最后用0填充后面的位置</h4><p>由上一种方法可以想到，我们可以遍历一遍数组的时候，用<code>index</code>记录0元素的位置，遇到非0元素就将它填充到前一个0的位置上，使得<code>[0,index)</code>区间内都是非0元素，<code>[index,nums.length)</code>区间用0填充。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;<span class="comment">//0元素初始位置</span></span><br><span class="line">    <span class="comment">//step1:复制非0元素到前一个0元素位置</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] != <span class="number">0</span>)&#123;</span><br><span class="line">            nums[index++] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//step2：将index之后的元素全部填充为0</span></span><br><span class="line">    <span class="keyword">while</span>(index &lt; nums.length)&#123;</span><br><span class="line">        nums[index++] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h4 id="改进1-将非0元素填充到前一个0的位置，最后用0填充后面的位置"><a href="#改进1-将非0元素填充到前一个0的位置，最后用0填充后面的位置" class="headerlink" title="改进1 - 将非0元素填充到前一个0的位置，最后用0填充后面的位置"></a>改进1 - 将非0元素填充到前一个0的位置，最后用0填充后面的位置</h4><p>由上一种方法可以想到，我们可以遍历一遍数组的时候，用<code>index</code>记录0元素的位置，遇到非0元素就将它填充到前一个0的位置上，使得<code>[0,index)</code>区间内都是非0元素，<code>[index,nums.length)</code>区间用0填充。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;<span class="comment">//0元素初始位置</span></span><br><span class="line">    <span class="comment">//step1:复制非0元素到前一个0元素位置</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] != <span class="number">0</span>)&#123;</span><br><span class="line">            nums[index++] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//step2：将index之后的元素全部填充为0</span></span><br><span class="line">    <span class="keyword">while</span>(index &lt; nums.length)&#123;</span><br><span class="line">        nums[index++] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>复杂度分析：</p>
 <blockquote>
 <p>时间复杂度：O(n)<br>空间复杂度：O(1)</p>
@@ -174,7 +171,6 @@
 <h4 id="改进2-将0元素与非0元素交换"><a href="#改进2-将0元素与非0元素交换" class="headerlink" title="改进2-将0元素与非0元素交换"></a>改进2-将0元素与非0元素交换</h4><p>可以将0元素与非0元素交换，那么，就不存在最后一步<code>填充0</code>了。</p>
 <p>这里还需要考虑到的一个极端情况是，数组没有0元素时，不管是<code>改进1</code>还是<code>改进2</code>都会对当前非0元素与自身进行复制/交换，可以通过添加一个小判断，减少操作的次数。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] != <span class="number">0</span>)&#123;<span class="comment">//非0元素</span></span><br><span class="line">            <span class="keyword">if</span>(i != index)&#123;<span class="comment">//如果i不等于index，才交换</span></span><br><span class="line">                swap(nums,i,index++);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;<span class="comment">//否则index++</span></span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">    nums[i] = nums[j];</span><br><span class="line">    nums[j] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>复杂度分析：</p>
 <blockquote>
 <p>时间复杂度：O(n)<br>空间复杂度：O(1)</p>
@@ -182,7 +178,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年10月09日 10:33</p>
+        <p>最后更新： 2019年10月10日 10:27</p>
         <p>原始链接： <a class="post-url" href="/2019/10/09/leetcode-283/" title="【leetCode】283.移动零">/2019/10/09/leetcode-283/</a></p>
         <footer>
             <a href="">
@@ -256,9 +252,11 @@
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
+    <a href="/tags/数组/" class="color3">数组</a>
+      
     <a href="/tags/LeetCode/" class="color4">LeetCode</a>
       
-    <a href="/tags/数组/" class="color3">数组</a>
+    <a href="/tags/简单/" class="color3">简单</a>
       
   </li>
 
@@ -277,6 +275,16 @@
     
 
 <nav id="article-nav">
+  
+    <a href="/2019/10/09/mintz-2009-note/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【论文笔记】Distant supervision for relation extraction without labeled data
+        
+      </span>
+    </a>
   
   
     <a href="/2019/10/08/related-work-for-relations-extraction-adai/" id="article-nav-older" class="article-nav-link-wrap">
@@ -346,7 +354,7 @@
             <a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -379,7 +387,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 20px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
         </div>
     </div>
 </div>
@@ -434,6 +442,24 @@
 <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
 <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
 <script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
