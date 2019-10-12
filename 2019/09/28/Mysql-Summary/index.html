@@ -195,8 +195,6 @@
 <blockquote>
 <p>1)设置为RR,加入间隙锁，session2插入时会阻塞。</p>
 <p>2)使用binlog的row格式，这个格式5.1才有。</p>
-</blockquote>
-<blockquote>
 <p><strong>因此MySQL的默认隔离级别是RR。</strong></p>
 </blockquote>
 <h2 id="7-那既然说InnoDB通过MVCC解决了幻读，什么是MVCC？"><a href="#7-那既然说InnoDB通过MVCC解决了幻读，什么是MVCC？" class="headerlink" title="7.那既然说InnoDB通过MVCC解决了幻读，什么是MVCC？"></a>7.那既然说InnoDB通过MVCC解决了幻读，什么是MVCC？</h2><blockquote>
@@ -244,9 +242,9 @@
 </blockquote>
 <h2 id="2-什么情况不会用到索引？"><a href="#2-什么情况不会用到索引？" class="headerlink" title="2.什么情况不会用到索引？"></a>2.什么情况不会用到索引？</h2><blockquote>
 <p>1.当MySQL估计全表比索引快时，不用索引。</p>
-<p>2.当跳过索引中的列。 当索引为&lt;a,b,c&gt; 查询where a = 10 and c= 100，就只会用到索引的第一列。</p>
-<p>3.违反最左前缀。当索引为&lt;a,b,c&gt;时，where b  = 100 或 where b = 100 and  c = 100 或where c = 100都不会用到索引。</p>
-<p>4.查询中有某个列的范围查询，则这个列的右边都无法用到索引。当索引为&lt;a,b,c&gt;时，查询where a = 10 and b like “bbv%” and c = 98，这个查询只用到索引的前两列&lt;a,b&gt;。</p>
+<p>2.当跳过索引中的列。 当索引为<a,b,c> 查询where a = 10 and c= 100，就只会用到索引的第一列。</a,b,c></p>
+<p>3.违反最左前缀。当索引为<a,b,c>时，where b  = 100 或 where b = 100 and  c = 100 或where c = 100都不会用到索引。</a,b,c></p>
+<p>4.查询中有某个列的范围查询，则这个列的右边都无法用到索引。当索引为<a,b,c>时，查询where a = 10 and b like “bbv%” and c = 98，这个查询只用到索引的前两列<a,b>。</a,b></a,b,c></p>
 <p>5.前导的模糊查询不会用到索引，where a like “%as”不会，但where a like “as%”可以用。</p>
 <p>6.使用聚合函数索引会失效。</p>
 <p>7.列类型是字符串，查询条件未加引号。</p>
@@ -283,18 +281,16 @@
 <p>1.无法用于排序与分组；</p>
 <p>2.只支持精确查找，无法用于部分查找和范围查找</p>
 </blockquote>
-<h2 id="7-索引的优点"><a href="#7-索引的优点" class="headerlink" title="7.索引的优点"></a>7.索引的优点</h2><blockquote>
+<h2 id="7-索引的优点"><a href="#7-索引的优点" class="headerlink" title="7.索引的优点"></a>7.索引的优点</h2><p>&gt;</p>
+<blockquote>
 <ul>
 <li><p>创建唯一性索引，保证数据库表中每一行数据的唯一性</p>
 </li>
 <li><p>大大加快数据的检索速度，这是创建索引的最主要的原因</p>
 </li>
-<li><p>加速数据库表之间的连接，特别是在实现数据的参考完整性方面特别有意义</p>
-</li>
-<li><p>在使用分组和排序子句进行数据检索时，同样可以显著减少查询中分组和排序的时间</p>
-</li>
-<li><p>通过使用索引，可以在查询中使用优化隐藏器，提高系统的性能</p>
-</li>
+<li>加速数据库表之间的连接，特别是在实现数据的参考完整性方面特别有意义</li>
+<li>在使用分组和排序子句进行数据检索时，同样可以显著减少查询中分组和排序的时间</li>
+<li>通过使用索引，可以在查询中使用优化隐藏器，提高系统的性能</li>
 </ul>
 </blockquote>
 <h2 id="8-索引的缺点"><a href="#8-索引的缺点" class="headerlink" title="8.索引的缺点"></a>8.索引的缺点</h2><blockquote>
@@ -324,7 +320,8 @@
 <p>select … for update</p>
 <p>在select语句后面加上for update时，MySQL会对查询结果中的每行都加排他锁，当没有其他线程对查询结果集中的任何一行使用排他锁时，可以成功申请排他锁，否则会被阻塞。</p>
 </blockquote>
-<h2 id="3-意向锁"><a href="#3-意向锁" class="headerlink" title="3.意向锁"></a>3.意向锁</h2><blockquote>
+<h2 id="3-意向锁"><a href="#3-意向锁" class="headerlink" title="3.意向锁"></a>3.意向锁</h2><p>&gt;</p>
+<blockquote>
 <font size="4" color="#FF0000">
 意向锁：意向锁是表级锁，其设计目的主要是为了在一个事务中揭示下一行将要被请求锁的类型。</font>
 
@@ -358,9 +355,7 @@
 <h3 id="分析步骤："><a href="#分析步骤：" class="headerlink" title="分析步骤："></a>分析步骤：</h3><blockquote>
 <p>1.确认应用程序是否在检索大量不需要的数据。</p>
 <p>2.确认MySQL服务器层时候在分析大量超过需要的行。</p>
-</blockquote>
-<h3 id="典型-lt-检索不需要数据-gt-情况："><a href="#典型-lt-检索不需要数据-gt-情况：" class="headerlink" title="典型&lt;检索不需要数据&gt;情况："></a>典型&lt;检索不需要数据&gt;情况：</h3><blockquote>
-<p>1.SELECT *</p>
+<h3 id="典型-lt-检索不需要数据-gt-情况："><a href="#典型-lt-检索不需要数据-gt-情况：" class="headerlink" title="典型&lt;检索不需要数据&gt;情况："></a>典型&lt;检索不需要数据&gt;情况：</h3><p>1.SELECT *</p>
 <p>每次看到这个的时候都需要想想，是不是真的需要表里全部的数据。</p>
 <p>我们那个查找下载论文学生的查询，就SELECT * FROM STUDENT。</p>
 <p>2.重复查询相同的数据</p>
@@ -374,9 +369,7 @@
 <p>SQL解析：通过关键字进行SQL语句解析，生成一颗“解析树”。<br>预处理器：根据MySQL规则进一步检查解析树是否合法。（表和列是否存在，名字和别名是否有歧义）<br>查询优化器：一条查询可以有很多种执行方式，优化器就是找到最好的执行计划。</p>
 <p>4.MySQL根据优化器生成的执行计划，调用存储引擎的API来执行查询。</p>
 <p>5.返回结果导到客户端。</p>
-</blockquote>
-<h2 id="3-EXPLAIN-分析查询"><a href="#3-EXPLAIN-分析查询" class="headerlink" title="3.EXPLAIN 分析查询"></a>3.EXPLAIN 分析查询</h2><blockquote>
-<p>EXPLAIN可以对SELECT查询进行分析，所有字段如下：<br><img src="https://img-blog.csdnimg.cn/20190917200021126.png" alt></p>
+<h2 id="3-EXPLAIN-分析查询"><a href="#3-EXPLAIN-分析查询" class="headerlink" title="3.EXPLAIN 分析查询"></a>3.EXPLAIN 分析查询</h2><p>EXPLAIN可以对SELECT查询进行分析，所有字段如下：<br><img src="https://img-blog.csdnimg.cn/20190917200021126.png" alt></p>
 <ul>
 <li>id：SELECT查询的标识符，每个SELECT都会分配一个唯一的标识符</li>
 <li>select_type：SELECT查询的类型</li>
@@ -389,11 +382,8 @@
 <li>ref：哪个字段或常数和key一起使用。</li>
 <li>rows：查询一共扫描了多少行，估计值。</li>
 <li>filtered：此查询条件所过滤数据的百分比。</li>
-<li>Extra：额外的信息。</li>
+<li>Extra：额外的信息。<h3 id="select-type-查询类型"><a href="#select-type-查询类型" class="headerlink" title="-select_type - 查询类型"></a>-select_type - 查询类型</h3>常用的取值有：</li>
 </ul>
-</blockquote>
-<h3 id="select-type-查询类型"><a href="#select-type-查询类型" class="headerlink" title="-select_type - 查询类型"></a>-select_type - 查询类型</h3><blockquote>
-<p>常用的取值有：</p>
 <p>SIMPLE, 表示此查询不包含 UNION 查询或子查询 （最常见）</p>
 <p>PRIMARY, 表示此查询是最外层的查询</p>
 <p>UNION, 表示此查询是 UNION 的第二或随后的查询</p>
@@ -401,9 +391,7 @@
 <p>UNION RESULT, UNION 的结果</p>
 <p>SUBQUERY, 子查询中的第一个 SELECT</p>
 <p>DEPENDENT SUBQUERY: 子查询中的第一个 SELECT, 取决于外面的查询. 即子查询依赖于外层查询的结果.</p>
-</blockquote>
-<h3 id="type-MySQL找到需要数据行的方式"><a href="#type-MySQL找到需要数据行的方式" class="headerlink" title="type - MySQL找到需要数据行的方式"></a>type - MySQL找到需要数据行的方式</h3><blockquote>
-<p>常取的值：</p>
+<h3 id="type-MySQL找到需要数据行的方式"><a href="#type-MySQL找到需要数据行的方式" class="headerlink" title="type - MySQL找到需要数据行的方式"></a>type - MySQL找到需要数据行的方式</h3><p>常取的值：</p>
 <p><strong>const</strong>：针对主键或唯一索引的等值查询扫描, 最多只返回一行数据,const 查询速度非常快, 因为它仅仅读取一次即可。</p>
 <p><strong>eq_ref</strong>：此类型通常出现在多表的 join 查询, 表示对于前表的每一个结果, 都只能匹配到后表的一行结果. 并且查询的比较操作通常是 = , 查询效率较高。</p>
 <p><strong>ref</strong>：此类型通常出现在多表的 join 查询, 针对于非唯一或非主键索引, 或者是使用了 最左前缀 规则索引的查询. </p>
@@ -453,9 +441,7 @@
 </blockquote>
 <h3 id="rows-查询需要扫描的行数"><a href="#rows-查询需要扫描的行数" class="headerlink" title="rows - 查询需要扫描的行数"></a>rows - 查询需要扫描的行数</h3><blockquote>
 <p>MySQL 查询优化器根据统计信息, 估算 SQL 要查找到结果集需要扫描读取的数据行数.<br>这个值非常直观显示 SQL 的效率好坏, 原则上 rows 越少越好.</p>
-</blockquote>
-<h3 id="Extra-额外信息"><a href="#Extra-额外信息" class="headerlink" title="Extra - 额外信息"></a>Extra - 额外信息</h3><blockquote>
-<p>Using index<br>“覆盖索引扫描”, 表示查询在索引树中就可查找所需数据, 不用扫描表数据文件, 往往说明性能不错</p>
+<h3 id="Extra-额外信息"><a href="#Extra-额外信息" class="headerlink" title="Extra - 额外信息"></a>Extra - 额外信息</h3><p>Using index<br>“覆盖索引扫描”, 表示查询在索引树中就可查找所需数据, 不用扫描表数据文件, 往往说明性能不错</p>
 <p>Using temporary<br>查询有使用临时表, 一般出现于排序, 分组和多表 join 的情况, 查询效率不高, 建议优化.</p>
 </blockquote>
 <h1 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h1><h2 id="1-连接的种类"><a href="#1-连接的种类" class="headerlink" title="1.连接的种类"></a>1.连接的种类</h2><h3 id="1-外连接"><a href="#1-外连接" class="headerlink" title="1.外连接"></a>1.外连接</h3><p>左连接 left join (left outer join)<br>结果包括左表的所有行，如果右表有无法匹配的行则显示null。<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvNzc1MDA1LzIwMTgwOS83NzUwMDUtMjAxODA5MTcxNjQ3MTQ3MzItMjA5NjQ3OTU2NS5naWY" alt><br>右连接 right join (right outer join)<br>包括右表所有的行，如果左表又无法匹配的行，则显示null。</p>
@@ -499,9 +485,7 @@
 </blockquote>
 <h2 id="4-数据库字段类型为什么建议尽量避免NULL"><a href="#4-数据库字段类型为什么建议尽量避免NULL" class="headerlink" title="4.数据库字段类型为什么建议尽量避免NULL"></a>4.数据库字段类型为什么建议尽量避免NULL</h2><blockquote>
 <p><strong>高性能MySQL中明确提到“尽量避免NULL”</strong></p>
-</blockquote>
-<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><blockquote>
-<p>NOT IN、!= 等负向条件查询在有 NULL 值的情况下返回非空行的结果&gt;集。<br>Count(*)会统计包括NULL的行，count(colName)不会统计此列为null的行<br>NULL 列需要更多的存储空间，需要一个额外的字节作为判断是否为 NULL 的标志位。</p>
+<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p>NOT IN、!= 等负向条件查询在有 NULL 值的情况下返回非空行的结果&gt;集。<br>Count(*)会统计包括NULL的行，count(colName)不会统计此列为null的行<br>NULL 列需要更多的存储空间，需要一个额外的字节作为判断是否为 NULL 的标志位。</p>
 </blockquote>
 
             <div class="post-copyright">
