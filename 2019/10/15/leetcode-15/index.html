@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【LeetCode】15. 三数之和 | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="15.三数之和给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。 注意：答案中不可以包含重复的三元组。  例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]， 满足要求的三元组集合为：[ [-1, 0, 1], [-1, -1, 2]]  题解分析解法1 - 延伸">
+<meta name="keywords" content="数组,双指针,LeetCode,中等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【LeetCode】15. 三数之和">
+<meta property="og:url" content="/2019/10/15/leetcode-15/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="15.三数之和给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。 注意：答案中不可以包含重复的三元组。  例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]， 满足要求的三元组集合为：[ [-1, 0, 1], [-1, -1, 2]]  题解分析解法1 - 延伸">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-15T07:50:17.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【LeetCode】15. 三数之和">
+<meta name="twitter:description" content="15.三数之和给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。 注意：答案中不可以包含重复的三元组。  例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]， 满足要求的三元组集合为：[ [-1, 0, 1], [-1, -1, 2]]  题解分析解法1 - 延伸">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-leetcode-15" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【LeetCode】15. 三数之和
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/LeetCode/">LeetCode</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-15
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="15-三数之和"><a href="#15-三数之和" class="headerlink" title="15.三数之和"></a>15.三数之和</h1><p>给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。</p>
+<p><strong>注意</strong>：答案中不可以包含重复的三元组。</p>
+<blockquote>
+<p>例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]，</p>
+<p>满足要求的三元组集合为：<br>[<br> [-1, 0, 1],<br> [-1, -1, 2]<br>]</p>
+</blockquote>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><h4 id="解法1-延伸的两数之和-Map-Set大法"><a href="#解法1-延伸的两数之和-Map-Set大法" class="headerlink" title="解法1 - 延伸的两数之和(Map+Set大法)"></a>解法1 - 延伸的两数之和(Map+Set大法)</h4><p>三元组不可以重复，那我们可以先不考虑是不是重复，而是找到以后都扔到Set里边去。<br>找的时候可以先取第一个数<code>a</code>，然后取第二个数<code>b</code>，计算需要的第三个数的值<code>c</code>，然后在数组里找有没有这个值。可以用Map来存放被访问过的值，这样就不用重复地去查询数组。</p>
+<p><strong>代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum(<span class="keyword">int</span>[] nums)&#123;</span><br><span class="line">       <span class="keyword">int</span> count = <span class="number">0</span>;<span class="comment">//计数，与题目无关</span></span><br><span class="line">       <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length &lt; <span class="number">3</span>) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">       Set&lt;List&lt;Integer&gt;&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">       Arrays.sort(nums);<span class="comment">//排序</span></span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">           <span class="keyword">int</span> first = nums[i];</span><br><span class="line">           Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums.length; j++)&#123;</span><br><span class="line">               count++;</span><br><span class="line">               <span class="keyword">int</span> needed = <span class="number">0</span> - first - nums[j];<span class="comment">//找到俩，需要找第三个</span></span><br><span class="line">               <span class="keyword">if</span>(map.containsKey(needed))&#123;<span class="comment">//找到第三个</span></span><br><span class="line">                   List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                   list.add(first);</span><br><span class="line">                   list.add(nums[j]);</span><br><span class="line">                   list.add(needed);</span><br><span class="line">                   set.add(list);</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">if</span>(!map.containsKey(nums[j]))<span class="comment">//把第二个加入备选</span></span><br><span class="line">                   map.put(nums[j],j);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       List&lt;List&lt;Integer&gt;&gt; answer = <span class="keyword">new</span> ArrayList&lt;&gt;(set);</span><br><span class="line">       System.out.println(<span class="string">"count :"</span> + count);</span><br><span class="line">       <span class="keyword">return</span> answer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行情况：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">&#123;-1,0,1,2,-1,-4&#125;</span><br><span class="line">输出：</span><br><span class="line">count :15</span><br><span class="line">-1 2 -1 </span><br><span class="line">-1 1 0</span><br></pre></td></tr></table></figure></p>
+<p>复杂度分析：</p>
+<blockquote>
+<p>时间复杂度：内层循环执行$\frac {n(n-1)} {2}$次，复杂度为$O(n^2)$<br>空间复杂度：使用了Set和Map。</p>
+</blockquote>
+<p><strong>能否优化呢？</strong>我们可以看到在这里循环进行的次数是15次。也就是说每取一个first元素，都要遍历他后面的所有元素。</p>
+<h4 id="解法2-对解法1的优化"><a href="#解法2-对解法1的优化" class="headerlink" title="解法2 - 对解法1的优化"></a>解法2 - 对解法1的优化</h4><blockquote>
+<p>1.实际上我们通过升序排序后，就能发现，如果我们前3个数字之和就大于0的话，那再往后取也没意义了，也不会再有解了，直接结束循环。</p>
+<p>2.如果我们取当前最小的<code>first</code>，和最大以及次大的元素，他们的和如果小于0的话，说明此时的<code>first</code>也不合适，太小了，直接跳过它去找下一个比他大一点的first。</p>
+<p>3.一开始我们在用Set去重，但我们发现排序之后的数组为<code>{-4，-1&#39;，-1&#39;&#39;，0，1，2}</code>，当我们<code>-1&#39;</code>做<code>first</code>的时候，找到的3元组为<code>{-1&#39;，0，1&#39;&#39;}，{-1&#39;，-1&#39;&#39;，2}</code>，下一个<code>first</code>取的<code>-1&#39;&#39;</code>时，找到的3元组为<code>{-1&#39;&#39;，0，1}</code>，也就是说，当相邻的两个元素相同时，我们先取的那个元素<code>（-1&#39;）</code>得到的解，与后一个元素能得到的解相同，于是我们在遇到<code>-1</code>时，判断它上一个元素是否和他相同，相同就跳过<code>-1</code>，这样我们不会得到重复的解。</p>
+</blockquote>
+<p><strong>代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum(<span class="keyword">int</span>[] nums)&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length &lt; <span class="number">3</span>) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="comment">//        Set&lt;List&lt;Integer&gt;&gt; set = new HashSet&lt;&gt;();//优化后不再需要Set了</span></span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; three = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Arrays.sort(nums);<span class="comment">//排序</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">2</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> first = nums[i];</span><br><span class="line"> </span><br><span class="line">            <span class="comment">//优化1：最小的3个相加&gt;0 就不用考虑后面的了，没有解了。</span></span><br><span class="line">            <span class="keyword">if</span>(first + nums[i + <span class="number">1</span>]+ nums[i + <span class="number">2</span>] &gt; <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//最小的加上俩最大的，都小于0，这个小的不考虑了。</span></span><br><span class="line">            <span class="keyword">if</span>(first + nums[nums.length - <span class="number">1</span>] + nums[nums.length - <span class="number">2</span>] &lt; <span class="number">0</span>)<span class="keyword">continue</span>;</span><br><span class="line">            <span class="comment">//这个数字与前一个重复，它在上一轮被考虑过了，这次就不考虑它。</span></span><br><span class="line">            <span class="keyword">if</span>(i &gt; <span class="number">0</span> &amp;&amp; first == nums[i - <span class="number">1</span>])<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">            Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums.length; j++)&#123;</span><br><span class="line">                count++;</span><br><span class="line">                <span class="keyword">int</span> needed = <span class="number">0</span> - first - nums[j];<span class="comment">//找到俩，需要找第三个</span></span><br><span class="line">                <span class="keyword">if</span>(map.containsKey(needed))&#123;<span class="comment">//找到第三个</span></span><br><span class="line">                    List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                    list.add(first);</span><br><span class="line">                    list.add(nums[j]);</span><br><span class="line">                    list.add(needed);</span><br><span class="line">                    three.add(list);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(!map.containsKey(nums[j]))<span class="comment">//把第二个加入备选</span></span><br><span class="line">                    map.put(nums[j],j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"count :"</span> + count);</span><br><span class="line">        <span class="keyword">return</span> three;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>执行情况：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输出：</span><br><span class="line">count :4</span><br><span class="line">-1 1 0 </span><br><span class="line">-1 2 -1</span><br></pre></td></tr></table></figure></p>
+<p>可能你发现了，上面这段代码其实还有点问题，就是当我们遇到<code>{0，0，0，0}</code>这样的输入时，还是会得到两组<code>{0，0，0}</code>，也就是说，当我们选第一个0和第二个0，我们可以和第3个0得到一个三元组，然后我们会去查看第4个0，发现它依旧能和第一个0以及第二个0进行组合，所以说，还是会得到重复的元组，所以上面的第三部优化没有真正做到去重（可以用Set大法：），对于出现多个重复的元素，我们应该怎么去重呢？</p>
+<h4 id="解法3-双指针"><a href="#解法3-双指针" class="headerlink" title="解法3 - 双指针"></a>解法3 - 双指针</h4><p>我们可以用双端指针来做这件事，对于<code>{0，0&#39;，0&#39;&#39;，0&#39;&#39;&#39;，0&#39;&#39;&#39;&#39;，0&#39;&#39;&#39;&#39;&#39;}</code>这样的情况，首先我们<code>0</code>做first，然后在后面的0里变找剩下两个元素，设置两个指针low指向<code>0&#39;</code>，high指向<code>0&#39;&#39;&#39;&#39;</code>，我们比较他们3个的和，如果<0，我们把`low++`，如果大于0，我们把`high--`，如果等于0，我们就找到了我们要的三元组，于是把它加入结果列表中，此时我们去判断，`low的右边`有没有和它一样的元素，有的话`low++`右移，同时，我们去看`high的左边`有没有和它相同的元素，有的话，`high--`，直到`low>=high`或者遇到不相同的元素，结束本次操作。</0，我们把`low++`，如果大于0，我们把`high--`，如果等于0，我们就找到了我们要的三元组，于是把它加入结果列表中，此时我们去判断，`low的右边`有没有和它一样的元素，有的话`low++`右移，同时，我们去看`high的左边`有没有和它相同的元素，有的话，`high--`，直到`low></p>
+<p><strong>代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum2(<span class="keyword">int</span>[] nums)&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length &lt; <span class="number">3</span>) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; three = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Arrays.sort(nums);<span class="comment">//排序</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">2</span>; i++)&#123;</span><br><span class="line">            <span class="comment">//优化1：最小的3个相加&gt;0 就不用考虑后面的了，没有解了。</span></span><br><span class="line">            <span class="keyword">if</span>(nums[i] + nums[i + <span class="number">1</span>]+ nums[i + <span class="number">2</span>] &gt; <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//最小的加上俩最大的，都小于0，这个小的不考虑了。</span></span><br><span class="line">            <span class="keyword">if</span>(nums[i] + nums[nums.length - <span class="number">1</span>] + nums[nums.length - <span class="number">2</span>] &lt; <span class="number">0</span>)<span class="keyword">continue</span>;</span><br><span class="line">            <span class="comment">//这个数字与前一个重复，它在上一轮被考虑过了，这次就不考虑它。</span></span><br><span class="line">            <span class="keyword">if</span>(i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i - <span class="number">1</span>])<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">int</span> low = i + <span class="number">1</span>, high = nums.length - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(low &lt; high)&#123;</span><br><span class="line">                count++;</span><br><span class="line">                <span class="keyword">int</span> sum = nums[i] + nums[low] + nums[high];</span><br><span class="line">                <span class="keyword">if</span>(sum == <span class="number">0</span>)&#123;</span><br><span class="line">                    three.add(Arrays.asList(nums[i],nums[low],nums[high]));</span><br><span class="line">                    <span class="keyword">while</span>(low &lt; high &amp;&amp; nums[low] == nums[low + <span class="number">1</span>]) low ++;</span><br><span class="line">                    <span class="keyword">while</span>(low &lt; high &amp;&amp; nums[high] == nums[high - <span class="number">1</span>]) high --;</span><br><span class="line">                    low ++;</span><br><span class="line">                    high --;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(sum &lt; <span class="number">0</span>) low ++;</span><br><span class="line">                <span class="keyword">else</span> high --;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"count:"</span> + count);</span><br><span class="line">        <span class="keyword">return</span> three;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">&#123;0,0,0,0,1,1,2,2&#125;</span><br><span class="line">输出：</span><br><span class="line">count:5</span><br><span class="line">0 0 0</span><br></pre></td></tr></table></figure></p>
+<p>复杂度分析：</p>
+<blockquote>
+<p>时间复杂度：$O(n^2)$<br>空间复杂度：$O(1)$</p>
+</blockquote>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月15日 15:50</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/15/leetcode-15/" title="【LeetCode】15. 三数之和">/2019/10/15/leetcode-15/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/15/leetcode-15/&title=《【LeetCode】15. 三数之和》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/19.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/15/leetcode-15/&title=《【LeetCode】15. 三数之和》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/15/leetcode-15/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【LeetCode】15. 三数之和》 — Fishwinwin&url=/2019/10/15/leetcode-15/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/15/leetcode-15/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/15/leetcode-15/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/数组/" class="color3">数组</a>
+      
+    <a href="/tags/双指针/" class="color4">双指针</a>
+      
+    <a href="/tags/LeetCode/" class="color4">LeetCode</a>
+      
+    <a href="/tags/中等/" class="color3">中等</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#15-三数之和"><span class="post-toc-text">15.三数之和</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-text">题解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分析"><span class="post-toc-text">分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#解法1-延伸的两数之和-Map-Set大法"><span class="post-toc-text">解法1 - 延伸的两数之和(Map+Set大法)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#解法2-对解法1的优化"><span class="post-toc-text">解法2 - 对解法1的优化</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#解法3-双指针"><span class="post-toc-text">解法3 - 双指针</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/15/leetcode-16/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【LeetCode】16.最接近的三数之和
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/14/DL-note-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【DL】学习笔记(持续更新)</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

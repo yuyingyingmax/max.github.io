@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Neural Relation Extraction with Selective Attention over Instances | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要为解决远程监督关系抽取中的wrong label问题，提出句子级基于注意力的模型。模型中，使用CNN来嵌入句子的语义。之后在多个实例上建立句子级别的注意力，有望动态减少噪声实例的权重。在真实数据集上的结果表明，该模型可以充分利用所有有效的句子并有效减少错误标记实例的影响。与基线相比，该模型在关系提取方面实现了显著且一致的改进。 代码在这里：https://github.com/thunlp/N">
+<meta name="keywords" content="笔记,论文,NLP,关系抽取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Neural Relation Extraction with Selective Attention over Instances">
+<meta property="og:url" content="/2019/10/26/Lin-2016-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要为解决远程监督关系抽取中的wrong label问题，提出句子级基于注意力的模型。模型中，使用CNN来嵌入句子的语义。之后在多个实例上建立句子级别的注意力，有望动态减少噪声实例的权重。在真实数据集上的结果表明，该模型可以充分利用所有有效的句子并有效减少错误标记实例的影响。与基线相比，该模型在关系提取方面实现了显著且一致的改进。 代码在这里：https://github.com/thunlp/N">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/10/26/Lin-2016-note/1.png">
+<meta property="og:image" content="/2019/10/26/Lin-2016-note/2.png">
+<meta property="og:image" content="/2019/10/26/Lin-2016-note/3.png">
+<meta property="og:image" content="/2019/10/26/Lin-2016-note/4.png">
+<meta property="og:image" content="/2019/10/26/Lin-2016-note/5.png">
+<meta property="og:image" content="/2019/10/26/Lin-2016-note/6.png">
+<meta property="og:image" content="/2019/10/26/Lin-2016-note/7.png">
+<meta property="og:image" content="/2019/10/26/Lin-2016-note/8.png">
+<meta property="og:updated_time" content="2019-10-28T03:41:20.685Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Neural Relation Extraction with Selective Attention over Instances">
+<meta name="twitter:description" content="摘要为解决远程监督关系抽取中的wrong label问题，提出句子级基于注意力的模型。模型中，使用CNN来嵌入句子的语义。之后在多个实例上建立句子级别的注意力，有望动态减少噪声实例的权重。在真实数据集上的结果表明，该模型可以充分利用所有有效的句子并有效减少错误标记实例的影响。与基线相比，该模型在关系提取方面实现了显著且一致的改进。 代码在这里：https://github.com/thunlp/N">
+<meta name="twitter:image" content="/2019/10/26/Lin-2016-note/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Lin-2016-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Neural Relation Extraction with Selective Attention over Instances
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-26
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>为解决远程监督关系抽取中的wrong label问题，提出句子级基于注意力的模型。模型中，使用CNN来嵌入句子的语义。之后在多个实例上建立句子级别的注意力，有望动态减少噪声实例的权重。在真实数据集上的结果表明，该模型可以充分利用所有有效的句子并有效减少错误标记实例的影响。与基线相比，该模型在关系提取方面实现了显著且一致的改进。</p>
+<p>代码在这里：<a href="https://github.com/thunlp/NRE" target="_blank" rel="noopener">https://github.com/thunlp/NRE</a></p>
+<h2 id="结论和未来工作"><a href="#结论和未来工作" class="headerlink" title="结论和未来工作"></a>结论和未来工作</h2><p>开发了具有句子级别的注意力的CNN。模型可以充分利用有效的句子，减轻了远程监督关系抽取中wrong label问题。在实验中，我们评估了关系抽取任务的模型，实验结果表明，我们的模型显著且始终优于最新的基于特征的方法和神经网络方法。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>关系抽取是从纯文本中生成关系数据的过程，是NLP中的关键任务。</p>
+<p>之前的方法（远程监督mintz-&gt;多实例多标签, 用神经网络的），这些方法基于句子级别的注释数据构建分类器，由于缺少人工标注的训练数据，因此无法在大规模知识库中应用。因此Zeng（2015）将多实例学习和神经网络模型结合，可以基于远程监督数据构建关系提取器。</p>
+<p>尽管该方法在关系抽取方面取得了显著改进，但远不能令人满意。该方法假定至少一个提到这两个实体的句子将表答他们的关系，并且仅在训练和预测中为每个实体对选择可能性最高的句子。显然该方法将丢失大量包含在被忽略句子中的丰富信息。</p>
+<p><strong>本文提出句子级别的基于注意力的CNN，用于远程监督关系抽取。</strong></p>
+<p>如图1，我们使用CNN来嵌入句子的语义。随后，为了利用包含信息的句子，我们将关系表示为句子嵌入的语义组成。为了解决wrong label问题，我们在多实例上建立了句子级别的注意力机制，这有望动态减少噪声的权重。最后，利用句子级别attention加权的关系向量抽取关系。我们在真实数据集上评估模型，实验结果表明，与最新方法相比，模型在关系抽取方面实现了显著且一致的改进。</p>
+<p><div><br> <img src="/2019/10/26/Lin-2016-note/1.png" title="figure 1"></div></p>
+<div>
+
+<p>论文贡献如下：</p>
+<ul>
+<li>与现有神经关系抽取模型相比，我们的模型可以<strong>充分利用每个实体对的所有包含信息的句子</strong></li>
+<li>为了解决wrong label问题，我们提出选择性的注意力机制来淡化噪声实例。</li>
+<li>实验中，我们表明选择性注意力机制在关系抽取任务中对两种CNN模型有利。</li>
+</ul>
+<h2 id="研究方法"><a href="#研究方法" class="headerlink" title="研究方法"></a>研究方法</h2><p>给定一组句子$\{x_1,x_2,\cdots,x_n\}$和两个相应实体，模型评估每个关系$r$的概率。这一部分从两个主要方面介绍模型：</p>
+<ol>
+<li><strong>句子编码器（Sentence Encoder）</strong>：给定句子$x$个两个目标实体，CNN用来构造句子的分布式表示$\bf x$.</li>
+<li><strong>实例的选择性注意机制（Selective Attention over Instances)</strong>。当学习了所有句子的分布式向量表示，我们使用句子级别的attention来选择真正表达相应关系的句子。</li>
+</ol>
+<h3 id="句子编码器-Sentence-Encoder"><a href="#句子编码器-Sentence-Encoder" class="headerlink" title="句子编码器 Sentence Encoder"></a>句子编码器 Sentence Encoder</h3><p>如图2，我们将句子$x$通过CNN转换成分布式表示$\bf x$。首先，句子中的单词被转换成密集的实值向量。然后，卷积层，最大值池化层和非线性转换层用来构建句子的分布式表示，例如$\bf x$。</p>
+<p><div><br> <img src="/2019/10/26/Lin-2016-note/2.png" title="figure 2"></div></p>
+<div>
+
+<h4 id="输入表示"><a href="#输入表示" class="headerlink" title="输入表示"></a>输入表示</h4><p>CNN的输入是句子$x$的原始单词。</p>
+<p><strong>首先将单词转换为低维向量</strong>。这里每个输入单词通过<code>word embedding</code>矩阵转换为向量。此外,为了明确每个实体对的位置，我们也为句子中的所有单词使用了<code>position embedding</code>。</p>
+<p><strong>Word Embeddings</strong>.将单词转换为分布式表示，其能捕获句法和语义信息。给定包含$m$个单词的句子$x$，每个单词都被表示成实值向量。单词表示通过embedding矩阵中的列向量$\bf V$编码，$\bf V$是固定大小的词汇表。</p>
+<p><strong>Position Embeddings</strong>。关系抽取中，离目标实体近的单词通常有助于确定实体间的关系。沿用(Zeng,2014)的方法使用<code>position embeddings</code>，<strong>它能帮助CNN跟踪每个单词与头部实体或尾部实体的接近程度</strong>。它定义为当前单词到头或尾实体的相对距离的组合。</p>
+<p>如图2，假定<code>word embedding</code>的维数$d^a$是3，<code>position embedding</code>的维数$d^b$是1。最终将所有单词的<code>word embeddings</code>和<code>position embeddings</code>串联起来，并将其表示为向量序列$\bf w = \{w_1,w_2,\cdots,w_m\}$，其中$\bf w_i \in \Bbb R^d \it (d= d^a+d^b \times 2)$</p>
+<h4 id="卷积层，最大池化层和非线性层"><a href="#卷积层，最大池化层和非线性层" class="headerlink" title="卷积层，最大池化层和非线性层"></a>卷积层，最大池化层和非线性层</h4><p>关系抽取中，主要存在的挑战就是句子长度可变，且重要信息可能会出现在句子的任何位置。因此我们应该利用所有局部特征并全局地执行关系预测。</p>
+<p>这里用卷积层合并这些特征。</p>
+<p>卷积层首先用长度为$l$的滑动窗口在句子上抽取局部特征。图2的例子中，假设滑动窗口长度$l$是3。然后，通过最大值池化操作来结合所有局部特征，以获得输入句子对应的固定大小的向量。</p>
+<p>卷积被定义为向量序列$\bf w$和卷积矩阵$\bf W \in \Bbb R^{d^c \times (l \times d)}$，其中$d^c$是句子的embedding大小。定义$qi \in \Bbb R^{l \times d}$为第ige窗口内$w$单词嵌入序列的串联：</p>
+<p>$\bf q_i = w_{\it i-l+1:i} \qquad \text{$1 \leq i \leq m+l-1$} \tag{1}$</p>
+<p>由于窗口在滑动到边界附近可能会在句子边界之外，因此我们为句子设置了特殊的padding标记。我们将所有超出范围的输入向量$w_i(i<1 \qquad i>m)$作为零向量。</1></p>
+<p>因此，卷积层的第i个过滤器计算为：</p>
+<p>$\bf p_i = [W_q + b]_i \tag{2}$</p>
+<p>其中$\bf b$是偏置向量。向量$\bf x \in \Bbb R^{d^c}$的第i个元素如下：</p>
+<p>$[\bf x]_i = max(p_i) \tag{3}$</p>
+<p>此外，PCNN（Zeng，2015）作为CNN的变体，在关系抽取中采用分段最大池化。每个卷积过滤器$\bf p_i$通过首部和尾部的实体被划分为3个部分（$\bf p_i1,p_i2,p_i3 $），最大池化处理分别在3个部分中执行。</p>
+<p>最后，我们在输出端使用非线性方程，例如<code>tanh</code>。</p>
+<h3 id="实例的选择性注意机制（Selective-Attention-over-Instances"><a href="#实例的选择性注意机制（Selective-Attention-over-Instances" class="headerlink" title="实例的选择性注意机制（Selective Attention over Instances)"></a>实例的选择性注意机制（Selective Attention over Instances)</h3><p>引入attention机制，给不同的语料赋予不同的权重，隐式地摒弃一些噪声语料，以此提升分类器的性能。</p>
+<p>给包含某一实体及其关系的所有句子都分配权重，这个权重的大小代表着我们是否可以认为该句子包含着该种关系。</p>
+<p>给定包含一对实体和n个句子的集合$S = \{x_1,x_2,\cdots,x_n\}$,在预测关系$\bf r$时，模型将集合$S$表示为实值向量$\bf s$。集合$S$的表示取决于所有句子表示$\bf x_1,x_2,\cdots,x_n$。每个句子表示$\bf x_i$包含了这样的信息，实体对(<em>head，tail</em>)是否包含句子$x_i$的关系$r$。</p>
+<p>集合向量$s$计算为这些句子向量$\bf x_i$的加权和：</p>
+<p>$\bf s = \sum_{i}{\alpha_ix_i} \tag{5}$</p>
+<p>其中$\alpha_i$是每个句子向量$x_i$的权重。</p>
+<p>本文以两种方式定义$\alpha_i$:</p>
+<p><strong>平均值</strong>：假设集合中所有句子对集合表示都有相同贡献，那么集合S的embedding就是所有句子向量的平均值。这是我们attentino的最初基线。</p>
+<p><strong>Selective Attention</strong>：使用均值的话，wrong label的句子会在训练和测试中引入大量噪声，因此使用注意力机制来减小噪声句子的影响。因此$\alpha_i$定义为：</p>
+<p><div><br> <img src="/2019/10/26/Lin-2016-note/3.png" title="公式7"></div></p>
+<div>
+
+<p>其中$e_i$称为基于查询的函数，可以对输入句子$x_i$和预测关系关系$r$的匹配程度进行评分。我们选择双线性的形式，该形式在不哦那个的选择中均能达到最佳性能。</p>
+<p>$e_i = \bf x_iAr \tag{8}$</p>
+<p>其中$\bf A$是加权对角矩阵，$\bf r$是与关系$r$相关联的查询向量，指示关系$r$的表示。显然$e$的大小取决于$x$在$r$上的映射的大小。与该实体关系更加密切的句子可以取得更大的取值。</p>
+<p>最后，通过softmax层定义条件概率$p(r|S,\theta)$,那么所要最大化的的就是的就是在网络参数下某实体关系的概率：</p>
+<p><div><br> <img src="/2019/10/26/Lin-2016-note/4.png" title="公式9"></div></p>
+<div>
+
+<p>其中$n_r$是关系总数，$\bf o$是神经网络最后的输出，它对应于与所有关系类型相关的分数，定义如下：</p>
+<p>$\bf o = Ms + d \tag{10}$</p>
+<p>其中$d$是偏置向量，$\bf M$是关系的表示矩阵。</p>
+<p>（Zeng，2015）遵循这样的假设，即一对实体至少有一个提及将反映它们之间的关系，并且仅使用每组中概率最高的句子进行训练。 因此，当将概率最高的句子的权重设置为1并将其他概率设置为0时，他们在多实例学习中采用的方法可以被视为我们的选择性注意力特例。</p>
+<p>选取交叉熵函数并利用随机梯度下降进行优化最后便可以学得网络的所有参数：</p>
+<p><div><br> <img src="/2019/10/26/Lin-2016-note/5.png" title="公式11"></div></p>
+<div>
+
+<h2 id="模型分析"><a href="#模型分析" class="headerlink" title="模型分析"></a>模型分析</h2><h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><p><div><br> <img src="/2019/10/26/Lin-2016-note/6.png" title="实验结果1"></div></p>
+<div>
+
+<p>从上面两张图可以看出 </p>
+<ul>
+<li>ONE模型（at-least-one multi-instance,每次只选取最后可能的一个句子进行训练和预测）效果要优于裸CNN模型，证明了过滤掉噪音语料是有效的； </li>
+<li>AVE模型（sentence-level attention’s naive version）效果优于裸CNN模型，证明了减弱噪音语料是有效的； </li>
+<li>而AVE模型和ONE模型的效果接近，因为对噪音语料的处理都不是十分恰当； </li>
+<li>实验也证明了文章对于噪音语料处理的有效性。</li>
+</ul>
+<h3 id="句子数目"><a href="#句子数目" class="headerlink" title="句子数目"></a>句子数目</h3><p>使用CNN/PCNN+ONE,CNN/PCNN+AVE和CNN/PCNN+ATT三种模型在所有句子上训练，然后在每个实体对对应２个以上句子的实例中进行测试，分别使用随机选取１个句子，随机选取２个句子和选取所有句子的方式进行测试。</p>
+<p><div><br> <img src="/2019/10/26/Lin-2016-note/7.png" title="实验结果2"></div></p>
+<div>
+
+<p>从上图可以看出 </p>
+<ul>
+<li>搭载ATT的模型在所有实验条件下都表现最好； </li>
+<li>随机选取一个句子测试时，搭载AVE的模型和搭载ATT的模型性能接近，但当选取句子数目上升时，搭载AVE的模型的性能不再增加，说明将每个句子等同对待时，噪音语料会对关系提取有负面影响； </li>
+<li>在选取一个句子做预测时，CNN+AVE和CNN+ATT的模型的性能明显优于CNN+ONE，由于这只跟训练有关，说明尽管一些噪音语料会带来负面影响，但训练时考虑的语料越多，总的来说，还是对关系提取有帮助的； </li>
+<li>搭载ATT的模型要明显优于其余2种模型，说明当考虑的语料越多的同时，考虑的语料的质量越高，对关系提取的帮助越大。</li>
+</ul>
+<h3 id="对比人工提取特征的方法"><a href="#对比人工提取特征的方法" class="headerlink" title="对比人工提取特征的方法"></a>对比人工提取特征的方法</h3><p><div><br> <img src="/2019/10/26/Lin-2016-note/8.png" title="实验结果3"></div></p>
+<div>
+
+<p>从上图可以看出 </p>
+<ul>
+<li>基于attention机制的神经网络模型要明显优于手工提取特征的方法，不仅性能曲线整体更高，同时，下降得也更平缓； </li>
+<li>同为使用神经网络的模型，PCNN+ATT要明显优于CNN+ATT，这说明attention机制只考虑了全局的句子层面的信息，而没有考虑到句子内部的信息，也就是说还可以通过使用更为强劲的句子编码神经网络获得更好的句子内信息，以此来提高关系提取的性能。</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇文章的思路十分简洁，面对误标签传播的问题，引入attention来评价句子的贡献度是一种十分自然而舒服的思路。注意力模型之前在很多自然语言处理场景中都得到了很好的应用，那么显然在关系抽取中也可以取得相应的效果。这篇文章的想法对于以后的工作会有很多的借鉴意义。</p>
+<blockquote>
+<p>是否可以将Attention机制和其他的神经网络结合？</p>
+</blockquote>
+</div></div></div></div></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月28日 11:41</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/26/Lin-2016-note/" title="【论文笔记】Neural Relation Extraction with Selective Attention over Instances">/2019/10/26/Lin-2016-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/26/Lin-2016-note/&title=《【论文笔记】Neural Relation Extraction with Selective Attention over Instances》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/42.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/26/Lin-2016-note/&title=《【论文笔记】Neural Relation Extraction with Selective Attention over Instances》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/26/Lin-2016-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Neural Relation Extraction with Selective Attention over Instances》 — Fishwinwin&url=/2019/10/26/Lin-2016-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/26/Lin-2016-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/26/Lin-2016-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论和未来工作"><span class="post-toc-text">结论和未来工作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#研究方法"><span class="post-toc-text">研究方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#句子编码器-Sentence-Encoder"><span class="post-toc-text">句子编码器 Sentence Encoder</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#输入表示"><span class="post-toc-text">输入表示</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#卷积层，最大池化层和非线性层"><span class="post-toc-text">卷积层，最大池化层和非线性层</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实例的选择性注意机制（Selective-Attention-over-Instances"><span class="post-toc-text">实例的选择性注意机制（Selective Attention over Instances)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模型分析"><span class="post-toc-text">模型分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Attention"><span class="post-toc-text">Attention</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#句子数目"><span class="post-toc-text">句子数目</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#对比人工提取特征的方法"><span class="post-toc-text">对比人工提取特征的方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-text">小结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/28/sentence-level-attention-entity-description-2017-note/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【论文笔记】Distant Supervision for Relation Extraction with Sentence-Level Attention and Entity Descriptions
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/26/leetcode-209/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【LeetCode】209.长度最小的子数组</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

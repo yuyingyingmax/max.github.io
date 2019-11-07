@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要使用远程监督进行关系抽取时存在2个问题。 1.wrong label 问题 2.NLP工具带来的误差传递问题 本文提出分段卷积神经网络(PCNNs)和多实例学习来解决这两个问题。 对于第一个问题，远程监督关系抽取被当做多分类问题，其中考虑了实例标签的不确定性。 对于第二个问题，避免了特征工程，采用具有分段max pooling的卷积架构自动学习相关特征。 实验证明，该方法优于很多竞争性的基线方">
+<meta name="keywords" content="笔记,论文,NLP,关系抽取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks">
+<meta property="og:url" content="/2019/10/22/Zeng-2015-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要使用远程监督进行关系抽取时存在2个问题。 1.wrong label 问题 2.NLP工具带来的误差传递问题 本文提出分段卷积神经网络(PCNNs)和多实例学习来解决这两个问题。 对于第一个问题，远程监督关系抽取被当做多分类问题，其中考虑了实例标签的不确定性。 对于第二个问题，避免了特征工程，采用具有分段max pooling的卷积架构自动学习相关特征。 实验证明，该方法优于很多竞争性的基线方">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/10/22/Zeng-2015-note/1.png">
+<meta property="og:image" content="/2019/10/22/Zeng-2015-note/2.png">
+<meta property="og:image" content="/2019/10/22/Zeng-2015-note/3.png">
+<meta property="og:image" content="/2019/10/22/Zeng-2015-note/4.png">
+<meta property="og:image" content="/2019/10/22/Zeng-2015-note/5.png">
+<meta property="og:image" content="/2019/10/22/Zeng-2015-note/6.png">
+<meta property="og:updated_time" content="2019-10-26T10:58:51.480Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks">
+<meta name="twitter:description" content="摘要使用远程监督进行关系抽取时存在2个问题。 1.wrong label 问题 2.NLP工具带来的误差传递问题 本文提出分段卷积神经网络(PCNNs)和多实例学习来解决这两个问题。 对于第一个问题，远程监督关系抽取被当做多分类问题，其中考虑了实例标签的不确定性。 对于第二个问题，避免了特征工程，采用具有分段max pooling的卷积架构自动学习相关特征。 实验证明，该方法优于很多竞争性的基线方">
+<meta name="twitter:image" content="/2019/10/22/Zeng-2015-note/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Zeng-2015-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-22
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>使用远程监督进行关系抽取时存在2个问题。</p>
+<p>1.wrong label 问题</p>
+<p>2.NLP工具带来的误差传递问题</p>
+<p>本文提出<strong>分段卷积神经网络(PCNNs)和多实例学习</strong>来解决这两个问题。</p>
+<p>对于第一个问题，远程监督关系抽取被当做多分类问题，其中考虑了实例标签的不确定性。</p>
+<p>对于第二个问题，避免了特征工程，采用具有分段max pooling的卷积架构自动学习相关特征。</p>
+<p>实验证明，该方法优于很多竞争性的基线方法，且是有效的。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>本文提出的方法，特征能够自动学习无需NLP预处理。成功地在提出的网络中配置了分段最大池化层(max pooling)来捕获结构信息并且结合多实例学习来解决wrong label问题。实验结果证明提出的方法在比较的方法中有重要的改进。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>关系抽取中，构建机器学习系统面临的一个问题就是<strong>生成训练数据</strong>，这个问题的常用解决方法是<strong>远程监督</strong>（Mintz提出），远程监督假设：在已知的知识库中，如果两个实体存在关系，那么所有提到这两个实体的句子都已某种方式表达了这个关系。</p>
+<p>图1是通过远程监督自动打标签的例子。其中第二个句子就没表达这个relation。</p>
+<p><div><br> <img src="/2019/10/22/Zeng-2015-note/1.png" title="figure 1"></div></p>
+<div>
+
+<p>远程监督用在关系抽取中，也存在两个问题。</p>
+<p>1.远程监督的假设太强了，造成了wrong label问题。</p>
+<p>2.Mintz、Riedel、Hoffman等人提出的方法通过远程监督获取标记数据时使用监督模型来精心设计特征。这些特征来自已有的NLP工具，由于工具总是存在误差，所以存在误差传播问题。</p>
+<p>远程监督从Web获取语料，包括非结构文本。图2展示了句子长度的分布。（benchmark远程监督数据集）。超过一半的句子都超过40个词。McDonald和Nivre提出，句法解析的准确率随着句子长度的增长而显著降低。因此，使用传统特征时，误差传播或积累的问题不仅存在，还会变得更严重。</p>
+<p><div><br> <img src="/2019/10/22/Zeng-2015-note/2.png" title="figure 2"></div></p>
+<div>
+
+<p>本文提出了新模型，叫做PCNNs和多实例学习，来解决上面描述的这俩问题。</p>
+<p>对于第1个问题，远程监督关系抽取被当做多分类问题，和之前的研究相似(Riedel、Hoffman、Surdeanu）。<br>在多分类问题中训练集被当做很多<code>bag</code>，每个bag有很多实例。bag的标签已知，bag中的实例的标签未知。我们设计了bag级的目标函数。在学习过程中，实例标签的不确定性会被考虑。这样缓解了wrong label问题。</p>
+<p>对于第二个问题，我们使用卷积架构来自动学习相关特征，无需复杂的NLP预处理。该方法是对Zeng(2014)提出方法的扩展（自己改进自己~），之前的方法利用<code>单个max pooling</code>操作来定义最重要的特征。尽管这个方法有效，但它过快地缩小了隐藏层的大小，不能捕获两个实体间的结构信息(Graham，2014）.</p>
+<p>例如，要定义<em>Steve Jobs</em> 和 <em>Apple</em>的关系，需要指明实体并提取他们之间的结构特征。有几种方法采用了人工创建特征来为结构信息建模。这些方法通常考虑内部和外部的上下文。根据两个给定实体，句子被固定地划分为3个部分。内部上下文考虑两个实体之间的字符，外部上下文包括2个实体周围的字符(Zhang,2006).<strong>显然，单个 max pooling不足以捕捉这样的结构信息。</strong></p>
+<p><strong>为了捕捉结构和其他潜在信息，基于两个实体的位置将卷积的结果分成3段，并且设计出分段的max pooling层取代单个max pooling层。分段max pooling返回每个segment的最大值而不是整个句子的单一最大值。</strong>因此期望比传统方法表现更佳。</p>
+<p>本文贡献如下：</p>
+<ul>
+<li>探讨了在不需要设计特征的情况下进行远程监督关系抽取的可行性。PCNNs不需要复杂的NLP预处理就可以自动学习特征。</li>
+<li>为了解决wrong label问题，开发了创新的解决方案，将多实例学习融入PCNNs中，用于远程监督关系抽取。</li>
+<li>在该网络中，我们涉及了一个分段最大池化层，其目的是捕获两个实体之间的结构信息。</li>
+</ul>
+<h2 id="研究方法"><a href="#研究方法" class="headerlink" title="研究方法"></a>研究方法</h2><p>远程监督关系抽取是一个多实例问题。在这一部分，我们提出将多实例学习融入卷积神经网络中来解决这个问题。PCNNs 用来自动学习特征。</p>
+<p>图3展示了远程监督关系抽取的神经网络结构。解释了处理一个<code>bag</code>中一个实例的过程。该过程包括4个主要的部分：</p>
+<ol>
+<li>向量表示(Vector Representation)</li>
+<li>卷积</li>
+<li>分段最大值池化</li>
+<li>Softmax输出</li>
+</ol>
+<p>接下来详细解释这4个部分。</p>
+<p><div class="image-size-100"><br> <img src="/2019/10/22/Zeng-2015-note/3.png" title="figure 3"></div></p>
+<div>
+
+<h3 id="向量表示"><a href="#向量表示" class="headerlink" title="向量表示"></a>向量表示</h3><p>网络的输入是原始单词标记。使用神经网络时，我们通常将单词标记转换为低维向量。在我们的方法中，通过查询预训练的词嵌入，将每个输入的单词标记转换成一个向量。此外，我们使用位置特征（PFs）来指定实体对，这也是通过查询位置嵌入(position embeddings)进行的。</p>
+<h4 id="词嵌入"><a href="#词嵌入" class="headerlink" title="词嵌入"></a>词嵌入</h4><p>词嵌入是单词的分布式表示，它将文本中的每个单词映射为<code>k维</code>的实值向量。在捕捉单词的语义和语法信息上十分有效。使用预先训练好的词嵌入已经成为解决其他NLP问题的常用方法(Parikh,2014;Huang,2014).</p>
+<p>训练神经网络的通常方法是随机初始化所有参数，然后再通过优化算法来优化它们。最近的研究（Erhan，2010）表明，使用词嵌入初始化时，神经网络可以收敛到更好的局部极小值。词嵌入通常是通过利用未标记文本中单词的共现结构，以完全无监督的方式学习的。研究人员已经提出一些训练词嵌入的方法（Bengio，2003；Collobert，2011；Mikolov，2013）,本文使用<code>Skip-gram</code>模型（Mikolov，2013）来训练词嵌入。</p>
+<h4 id="位置嵌入"><a href="#位置嵌入" class="headerlink" title="位置嵌入"></a>位置嵌入</h4><p>在关系抽取中，我们专注于为实体对打标签。和Zeng（2014）相似，我们使用<code>PFs</code>来指定实体对。一个<code>PF</code>被定义为当前单词与$e_1$和$e_2$的相对距离的组合。</p>
+<p>举例来讲，<code>son</code>和$e_1$(<em>Kojo Annan</em>）与$e_2$(<em>Kofi Annan</em>)的相对距离分别是<code>3</code>和<code>-2</code>。</p>
+<p><div><br> <img src="/2019/10/22/Zeng-2015-note/4.png" title="example for PF"></div></p>
+<div>
+
+<p>两个位置嵌入矩阵（$PF_1$和$PF_2$）是随机初始化的。然后通过查找位置嵌入矩阵将相对距离转换成实值向量。在图3的例子中，假设词嵌入的大小是$d_w = 4$，位置嵌入的大小是$d_p = 1$.在组合的词嵌入和位置嵌入中，向量表示部分将实例转换成矩阵 $S \in \Bbb R^{s \times d}$,其中$s$是句子长度，$d = d_w + d_p \times 2$;然后矩阵<em>S</em>就作为卷积部分的输入。</p>
+<h3 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h3><p>在关系抽取中，标记为包含目标实体的输入句子仅对应于关系类型。它不会为每个单词预测标签。因此，可能有必要利用所有局部特征并全局地执行此预测。当使用神经网络时，卷积方法是很自然地用来合并所有特征的方法(Collobert,2011)。</p>
+<p>卷积是一个在权重向量$\bf w$和输入向量之间的操作，输入向量被当做一个序列$\bf q$。权重向量$\bf w$被当做卷积的过滤器。在图3的例子中，假设过滤器的长度是$w(w=3)$；因此，$\bf w$ $\in \Bbb R^m$  $(m = w*d)$。我们认为$\bf S$是一个序列$\{\bf q_1,q_2,\cdots,q_s\}$，其中$\bf q_i$ $\in \Bbb R^d$。通常$\bf q_{i:j}$指的是$\bf q_i$到$\bf q_j$的串联。卷积操作涉及对序列$\bf q$中的每个$w$-gram取$\bf w$的点积，以获得另一个序列$\bf c$ $\in \Bbb R^{s+w-1}$:<br>$c_j = \bf wq_{\it j-w+1:j} \tag{1}$</p>
+<p>其中索引$j$的范围从1到$s+w-1$,超出范围的输入值$\bf q_i$取0，其中$i<1$或$i>s$。</1$或$i></p>
+<p>捕获不同特征通常需要在卷积中使用多个过滤器（或特征映射）。在该假设下，我们使用$n$个过滤器（$\bf W = \{ w_1,w_2,\cdots.w_n\}$),卷积操作可以表达如下：<br>$c_ij = \bf w_i q_{i-w+1:j} \qquad \text{$1 \leq i \leq n$} \tag{2}$ </p>
+<p>卷积后的结果是矩阵$\bf C = \{c_1,c_2,\cdots,c_n\} \in \Bbb R^{\it n \times (s+w-1)}$ .</p>
+<p>图3是使用3个过滤器进行卷积过程的例子。</p>
+<h3 id="分段最大值池化"><a href="#分段最大值池化" class="headerlink" title="分段最大值池化"></a>分段最大值池化</h3><p>卷积输出矩阵$\bf C$（$\bf C \in \Bbb R^{\it n \times (s + w -1}$）的大小取决于输入网络中的句子里标记$s$的数量。<strong>为了应用后续的层，必须将卷积层抽取的特征进行组合，以使其与句子长度无关</strong>。在传统卷积神经网络(CNNs)中，最大值池化操作通常用于此目的（Collobert,2011;Zeng,2014）。这种类型的池化方案自然可以解决可变句子的长度问题。该想法是捕获每个特征映射中最重要的特征（最大值）。</p>
+<p>然而，尽管最大值池化的使用非常广泛，但此方法不足以进行关系抽取。如第一部分所述，单个最大值池化会过快地减小隐藏层地大小，并且过于粗糙，无法捕获用于关系提取的细粒度特征。此外，单个最大值池化不足以捕捉两个实体之间的结构信息。在关系抽取中，输入的句子能够根据2个被选择的实体被划分为3个部分。因此，我们提出分段最大值池化过程，该过程将返回每个segment的最大值而不是单个最大值。如图3所示，每个卷积过滤器$c_i$的输出，通过<em>Kojo Annan</em>和<em>Kofi Annan</em>被划分为3个部分$\{c_i1,c_i2,c_i3\}$。分段最大值池化过程表达如下：</p>
+<p>$p_ij = max(\bf c_ij) \qquad \text{$1 \leq i \leq n, 1 \leq j \leq 3$} \tag{3}$</p>
+<p>对于每个卷积过滤器的输出，能够得到一个3维向量$\bf p_i = \it \{p_i1,p_i2,p_i3\}$。然后串联所有向量$\bf p_{1:n}$，使用非线性方程，例如双曲正切（tanh）。最后，分段最大值池化处理输出一个向量：<br>$\bf g = \it tanh(\bf p_{1:n}\it) \tag{4}$<br>其中$\bf g \in \Bbb R ^{\it 3n}$,$\bf g$的大小是固定的，并且不再与句子长度相关。</p>
+<h3 id="Softmax输出"><a href="#Softmax输出" class="headerlink" title="Softmax输出"></a>Softmax输出</h3><p>为计算每个关系的置信度，将特征向量$\bf g$输入softmax分类器。</p>
+<p>$\bf o = W_1g + \it b \tag{5}$</p>
+<p>$\bf W_1 \in \Bbb R ^{n_1 \times 3n}$是转换矩阵，$\bf o \in \Bbb R^{n_1}$是网络最终的输出，其中$n_1$等于关系抽取系统中可能的关系类型的数量。</p>
+<p>我们在倒数第二层使用dropout进行正则化。Dropout 通过在正向计算的过程中让隐藏层的节点以$p$的概率不工作，来防止共适应(co-adaptation)。首先在$\bf g$上使用掩蔽(masking)操作($\bf g \circ r$)，其中$r$是概率为p的伯努利随机变量的向量。等式(5)变为：<br>$\bf o = W1(g \circ r) + b \tag{6}$</p>
+<p>然后每个输出都可以被解释为对应关系的置信度得分。通过应用softmax操作，可以将此分数解释为条件概率（下一节）。在测试的过程中，学习的权重向量通过$p$进行缩放，以使$\hat{W_1} = pW_1$，并用于（没有dropout）对未见的实例进行评分。</p>
+<h3 id="多实例学习"><a href="#多实例学习" class="headerlink" title="多实例学习"></a>多实例学习</h3><p>我们在PCNNs上使用多实例学习，缓和wrong label问题。基于PCNN的关系提取可以表示为五元组$\theta = (\bf E,PF_1,PF_2,W,W_1)^2$。</p>
+<p>网络的输入是一个bag。假设有$T$个bag$\{M_1,M_2,\cdots,M_T\}$,第i个bag包含$q_i$个实例$M_i = \{ m_{i}^{1}, m_{i}^{2}, \cdots, m_{i}^{q_i} \}$。多实例学习的目的是预测看不见的bag的标签。本文中认为一个bag中的所有实例都是独立的。给定输入实例$m_i^j$，参数为$\theta$的网络输出向量$\bf o$,其中第r个分量$o_r$对应与关系$r$相关的分数。为了获得条件概率$p(r\mid m,\theta)$</p>
+<p>$p(r \mid m_i^j;\theta) = \frac {e^{o_r}}{\sum_{k = 1}^{n_1} {e^{o_k}} } \tag{7}$</p>
+<p>多实例学习的目的是区分bags而不是实例。为此，我们必须在bags上定义目标函数。给定所有($T$)bags($M_i,y_i$)，我们可以在bag级别使用交叉熵定义目标函数，如下：</p>
+<p><div><br> <img src="/2019/10/22/Zeng-2015-note/5.png" title="公式"></div></p>
+<div>
+
+<p>使用此定义的目标函数，我们通过我们使用Adadelta（Zeiler，2012）更新规则通过shuffled mini-batches上的随机梯度下降来最大化$J(\theta)$,整个训练过程在算法1中进行了描述：</p>
+<p><div><br> <img src="/2019/10/22/Zeng-2015-note/6.png" title="算法1"></div></p>
+<div>
+
+<p>通过以上介绍，我们知道传统的反向传播算法会根据所有训练实例修改网络，而使用多实例学习的反向传播会修改基于bag的网络。 因此，我们的方法捕获了远程监督关系提取的本质，其中不可避免地会错误地标记一些训练实例。 当使用训练好的PCNN进行预测时，当且仅当网络的输出至少在bag中的一个实例上被标记为positive，才会对bag打positive标签。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>实验为了证明以下假设：使用PCNNs和多实例学习来自动学习特征能够提升性能。为此，首先介绍使用的数据集和评估指标。接下来通过交叉验证测试几种变体以确定实验中使用的参数。然后将我们的方法的性能与几种传统方法的性能进行比较。最后评估分段最大值池化和多实例学习的效果。</p>
+<p>数据集:使用了一个公开的数据集，KB是Freebase，而metric为precision/recall。<br>实验Baseline部分包含：传统的Distant Supervision RE Baseline、包含Multiple-Instance改进的，同时包含Multiple-Instance+Multiple Labels改进的。实验显示该方法均高于Baseline模型不少。</p>
+</div></div></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月26日 18:58</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/22/Zeng-2015-note/" title="【论文笔记】Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks">/2019/10/22/Zeng-2015-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/22/Zeng-2015-note/&title=《【论文笔记】Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/35.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/22/Zeng-2015-note/&title=《【论文笔记】Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/22/Zeng-2015-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks》 — Fishwinwin&url=/2019/10/22/Zeng-2015-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/22/Zeng-2015-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/22/Zeng-2015-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#研究方法"><span class="post-toc-text">研究方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#向量表示"><span class="post-toc-text">向量表示</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#词嵌入"><span class="post-toc-text">词嵌入</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#位置嵌入"><span class="post-toc-text">位置嵌入</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#卷积"><span class="post-toc-text">卷积</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分段最大值池化"><span class="post-toc-text">分段最大值池化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Softmax输出"><span class="post-toc-text">Softmax输出</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多实例学习"><span class="post-toc-text">多实例学习</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验"><span class="post-toc-text">实验</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/23/leetcode-345/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【LeetCode】345.反转字符串中的元音字母
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/22/leetcode-42/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【LeetCode】42.接雨水</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

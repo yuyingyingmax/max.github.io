@@ -16,13 +16,21 @@
 <meta property="og:site_name" content="Fishwinwin">
 <meta property="og:description" content="CNN：https://blog.csdn.net/kane7csdn/article/details/83617086https://blog.csdn.net/liangchunjiang/article/details/79030681论文模型调试：https://blog.csdn.net/u014586129/article/details/90142875https://www.jia">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-11T14:28:37.424Z">
+<meta property="og:image" content="/2019/10/11/Zeng-2014-note/1.png">
+<meta property="og:image" content="/2019/10/11/Zeng-2014-note/2.png">
+<meta property="og:image" content="/2019/10/11/Zeng-2014-note/3.png">
+<meta property="og:image" content="/2019/10/11/Zeng-2014-note/4.png">
+<meta property="og:image" content="/2019/10/11/Zeng-2014-note/5.png">
+<meta property="og:image" content="/2019/10/11/Zeng-2014-note/6.png">
+<meta property="og:image" content="/2019/10/11/Zeng-2014-note/7.png">
+<meta property="og:updated_time" content="2019-11-02T01:21:38.884Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【论文笔记】Relation Classification via Convolutional Deep Neural Network">
 <meta name="twitter:description" content="CNN：https://blog.csdn.net/kane7csdn/article/details/83617086https://blog.csdn.net/liangchunjiang/article/details/79030681论文模型调试：https://blog.csdn.net/u014586129/article/details/90142875https://www.jia">
+<meta name="twitter:image" content="/2019/10/11/Zeng-2014-note/1.png">
   
   
-    <link rel="icon" href="images/head2.jpeg">
+    <link rel="icon" href="/head2.jpeg">
   
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/style.css">
@@ -148,10 +156,147 @@
             
             <p>CNN：<br><a href="https://blog.csdn.net/kane7csdn/article/details/83617086" target="_blank" rel="noopener">https://blog.csdn.net/kane7csdn/article/details/83617086</a><br><a href="https://blog.csdn.net/liangchunjiang/article/details/79030681" target="_blank" rel="noopener">https://blog.csdn.net/liangchunjiang/article/details/79030681</a><br>论文模型调试：<br><a href="https://blog.csdn.net/u014586129/article/details/90142875" target="_blank" rel="noopener">https://blog.csdn.net/u014586129/article/details/90142875</a><br><a href="https://www.jianshu.com/p/28fb2aed876f" target="_blank" rel="noopener">https://www.jianshu.com/p/28fb2aed876f</a></p>
 <p><a href="https://blog.csdn.net/manmanxiaowugun/article/details/81157105" target="_blank" rel="noopener">https://blog.csdn.net/manmanxiaowugun/article/details/81157105</a><br><a href="https://www.sohu.com/a/165856071_465975" target="_blank" rel="noopener">https://www.sohu.com/a/165856071_465975</a><br><a href="https://blog.csdn.net/u013414502/article/details/82110202#1%E5%A6%82%E4%BD%95%E6%8F%92%E5%85%A5%E5%85%AC%E5%BC%8F" target="_blank" rel="noopener">https://blog.csdn.net/u013414502/article/details/82110202#1%E5%A6%82%E4%BD%95%E6%8F%92%E5%85%A5%E5%85%AC%E5%BC%8F</a><br><a href="https://www.cnblogs.com/Luv-GEM/p/11598294.html" target="_blank" rel="noopener">https://www.cnblogs.com/Luv-GEM/p/11598294.html</a></p>
+<p><strong>高效论文阅读顺序：</strong></p>
+<p>1.题目，关键词，摘要<br>2.结论<br>3.图表<br>4.引言<br>5.<strong>核心部分</strong>：研究结果和讨论<br>6.实验</p>
+<hr>
+<p>偶然看到的做笔记大法</p>
+<p>主旨：</p>
+<p><strong>Abstract</strong></p>
+<ol>
+<li><p>作者想解决什么问题？question</p>
+</li>
+<li><p>作者通过什么理论/模型来解决这个问题？method</p>
+</li>
+<li><p>作者给出的答案是什么？answer</p>
+</li>
+</ol>
+<p><strong>Introduction</strong></p>
+<ol>
+<li><p>作者为什么研究这个课题？</p>
+</li>
+<li><p>目前这个课题的研究进行到了哪一阶段？</p>
+</li>
+<li><p>作者使用理论基于哪些假设？（现在也许有点明白了，不明白再去查）</p>
+</li>
+</ol>
+<p><strong>Conclusion</strong></p>
+<ol>
+<li><p>这篇文章存在哪些缺陷？</p>
+</li>
+<li><p>作者关于这个课题的构思有哪几点？</p>
+</li>
+</ol>
+<p>研究方法：</p>
+<p>数据来源+重要指标+模型步骤（看不懂理论推导没关系，那玩意儿一般很少人能看懂）+每个步骤得出的结论。</p>
+<p>我们可以将【研究方法】这一部分进一步整理成：</p>
+<ol>
+<li><p>研究的数据从哪里来？</p>
+</li>
+<li><p>研究中用到的重要指标有哪些？</p>
+</li>
+<li><p>模型分哪几步？每一步分别得出了什么结论？</p>
+</li>
+</ol>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>用于关系分类的最先进的方法主要是基于统计机器学习的，性能很大程度上取决于提取特征的质量。提取的特征通常源自于预先存在的NLP系统的输出，<strong>这导致现有NLP工具的错误在特征提取任务中被不断传播且放大</strong>。</p>
+<p><strong>本文利用卷积神经网络提取词汇和句子级别的特征</strong></p>
+<p>将所有单词标记(word tokens)作为输入，无需复杂预处理。</p>
+<p>首先，通过查找<strong>词嵌入(word embeddings)</strong>将单词标记转换成向量。然后，根据给定的名词抽取出词汇级别的特征。同时使用卷积方法学习句子级别的特征。将这两个级别的特征串联形成最终提取的特征向量。最后，将这些特征输入<code>softmax</code>分类器来预测两个标记名词间的关系。实验结果表明该方法明显优于最先进的方法。</p>
+<p><strong>注：关于词嵌入，学习</strong><a href="https://blog.csdn.net/L_R_H000/article/details/81320286" target="_blank" rel="noopener">Word Embedding</a></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>利用CNN提取词汇和句子级别的特征用来关系分类。在网络中，成功提出位置特征(position features)来指定名词对的关系。当添加PF后，系统有了显著的改进。自动学习特征可以产生出色的结果并且取代基于NLP工具提取的特征。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>为了识别名词对之间的关系，巧妙地从不同句法和语义结构中结合词汇和句子级别的线索是十分必要的。</p>
+<p> 例如，在这个句子中：</p>
+<blockquote>
+<p>“The [fire]e1 inside WTC was caused by exploding [fuel]e2”</p>
+</blockquote>
+<p>我们通常利用标记的名词和句子的意思来标识<em>fuel</em>和<em>fire</em>之间的<em>cause-effect</em>关系。</p>
+<p>本文中，使用CNN来抽取关系分类中词汇和句子级别的特征。方法将所有单词标记作为输入而无须复杂处理。（例如词性标记和语法分析）。<br>首先，通过查找<strong>词嵌入(word embeddings)</strong>将单词标记转换成向量。然后，根据给定的名词抽取出词汇级别的特征。同时使用卷积方法学习句子级别的特征。将这两个级别的特征串联形成最终提取的特征向量。最后，将这些特征输入<code>softmax</code>分类器来预测两个标记名词间的关系。实验结果表明该方法明显优于最先进的方法。</p>
+<p>Collobert等人先前研究了使用CNN提取NLP特征的想法，所有任务都被认为是顺序标记问题，其中输入的句子的每个单词都被赋予标记。</p>
+<p>我们的任务可以被认为是一个多分类问题，产生不同目标函数。此外，关系分类被定义为将关系标签分配给单词对。因此有必要区分我们期望分配关系标签的单词对。<strong>为了这个目的，利用position features（PF）来编码目标名词对的相对距离。这是使用CNN进行关系分类的第一个例子</strong></p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>使用深度学习来学习特征，在NLP中，这些方法主要是基于学习每个单词的分布式表示，也叫做词嵌入(word embeddings). </p>
+<p>RNN也可用作关系分类，从连接两个名词的句法树路径中学习向量，用来确定他们间的语义关系。</p>
+<h2 id="研究方法"><a href="#研究方法" class="headerlink" title="研究方法"></a>研究方法</h2><h3 id="神经网络体系结构"><a href="#神经网络体系结构" class="headerlink" title="神经网络体系结构"></a>神经网络体系结构</h3><p><div><br> <img src="/2019/10/11/Zeng-2014-note/1.png" title="graph1"></div></p>
+<div>
 
+<p>图1描述了用于关系分类的神经网络体系结构，网络采用句子作为输入，并且发现特征提取的多个层次，较高的层次代表了输入的更抽象的方面。</p>
+<p>它主要包括3个组成部分：<br>1.单词表征（<a href="https://blog.csdn.net/wangyangjingjing/article/details/86631058" target="_blank" rel="noopener">Word Representation</a>）<br>2.特征提取<br>3.输出</p>
+<p>系统无需复杂的句法或语义预处理，输入是带有两个标记名词的句子。然后通过查找词嵌入将单词标记转换为向量。接下来，分别提取词汇和句子级的特征，然后直接连接形成最终的特征向量。最后，为了计算每个关系的置信度，特征向量被输入<code>softmax</code>分类器。分类器的输出是一个向量，其维数等于预定义关系类型的数量。每个维度的值是对应关系的置信度得分。</p>
+<blockquote>
+<p>置信度？softmax？<br><a href="https://blog.csdn.net/bitcarmanlee/article/details/82320853" target="_blank" rel="noopener">softmax</a><br><a href="http://baijiahao.baidu.com/s?id=1596169784713150436&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">置信度</a></p>
+</blockquote>
+<h3 id="单词表征（Word-Representation）"><a href="#单词表征（Word-Representation）" class="headerlink" title="单词表征（Word Representation）"></a>单词表征（Word Representation）</h3><p>在单词表征部分中，通过查找词嵌入将每个输入单词标记变换为向量。Collobert等人汇报，从大量未标记数据中学习的词嵌入要比随机初始化词嵌入更令人满意。在关系分类中，我们首先应当使用大量未标注数据集中精力学习有判别能力的词嵌入，它拥有更多句法和语义信息。不信的是，训练词嵌入总是花费很长时间。然而，有很多训练好的词嵌入是可以免费使用的。我们的实验直接使用Turian等人提供的词嵌入。</p>
+<h3 id="词汇级特征"><a href="#词汇级特征" class="headerlink" title="词汇级特征"></a>词汇级特征</h3><p>词汇级特征是决定关系的重要线索。传统的词汇级别特征主要包括名词本身，名词对以及实体间词序列的类型，其质量很大程度上取决于现有NLP工具产生的结果。</p>
+<p><strong>取而代之，本文使用词嵌入作为基本特征的来源。选择标记名词的词嵌入及其上下文标记，</strong>所有这些特征串联到词汇级特征向量 <strong>1</strong>。</p>
+<p>表1展示了选择的word embeddings，与句中标记名词相关。</p>
+<p><div><br> <img src="/2019/10/11/Zeng-2014-note/2.png" title="table 1"></div></p>
+<div>
+
+<h3 id="句子级特征"><a href="#句子级特征" class="headerlink" title="句子级特征"></a>句子级特征</h3><p>如上所述，所有标记都被表示成词向量，已被证明与人类对词相似性的判断有很好的相关性。尽管取得了成功，单个词向量模型是严重受限的，因为它们不能捕捉长距离特征和语义合成性（我的思考：LSTM？），这是自然语言的重要品质，它使人能够理解更长表达的含义。</p>
+<p>在本节中，我们提出一个<code>max-pooled CNN</code>以提供句子级别的表示并且自动抽取句子级别的特征.</p>
+<p>图2展示了句子级别的特征抽取框架。在<code>Window Processing</code>部分，每个标记进一步被表示为<code>词特征(WF)</code>和<code>位置特征(PF)</code>。然后，向量通过<code>卷积</code>部分。最后，我们通过<code>非线性变换</code>得到了句子级别的特征。</p>
+<p><div><br> <img src="/2019/10/11/Zeng-2014-note/3.png" title="figure 2"></div></p>
+<div>
+
+<h4 id="Word-Features-词特征"><a href="#Word-Features-词特征" class="headerlink" title="Word Features 词特征"></a>Word Features 词特征</h4><p><strong>分布假设理论（Harris，1954）指出，在相同语境中出现的词语往往具有相似的含义。</strong>为了捕获这个特征，<code>WF</code>结合了词的向量表示以及其在上下文中的向量表示。假设我们有下列单词序列。</p>
+<p>$S:[People]_0 \; have_1 \; been_2 \; moving_3 \; back_4 \; into_5 \; [downtown]_6$</p>
+<p>被标记的名词与标签$y$关联，$y$定义了被标记名词对包含的关系类型。每个单词也与word embeddings的索引相关联。句子$S$中的单词标记被表示为向量列表$(x_0,x_1,\cdots,x_6)$,其中$x_i$对应于句子中第i个单词的word embedding。</p>
+<p>要使用$w$的上下文大小，我们将$w$大小的向量窗口组合成一个更丰富的特征。例如，当$w = 3$,句子$S$中第三个单词<code>&quot;moving&quot;</code>的<code>WF</code>被表达为$[x_2,x_3,x_4]$,相似地，考虑到整个句子，<code>WF</code>可以作如下表示：</p>
+<p>$ \{ [x_s,x_0,x_1],[x_0,x_1,x_2],\cdots,[x_5,x_6,x_e]\}$</p>
+<blockquote>
+<p>$x_s$和$x_e$是分别对应于句子开头和结尾的特殊word embedding。</p>
+</blockquote>
+<h4 id="Position-Features-位置特征"><a href="#Position-Features-位置特征" class="headerlink" title="Position Features 位置特征"></a>Position Features 位置特征</h4><p>关系分类是复杂的任务。传统上，结构特征（例如，名词间的最短依赖路径）用于解决该问题。显然，只通过<code>WF</code>无法捕获这类结构信息。有必要指明哪个输入标记(tokens)是句子的目标名词。为此，建议将<code>PF</code>用于关系分类。本位中，<code>PF</code>是当前单词与$w_1$和$w_2$的相对距离。</p>
+<p>例如，句子$S$中<code>&quot;moving&quot;</code>与<code>&quot;people&quot;</code>和<code>&quot;downtown&quot;</code>的相对距离分别为为3和-3。</p>
+<p>在我们的方法中，相对距离也被映射到维向量$d_e$(超参数），这个向量是随机初始化的。然后，我们获得当前单词与$w_1$和$w_2$的相对距离相关的距离向量$d_1$和$d_2$，以及$PF = [d_1,d_2]$.</p>
+<p>结合<code>WF</code>和<code>PF</code>，单词被表示为$[WF,PF]^T$，随后被输入算法的卷积部分。</p>
+<h4 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h4><p>我们将看到Word Representaion方法可以通过窗口中的向量组合来捕获上下文信息。但是，它只会在句子中的每个单词周围产生局部特征。在关系分类中，用目标名词标记的用于输入的句子，仅对应于关系类型而不是预测每个单词的标签。因此，可能有必要使用所有局部特征并预测全局关系。</p>
+<p>使用神经网络时，<strong>卷积方法是用来合并所有特征的自然方法</strong>。与Collobert相似，我们首先使用线性变换来处理<code>Window Processing</code>部分的输出。<br>$Z =W_1X \tag{1}$<br>$X \in \Bbb R^{n_0 \times t}$ 是 <code>Window Processing</code>任务的输出。其中$n_0 = w \times n$,$n$(超参数）是特征向量的维数，$t$是输入句子的标记数量。<br>$W_1 \in \Bbb R^{n_1 \times n_0}$是线性变换矩阵,$n_1$(超参数)是隐藏层1的大小，我们可以看见，这些特征共享相同的权重，大大减少了要学习的自由参数的数量。应用线性变换后，输出$Z  in \Bbb R^{n_1 \times t}$ 依赖于$t$。为了确定特征向量每一个维度上最有用的特征，我们在$Z$上随时间执行最大值操作。<br>$m_i = maxZ(i,\cdot) \qquad \text{$0 \leq i \leq n_1$} \tag{2}$<br>其中，$Z(i,\cdot)$表示矩阵$Z$的第i行。<br>最后，我们得到特征向量$m =\{m_1, m_2, \cdots, m_{n_1} \} $,其维度不再与句子长度相关。</p>
+<h4 id="句子级别特征向量"><a href="#句子级别特征向量" class="headerlink" title="句子级别特征向量"></a>句子级别特征向量</h4><p>为了学习更复杂的特征，我们设计了一个非线性层，且选择双曲线<code>tanh</code>作为激活函数。<code>tanh</code>中的一个有用的属性是<strong>它的导数可以用函数值本身来表示</strong>：<br>$\frac{d}{dx} tanhx = 1 - tanh^2x \tag{3}$<br>它的优点是在反向传播训练过程中使得梯度的计算变得容易。形式上，非线性变换可以被写作：<br>$g = tanh(W_2m) \tag{4}$</p>
+<p>$W_2 \in \Bbb R ^ {n_2 \times n_1}$是线性变换矩阵，其中$n_2$(超参数)是隐藏层2的大小。相比于$m \in \Bbb R^{n_1 \times 1}$, $g \in \Bbb R^{n_2 \times 1}$可以被认为是更高级别的特征（句子级别）。</p>
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><p>自动学到的词汇和句子级特征被串联成一个单独的向量$f = [l,g]$。为了计算每个关系的置信度,特征$f\in \Bbb R^{n_3 \times 1}$($n_3$等于$n_2$加上词汇级别特征的维数)，被输入到<code>softmax</code>分类器。<br>$o = W_3f \tag{5}$</p>
+<p>$W_3 \in \Bbb R^{n_4 \times n_5}是变换矩阵，$o \in \Bbb R^{n_4 \times 1}$是网络最后的输出，其中$n_4$等于关系分类系统中可能的关系类型的数量。然后可以将每个输出解释为对应关系的置信分数。通过应用<code>softmax</code>操作，这个分数能够被解释为条件概率。（参照下一节）</p>
+<h3 id="反向传播训练"><a href="#反向传播训练" class="headerlink" title="反向传播训练"></a>反向传播训练</h3><p>这里提出的基于DNN的关系分类方法可以被表示为5元组$\theta = (X,N,W_1,W_2,W_3)$(N代表WordNet上位词的词嵌入）。在本文中，认为每个输入的句子是独立的。给出输入样例$s$,带有参数$\theta$的网络输出向量$o$,其中第$i$个部分$o_i$包含了关系$i$的得分。为了获得条件概率$p(i\mid x,\theta)$,我们将对所有关系类型使用<code>softmax</code>操作：<br>$p(i\mid x,\theta)=\frac{e^{o_i}}{\sum_{k=1}^{n_4}{e^{o^k}}} \tag{6}$</p>
+<p>给出所有（假设T）训练示例$(x^{(i)};y^{(i)})$,可以写出参数的对数似然：<br>$J(\theta) = \sum_{i=1}^{T}{\log p(y^{(i)}\mid x^{(i)},\theta)} \tag{7}$</p>
+<p>为了计算参数$\theta$,我们使用简单优化方法SGD来最大化对数似然$J(\theta)$.$N,W_1,W_2,W_3$是随机初始化的，$X$使用Word Embeddings初始化。由于这些参数在神经网络的不同层，我们实现后向传播算法：通过网络使用差异化链规则，迭代的选择样例$(x,y)$并且应用以下更新规则，直到word embedding层reached<br>$\theta \leftarrow \theta + \lambda \frac{\partial \log p(y\mid x,\theta)}{\partial \theta} \tag{8}$</p>
+<h2 id="数据集与评估指标"><a href="#数据集与评估指标" class="headerlink" title="数据集与评估指标"></a>数据集与评估指标</h2><p>使用<code>SemEval-2010 Task 8</code> 数据集。该数据集包含10,717个标注的实例，包括8000训练实例和2717测试实例。有9种关系（2个方向）以及没有方向的其他类型。下面是包含关系的例子：<em>Cause-Effect(因果), Component-Whole(组成和整体), Entity-Origin(实体和来源)</em>。</p>
+<p>在官方评估框架中，考虑了方向性。如果关系中单词顺序是正确的，则这一对记为正确。例如，下列$S1$和$S2$具有相同的关系<em>Component-Whole</em>.<br>$S_1 : The [half]_{e_1} of the [axe]_{e_2} is make \cdots \Rightarrow Component-Whole(e_1,e_2)$</p>
+<p>$S_2： This [machine]_{e_1} has two [units]_{e_2}\cdots \Rightarrow Component-Whole(e_2,e_1)$</p>
+<p>然而，这两个实例不能被分成同一类，因为$Component-Whole(e_1,e_2)$和$Component-Whole(e_2,e_1)$是不同的关系。此外，参与系统的官方排名基于9个关系（不包括<em>Other</em>）的宏观平均F1值.为了将我们的结果与之前的研究结果进行比较，我们采用宏观平均F1值，并在下面的实验中考虑方向性。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>该部分设计了3组实验。</p>
+<p>第一部分是通过交叉验证来测试一些变体，以便了解超参数的选择是如何影响性能的。</p>
+<p>第二部分，比较通过CNN学习的特征和一些传统特征的性能。</p>
+<p>第三部分的目标则是评估每个抽取的特征的有效性。</p>
+<h3 id="参数设置"><a href="#参数设置" class="headerlink" title="参数设置"></a>参数设置</h3><p>本部分，我们通过实验研究提出方法中的3个参数的影响：卷积部分的窗口大小$w$,隐藏层1的数量，隐藏层2的数量。由于没有官方发布的数据集，我们通过5次交叉实验尝试不同的架构来调整超参数。</p>
+<p><div class="image-size-100"><br> <img src="/2019/10/11/Zeng-2014-note/4.png" title="figure 3"></div></p>
+<div>
+
+<p>如图3，分别改变超参数$w$,$n_1$和$n_2$的数量并计算F1。当窗口大小超过3之后就不会提高性能了。<strong>由于训练数据集大小有限，网络容易过拟合，尤其是使用大的隐藏层</strong>，图3中我们也能看出，当增加隐藏层1和隐藏层2的数量时，参数对结果的影响有限。由于距离维度对结果影响不大（图3没有说明），我们启发式地选择$d_e = 5$.最后单词维度和学习率和Collobert一样。表2报告了使用的所有超参数。</p>
+<p><div class="image-size-100"><br> <img src="/2019/10/11/Zeng-2014-note/5.png" title="table 2"></div></p>
+<div>
+
+<h3 id="比较实验的结果"><a href="#比较实验的结果" class="headerlink" title="比较实验的结果"></a>比较实验的结果</h3><p>为了获得自动学习的特征的最终性能，我们选择了7个方法与我们的方法比较，如表3. </p>
+<p>前5个是在Hendrickx(2010)论文中描述的，都使用传统特征，用SVM或MaxEnt做分类器。这些系统设计了一系列特征并且利用各种资源（Word net，ProBank，FrameNet等）。</p>
+<p>RNN表示用做分类的循环神经网络（Socher 2012），该方法在句法树路径上学习连接两个名词向量以确定它们的语义关系。</p>
+<p>MVRNN模型为最小成分构建单个语义，不能期望单个固定变换能够捕获所有自然语言运算符的意义组合，因此，MVRNN为每个单词分配矩阵并修改其他单词的含义，而不是仅考虑循环过程的词嵌入。</p>
+<p>基于结果，做出以下观察：</p>
+<ol>
+<li>使用传统方法时，丰富的特征集能带来更好的性能。这种改进可以通过<strong>从训练到测试数据的语义概括的需要</strong>来解释。传统特征的质量依赖于人工选择以及之前的NLP知识。人工选择最好的特征集几乎是不可能的。</li>
+<li>RNN 和 MVRNN包含了特征学习的过程。它们依赖于循环过程中使用的语法树。句法分析中的错误会抑制这些方法学习高质量特征的能力。即使将POS，NER以及WordNet加入训练数据集，RNN仍然不能达到使用传统特征的最好方法那么高的性能。MVRNN能够有效捕捉组合意义并且达到更高的效果。</li>
+<li>我们的方法在这些方法中达到了最好的效果。我们还执行了t检验($p \leq 0.05)$,这表明我们的方法明显优于所比较的方法。</li>
+</ol>
+<p><div class="image-size-100"><br> <img src="/2019/10/11/Zeng-2014-note/6.png" title="table 3"></div></p>
+<div>
+
+<h3 id="学到特征的效果"><a href="#学到特征的效果" class="headerlink" title="学到特征的效果"></a>学到特征的效果</h3><p>词汇级别的特征主要包含5组特征（L1到L5）。我们在这5组特征上做了消融测试，以确定哪种特征贡献最大。</p>
+<p>从表4中可以观察，我们学到的词汇级特征对关系分类是有效的。当添加新特征时，F1值显著提高。</p>
+<p>我们也在句子级特征上做了实验。当添加PF时系统提高了9.2%.</p>
+<p>当词汇级和句子级特征结合时，我们得到了最好的结果。</p>
+<p><div><br> <img src="/2019/10/11/Zeng-2014-note/7.png" title="table 4"></div></p>
+<div>
+
+</div></div></div></div></div></div></div>
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年10月11日 22:28</p>
+        <p>最后更新： 2019年11月02日 09:21</p>
         <p>原始链接： <a class="post-url" href="/2019/10/11/Zeng-2014-note/" title="【论文笔记】Relation Classification via Convolutional Deep Neural Network">/2019/10/11/Zeng-2014-note/</a></p>
         <footer>
             <a href="">
@@ -178,7 +323,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/11/Zeng-2014-note/&title=《【论文笔记】Relation Classification via Convolutional Deep Neural Network》 — Fishwinwin&pic=images/head2.jpeg" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/11/Zeng-2014-note/&title=《【论文笔记】Relation Classification via Convolutional Deep Neural Network》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/14.jpg?raw=true" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -242,8 +387,24 @@
 </article>
 
 
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相关工作"><span class="post-toc-text">相关工作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#研究方法"><span class="post-toc-text">研究方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#神经网络体系结构"><span class="post-toc-text">神经网络体系结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单词表征（Word-Representation）"><span class="post-toc-text">单词表征（Word Representation）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#词汇级特征"><span class="post-toc-text">词汇级特征</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#句子级特征"><span class="post-toc-text">句子级特征</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Word-Features-词特征"><span class="post-toc-text">Word Features 词特征</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Position-Features-位置特征"><span class="post-toc-text">Position Features 位置特征</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#卷积"><span class="post-toc-text">卷积</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#句子级别特征向量"><span class="post-toc-text">句子级别特征向量</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#输出"><span class="post-toc-text">输出</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反向传播训练"><span class="post-toc-text">反向传播训练</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据集与评估指标"><span class="post-toc-text">数据集与评估指标</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验"><span class="post-toc-text">实验</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参数设置"><span class="post-toc-text">参数设置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#比较实验的结果"><span class="post-toc-text">比较实验的结果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#学到特征的效果"><span class="post-toc-text">学到特征的效果</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
 
 <nav id="article-nav">
+  
+    <a href="/2019/10/12/leetcode-26/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【LeetCode】26.删除排序数组中的重复项
+        
+      </span>
+    </a>
   
   
     <a href="/2019/10/10/MIMR-2012-note/" id="article-nav-older" class="article-nav-link-wrap">
@@ -310,10 +471,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -346,7 +507,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/中等/" style="font-size: 10px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 17.5px;">关系抽取</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/学习笔记/" style="font-size: 15px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/数组/" style="font-size: 12.5px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/笔记/" style="font-size: 17.5px;">笔记</a> <a href="/tags/简单/" style="font-size: 12.5px;">简单</a> <a href="/tags/论文/" style="font-size: 20px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
         </div>
     </div>
 </div>

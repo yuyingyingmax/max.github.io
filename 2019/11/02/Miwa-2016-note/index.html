@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】End-to-End Relation Extraction using LSTMs on Sequences and Tree | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要提出了新颖的端到端神经模型来提取实体及其之间的关系。我们的基于RNN的模型通过在双向sequence LSTM-RNNs上堆叠双向树状LSTM-RNNs来捕获单词序列和依存树结构信息。这使模型能够在单个模型通过共享的参数同时表示实体和关系。我们进一步鼓励在训练过程中检测实体，并通过实体预训练和计划抽样在关系抽取中使用实体信息。我们的模型在最先进的基于特征的端到端关系抽取模型之上进行改进，分别在">
+<meta name="keywords" content="笔记,论文,NLP,关系抽取,联合抽取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】End-to-End Relation Extraction using LSTMs on Sequences and Tree">
+<meta property="og:url" content="/2019/11/02/Miwa-2016-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要提出了新颖的端到端神经模型来提取实体及其之间的关系。我们的基于RNN的模型通过在双向sequence LSTM-RNNs上堆叠双向树状LSTM-RNNs来捕获单词序列和依存树结构信息。这使模型能够在单个模型通过共享的参数同时表示实体和关系。我们进一步鼓励在训练过程中检测实体，并通过实体预训练和计划抽样在关系抽取中使用实体信息。我们的模型在最先进的基于特征的端到端关系抽取模型之上进行改进，分别在">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/11/02/Miwa-2016-note/1.png">
+<meta property="og:image" content="/2019/11/02/Miwa-2016-note/2.png">
+<meta property="og:image" content="/2019/11/02/Miwa-2016-note/3.png">
+<meta property="og:image" content="/2019/11/02/Miwa-2016-note/4.png">
+<meta property="og:image" content="/2019/11/02/Miwa-2016-note/5.png">
+<meta property="og:image" content="/2019/11/02/Miwa-2016-note/6.png">
+<meta property="og:image" content="/2019/11/02/Miwa-2016-note/7.png">
+<meta property="og:updated_time" content="2019-11-07T15:13:26.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】End-to-End Relation Extraction using LSTMs on Sequences and Tree">
+<meta name="twitter:description" content="摘要提出了新颖的端到端神经模型来提取实体及其之间的关系。我们的基于RNN的模型通过在双向sequence LSTM-RNNs上堆叠双向树状LSTM-RNNs来捕获单词序列和依存树结构信息。这使模型能够在单个模型通过共享的参数同时表示实体和关系。我们进一步鼓励在训练过程中检测实体，并通过实体预训练和计划抽样在关系抽取中使用实体信息。我们的模型在最先进的基于特征的端到端关系抽取模型之上进行改进，分别在">
+<meta name="twitter:image" content="/2019/11/02/Miwa-2016-note/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Miwa-2016-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】End-to-End Relation Extraction using LSTMs on Sequences and Tree
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-11-02
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>提出了新颖的端到端神经模型来提取实体及其之间的关系。我们的基于RNN的模型通过在双向sequence LSTM-RNNs上堆叠双向树状LSTM-RNNs来捕获单词序列和依存树结构信息。这使模型能够在单个模型通过共享的参数同时表示实体和关系。我们进一步鼓励在训练过程中检测实体，并通过实体预训练和计划抽样在关系抽取中使用实体信息。我们的模型在最先进的基于特征的端到端关系抽取模型之上进行改进，分别在ACE2005和ACE2004的F1评分达到了12.1%和5.7%的误差降低。在名词关系分类（SemEval-2010 Task 8）上，基于LSTMRNN的模型与基于CNN的最新模型相比具有优势。最后我们对几种模型组件进行了广泛的消融分析。</p>
+<hr>
+<p><strong>想解决什么问题？ question</strong></p>
+<blockquote>
+<p>pipeline性能不够好；在关系分类任务中，基于LSTM的系统使用了有限的语言结构及神经结构，并且没对实体和关系联合建模，性能没有RNN好；</p>
+</blockquote>
+<p><strong>通过什么理论/模型来解决的？ method</strong></p>
+<blockquote>
+<p>   双向LSTM  （BiLSTM）</p>
+</blockquote>
+<p><strong>给出的答案是什么？ answer</strong></p>
+<blockquote>
+<ol>
+<li>这种模型能够在单个模型上通过共享参数同时表示实体和关系；</li>
+<li>在基于特征的end2end关系抽取模型之上改进，降低了误差。</li>
+<li>基于LSTMRNN的模型在名词关系分类上要好于CNN的；</li>
+</ol>
+</blockquote>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>我们提出了一种新颖的端到端关系抽取模型，该模型通过使用双向顺序和双向树结构的LSTM-RNN来同时表示单词序列和依存树结构。这使得我们能够在单个模型中表示实体和关系，在端到端关系抽取中，相对于最新的基于特征的系统有所改进(ACE04,ACE05)，并且比最新的基于CNN的名词关系分类有更好的性能。</p>
+<p><strong>我们的评估和消融实验得出3个重要的发现：</strong></p>
+<ol>
+<li>同时使用单词序列和依存树结构是有效的。</li>
+<li>使用共享参数进行训练可以提高关系抽取的准确性，尤其是在与实体预训练，计划采样以及标签embedding配合使用时。</li>
+<li>在关系分类中广泛使用的最短路径也适用于在LSTM模型中表示树结构。</li>
+</ol>
+<hr>
+<p><strong>不足之处</strong></p>
+<blockquote>
+<p>(补）</p>
+</blockquote>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在信息抽取和NLP中，提取文本中实体间的语义关系是一项重要且经过充分研究的任务。</p>
+<p>传统系统将此任务视为两个独立任务的pipeline，即<strong>命名实体识别(NER)</strong>(Nadeau and Sekine,2007; Ratinov and Roth,2009)以及<strong>关系抽取</strong>（Zelenko,2003;Zhou,2005）。但是最近的研究表明，<strong>实体和关系的end2end（联合）建模对于实现高性能非常重要，因为关系与实体信息是密切交互的</strong>（Li and Ji,2014; Miwa and Sasaki, 2014)。例如，要学习句子<code>Toefting transferred to Bolton</code>中<em>Toefting</em>和<em>Bolton</em>之间的<em>Organization-Affiliation(ORG-AFF)</em>关系, 实体信息<em>Toefting</em>是<em>Person</em>实体 和 <em>Bolton</em> 是 <em>Organization</em>实体就很重要。这些实体的提取反过来又受到上下文单词<em>transfer to</em>的鼓励，这些上下文词语表示了<strong>雇佣关系</strong>。之前的联合模型引入基于特征的结构化学习。这种end2end关系抽取任务的替代方法是通过基于神经网络(NN)模型自动学习特征。</p>
+<p>有两种使用神经网络表示实体间关系的方式：RNN和CNN。其中，RNNs能够<em>直接</em> 表示基本的语言结构，即<strong>单词序列</strong>(Hammerton,2001)和<strong>组成/依赖树</strong>(Tai,2015)。尽管具有这种表示能力，对于关系分类任务来说，先前报告中使用基于RNN的LSTM(Xu,2015;Li,2015)性能要比CNNs(dos Santos, 2015)性能差。以前的这些基于LSTM的系统主要包括有限的语言结构以及神经结构，并且没有联合对实体和关系建模。<strong>通过基于包含补充语言结构的更丰富的LSTM RNN结构的实体和关系end2end建模，我们能够对最新模型进行改进</strong>。</p>
+<p>单词序列和树结构是用来在抽取关系时做补充信息的。例如，在句子：<code>&quot;This is...&quot;, one U.S. source said</code>中，单词间的依赖不足以预测<em>source</em> 和 <em>U.S.</em>之间有 <em>ORG-AFF</em>关系，预测需要上下文单词<em>said</em>。 许多传统的基于特征的关系分类模型同时从序列和解析树中抽取特征（Zhou,2005)。然而，先前的基于RNN的模型只关注了这些语法结构中的一种。</p>
+<p><strong>我们提出了新颖的end2end模型，同时在单词序列和依存树结构上抽取实体间的关系</strong>。<strong>我们的模型允许通过使用双向序列（左到右，右到左）和双向树结构（下到上，上到下)的LSTM-RNN在单个模型中对实体和关系进行联合建模</strong>。模型首先检测实体，然后使用单个增量解码的神经网络结构提取检测到的实体间的关系，并且使用实体和关系标签联合更新神经网络参数。与传统增量式end2end关系抽取模型不同，我们的模型在训练中进一步整合了两个<strong>增强</strong>：<strong>实体预训练（对实体模型进行预训练）以及计划抽样（Bengio，2015），将（不可靠的）预测标签替换为有一定概率的gold标签</strong>。这些增强<strong>缓解了训练早期阶段实体探测的低性能问题，并允许实体信息进一步帮助下游关系分类。</strong></p>
+<p>在end2end关系抽取中，我们改进了最新的基于特征的模型，在F1得分上减少了12.1%(ACE2005),5.7%(ACE2004)的相关误差。在名词关系分类（SemEval-2010 Task 8）上，与最新的基于RNN的模型相比，在F1值上具有优势。最后，我们还消融和比较了我们的各种模型组件，这引出了一些关于贡献和有效性的关键发现（正面和负面）：不同RNN结构，输入依赖关系结构，不同解析模型，外部资源，联合学习设置。（在共享和有效性方面）。</p>
+<hr>
+<p><strong>为什么研究这个课题？</strong></p>
+<blockquote>
+<p>1.传统pipeline分为NER和关系抽取，最近研究表明实体和关系的end2end建模对性能很重要，因为关系与实体式密切交互的。<br>2.虽然RNN能表示语言结构（单词序列和组成/依赖树），但在关系分类任务中，之前使用基于RNN的LSTM性能没CNN好，这是因为LSTM没有联合对实体和关系建模，只包含有限的语言结构和神经结构。</p>
+<p>因此我们通过包含补充语言结构的BiLSTM来做end2end的改进。</p>
+</blockquote>
+<p><strong>这个课题研究进行到哪一阶段？</strong></p>
+<blockquote>
+<p>目前看来应该是做了这个双向LSTM（BiLSTM）并有性能提升。</p>
+</blockquote>
+<p><strong>作者使用理论基于哪些假设？</strong></p>
+<blockquote>
+<p>(补）</p>
+</blockquote>
+<h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><p>我们使用代表<strong>单词序列</strong>和<strong>依赖关系树结构</strong>的LSTM-RNN设计模型，并在这些RNN之上执行实体之间关系的端到端提取。图1展示了该模型的概况。</p>
+<p>该模型主要由三个表示层组成：<br>1.词嵌入层（embedding layer)<br>2.基于LSTM-RNN的单词序列层（sequence layer）<br>3.基于LSTM-RNN的依存子树层（dependency layer）</p>
+<p>在解码期间，我们在序列层（sequence layer）建立贪婪的，从左到右的<strong>实体检测</strong>，并在依赖层（dependency layer）实现<strong>关系分类</strong>，其中每个基于LSTM-RNN的<strong>子树</strong>对应于两个检测到的实体之间的<strong>候选关系</strong>。</p>
+<p>解码整个模型结构后，我们通过反向传播（BPTT）同时更新参数（Werbos，1990）。依赖层堆叠在序列层之上，因此实体检测和关系分类共享嵌入层和序列层，并且共享参数受实体和关系标签两者共同影响。</p>
+<p><div><br> <img src="/2019/11/02/Miwa-2016-note/1.png" title="图1"></div></p>
+<div>
+
+<h3 id="嵌入层-Embedding-Layer"><a href="#嵌入层-Embedding-Layer" class="headerlink" title="嵌入层 Embedding Layer"></a>嵌入层 Embedding Layer</h3><p>嵌入层处理嵌入表示。$n_w,n_p,n_d,n_e$维向量$v^{(w)},v^{(p)},v^{(d)},v^{(e)}$分别嵌入单词(words),POS tags,依赖类型(dependency types)以及实体标签(entity labels).</p>
+<hr>
+<p><strong>嵌入层主要有4部分</strong><br>(1) word embedding<br>(2) part-of-speech (POS,词性) embedding<br>(3) dependency types embedding<br>(4) entity labels embedding</p>
+<h3 id="序列层-Sequence-Layer"><a href="#序列层-Sequence-Layer" class="headerlink" title="序列层 Sequence Layer"></a>序列层 Sequence Layer</h3><p>序列层使用嵌入层的表示形式以线性序列表示单词。该层表示句子上下文信息并且维护实体，如图一左下所示。</p>
+<p>我们使用双向LSTM-RNNs表示句子中的单词序列（Graves，2013）。第t个单词处的<strong>LSTM单元</strong>由$n_{l_s}$维的向量集合组成：一个输入门$i_t$,一个遗忘门$f_t$,一个输出门$o_t$,一个记忆单元$c_t$, 隐藏层状态$h_t$。该单元接收一个n维输入向量$x_t$,前一时刻的隐层状态$h_{t-1}$，以及上一时刻记忆单元$c_{t-1}$，使用下列公式计算新的向量：</p>
+<p><div><br> <img src="/2019/11/02/Miwa-2016-note/2.png" title="公式1"></div></p>
+<div>
+
+<p>其中$\sigma$表示logistic函数，$\bigodot$表示逐元素乘法，$W$和$U$是权重矩阵，$b$是偏置向量。<strong>第t个单词处的LSTM单元接受单词和POS嵌入的串联作为其输入向量</strong>：$x_t = \left[ v_t^{(w)};v_t^{(p)} \right]$。<strong>我们还将每个单词对应的两个方向的LSTM单元的隐层状态向量（表示为 $\overrightarrow{h_t}$ 和 $\overleftarrow{h_t}$）串联起来作为输出向量，$s_t = \left[\overrightarrow{h_t};\overleftarrow{h_t}\right] $</strong>，并将它传递到随后的层。</p>
+<h3 id="实体检测-Entity-Detection"><a href="#实体检测-Entity-Detection" class="headerlink" title="实体检测 Entity Detection"></a>实体检测 Entity Detection</h3><p><strong>我们将实体检测作为序列标注任务。</strong> 我们使用BILOU编码模式(Begin, Inside, Last, Outside, Unit)为每个单词分配实体标签，该模式中每个实体标签表达了实体类型以及实体中单词的位置。例如，在图一中，我们将<em>B-PER</em>和<em>L-PER</em>（分别表示person实体类型的起始单词和末尾单词）分配给<em>Sidney Yates</em>的每一个单词，以将该短语表示为<em>PER</em>(person)实体类型。</p>
+<p>我们在序列层（sequence layer）的顶层执行实体检测。我们引入了由$n_{h_e}$维的隐藏层$h^{(e)}$和softmax输出层组成的2层的神经网络来做实体检测。</p>
+<p><div><br> <img src="/2019/11/02/Miwa-2016-note/3.png" title="公式2，3"></div></p>
+<div>
+
+<p>这里，$W$是权重矩阵，$b$是偏置向量。</p>
+<p>我们以贪婪的，从左到右的方式为单词分配实体标签（也考虑过集束搜索，不过没有太大改进）。<strong>在解码中，我们使用单词的预测标签来预测下一个单词的标签，以便考虑标签的依赖性。</strong> 上面的神经网络接收其在序列层中的相应输出的级联以及前一个单词的标签嵌入。</p>
+<hr>
+<p><strong>小结</strong><br>Sequence层主要是对<code>word embedding</code> 和 <code>POS embedding</code>进行编码，使用BILOU编码模式，将实体检测作为序列标注任务，使用BiLSTM，然后接入softmax进行标签分类。这里使用到了<code>pretrain entity</code>使用预训练的实体的标签，使用<code>Sheduled sampling</code>计划采样，训练时以概率p选择模型自身的输出作为下一个预测的输入，以1-p选择真实标记作为下一个预测的输入，采样过程中p是变化的，一开始训练不充分时可以小一点，尽量使用真实label，随着训练进行，将p增大，多采用自身输出作为下一个预测的输入。</p>
+<h3 id="依赖层-Dependency-Layer"><a href="#依赖层-Dependency-Layer" class="headerlink" title="依赖层 Dependency Layer"></a>依赖层 Dependency Layer</h3><p>依赖层<strong>通过依存树表示一对目标单词间的关系</strong>（对应关系分类中的候选关系），并负责关系特定表示，如图1右上所示。该层主要关注依存树中一对目标单词间的 <em>最短路径</em> （即，最小公共节点与两个目标词之间的路径），因为这些路径在关系分类中是有效的（Xu，2015a)。例如，我们在图1下部展示了<em>Yates</em>和<em>Chicago</em>间的最短路径，这条路径很好地捕获了表达它们关系的关键短语，即<em>born in</em>。</p>
+<p>我们引入双向树结构的LSTM-RNN(即，自下而上和自上而下），通过捕获目标单词对周围的依赖结构来表达候选关系。这个双向结构<strong>向每个节点传播来自叶子节点的信息以及来自根节点的信息</strong>。这对关系分类来说很重要，它利用树底部附近的参数节点，而我们自上而下的LSTM-RNN将信息从树顶部发送到此类近叶节点（这和标准自下而上的LSTM-RNN不同）。注意，Tai等人（2015）的树形LSTM-RNN的两种变体无法代表我们的目标结构，目标结构中有可变数量的类型化children：Child-Sum Tree-LSTM不能处理类型，N-ary Tree假设固定数量的子类型。因此我们提出了一种树形LSTM-RNN的变体，该变体为相同类型的孩子共享权重矩阵$U$s，并且允许可变数量的孩子。对于该变体，我们使用以下方程以$C(t)$个子级在第t个节点的LSTM单元上计算$n_{l_t}$维向量：</p>
+<p><div><br> <img src="/2019/11/02/Miwa-2016-note/4.png" title="公式4"></div></p>
+<div>
+
+<p>其中$m(\cdot)$是类型映射函数。</p>
+<p>为了研究合适的结构来表示两个目标单词对之间的关系，我们尝试了3种可选结构。我们首先使用了最短路径结构（<strong>SP-Tree</strong>），这种结构能够捕捉目标单词对之间和核心依存路径，并且在关系分类模型中广泛的使用，例如（Bunescu and Mooney，2005；Xu，2015a）。我们也尝试了其他两种依赖结构：<strong>SubTree</strong> 以及 <strong>FullTree</strong>。SubTree是目标单词对的最低公共祖先的子树。这为SPTree中的单词对和路径提供了额外的修饰信息。FullTree是完全依存树。这从整个句子中捕获上下文。虽然我们为SPTree使用一种节点类型，但我们为SubTree和FullTree定义了两种节点类型。即，一种用于最短路径上的节点，另一种用于所有其他节点。我们用类型映射函数$m(\cdot)$来区别这两种节点类型。</p>
+<hr>
+<p><strong>小结</strong><br>这部分主要用于抽取目标实体对的关系，方法是在依赖树中找到两个目标实体的最短路径（shortest path）。<br>文中使用了 bidirectional tree-structured LSTM-RNNs的方式，这种双向（从上往下 + 从下往上）的方式，使得每个节点包含的信息也是双向的。而且文中的这种方式可以应对不同类型和数量的子节点，对同种类型的子节点共享权重矩阵$U$s。</p>
+<h3 id="堆叠序列层和依赖层"><a href="#堆叠序列层和依赖层" class="headerlink" title="堆叠序列层和依赖层"></a>堆叠序列层和依赖层</h3><p>我们将依赖层（对应于候选关系）堆叠在序列层之上，以便将单词序列和依存树结构的信息包括进输出中。依赖层中，第t个单词的LSTM单元接受输入$x_t = \left[ s_t;v_t^{(d)};v_t^{(e)}\right]$，即串联sequence层的隐层状态向量$s_t$，依存类型嵌入$v_t^{(d)}$(表示对parent的依存类型)，以及标签嵌入$v_t^{(e)}$(对应于预测的实体类型)。</p>
+<h3 id="关系分类"><a href="#关系分类" class="headerlink" title="关系分类"></a>关系分类</h3><p><strong>在解码期间，我们使用检测到的实体的最后单词的所有可能组合来逐步构建候选关系</strong>（即，在BILOU模式中有L或U标签的单词）。例如，我们使用带<em>L-PER</em>标签的<em>Yates</em>以及带<em>U-LOC</em>标签的<em>Chicago</em>构建候选关系。对于每个候选关系，我们实现了在候选关系中单词对$p$之间的路径相对应的依赖层$d_p$，并且神经网络接收由依存树层的输出构建的候选关系向量，然后预测它的关系标签。当检测到的实体是错误的或者当这对实体没有关系时，我们将这对实体视作负关系。我们通过类型和方向表示关系标签（除去负关系没有方向）</p>
+<p>候选关系向量是由级联的$d_p$构建的，$d_p = \left[\uparrow h_{p_A};\downarrow h_{p_1}; \downarrow h_{p_2}\right]$，其中$\uparrow h_{p_A}$是自底向上LSTM-RNN（表示目标单词对的最低公共祖先）的上层LSTM单元的隐藏层状态向量。$\downarrow h_{p_1}, \downarrow h_{p_2}$是两个LSTM单元的隐藏层向量，表达自顶向下的LSTM-RNN中的第一个和第二个目标单词。所有相应的箭头都在图一表示了。</p>
+<p>和实体检测类似，我们也引入两层神经网络，$n_{h_r}$维隐藏层$h_{(r)}$以及softmax输出层（权重矩阵$W$，偏置向量$b$)</p>
+<p><div><br> <img src="/2019/11/02/Miwa-2016-note/5.png" title="公式5,6"></div></p>
+<div>
+
+<p>我们通过从树结构LSTM-RNNs堆叠在序列LSTM之上，来为关系分类构建输入$d_p$,因此sequence层对输入的贡献是间接的。<strong>此外，我们的模型使用单词表示实体，因此它不能完全使用实体信息，为减轻这个问题，我们直接从序列层到输入$d_p$串联每个实体的平均隐层状态向量进行关系分类</strong>，即：</p>
+<p><div><br> <img src="/2019/11/02/Miwa-2016-note/6.png" title="公式"></div></p>
+<div>
+
+<p>其中$I_{p_1}$和$I_{p_2}$代表第一和第二实体的索引集合。</p>
+<p>另外，由于考虑了从左到右和从右到左的方向，因此在预测中为每个单词对分配了2个标签。当预测标签不一致时，我们选择positive以及confident 的标签，类似(Xu,2015).</p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p>我们通过BPTT和Adam(Kingma and Ba, 2015)来更新模型参数(weights, biases, embeddings)，并使用了梯度裁剪，参数平均和L2正则化（我们规范权重$W$和$U$，而不是偏置项$b$)。我们还将dropout应用在embedding层和最终隐藏层，以进行实体检测和关系分类。</p>
+<p>我们引入2个增强：<strong>计划采样</strong>以及<strong>实体预训练</strong>，以解决训练早期实体的预测标签不可信的问题，并且鼓励从检测到的实体中鼓励构建positive的关系实例。在计划采样中，我们以概率$\epsilon_i$使用gold labels作为预测（如果gold label合法），该概率依赖于训练过程中epochs的数量i。至于$\epsilon_i$，我们选择反sigmod衰减</p>
+<p><div><br> <img src="/2019/11/02/Miwa-2016-note/7.png" title="公式"></div></p>
+<div>
+
+<p>其中$k (\geq 1)$是一个超参数，用来调整我们使用gold label做预测的频率。 实体预训练是由(Pentina,2015)激发的灵感，并且，我们在训练整个模型参数之前，使用训练数据来预训练实体探测模型。</p>
+<hr>
+<p><strong>小结</strong></p>
+<blockquote>
+<p>dependency layer采用了依存树结构，树中的节点通过Bi-LSTM连接。遍历所有预测出的实体的最后一个word（BIL的最后一个word或U对应的word）的所有组合，做为候选的word-pair。预测时，word-pair中的每个实体由三个向量拼接表示：对应的label-embedding,对应的sequence layer的hidden unit，与父节点的dependency embedding。然后在依存树中找到连接这两个实体的最短路（sptree）（有论文证实最短路有利于分析实体间的关系）。然后利用最短路通过softmax输出它们之间的关系，比如图中的Yates和Chicage就是一个word-pair，其中Yates的label是预测出的BL的组后一位L，Chicage的label是U，在依存树中它们的最短路如图所示。这也是本文的核心内容，看似依旧是pipeline式的抽取，但由于sequence layer的参数和embedding层的参数是用到了dependency layer的，就是说参数是共享的，所以实体抽取和关系抽取是互相影响的，但是并没有做到真正的联合抽取，因为是先抽取出实体，然后得到所有实体对之间的关系。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文论文题目是端到端的关系抽取，但利用了NER作为辅助任务帮助关系抽取，可以说是实体和关系联合抽取的开山之作，所以往后的论文都会拿出来吊打一波。预测实体时忽略了标签之间的长依赖关系， (Y. H. Suncong Zheng n.d.)利用LSTM解码器解决了标签的长依赖问题[1]；预测好实体后，两两配对后输入到关系分类模块中识别它们之间的关系，因为不存在关系的实体对也输入到关系分类模块中，造成信息冗余，增加了错误率， (Suncong Zheng 2017)提出了新颖的标注机制解决了信息冗余的问题[2]。</p>
+<p><strong>这篇文章有哪些缺点</strong></p>
+<blockquote>
+<p>1.预测实体时忽略了标签之间的长依赖关系.<br>2.预测好实体后，两两配对后输入到关系分类模块中识别它们之间的关系，因为不存在关系的实体对也输入到关系分类模块中，造成信息冗余，增加了错误</p>
+</blockquote>
+<p><strong>作者的构思有哪些</strong></p>
+<blockquote>
+<p>在关系抽取中词序信息和树结构信息是可以互补的。因此，作者提出了一种新颖的端到端模型，基于词序信息和依存树结构信息来抽取实体间的关系。该模型使用了双向的LSTM和tree-LSTM结构，同时抽取实体及其关系。</p>
+</blockquote>
+<p><strong>后来的改进有哪些</strong></p>
+<blockquote>
+<p>[1]. Suncong Zheng, Yuexing Hao, Dongyuan Lu, Hongyun Bao, Jiaming Xu, Hongwei Hao, Bo Xu. “<strong>Joint entity and relation extraction based on a hybrid neural network</strong>.” Neurocomputing 257, n.d.: 59-66 (2017).<br>利用LSTM解码器解决了标签的长依赖问题<br>[2]. Suncong Zheng, Feng Wang, Hongyun Bao, Yuexing Hao, Peng Zhou, Bo Xu. “<strong>Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme</strong>.” ACL (1), 2017: 1227-1236.<br>提出了新颖的标注机制解决了信息冗余的问题</p>
+</blockquote>
+<p>链接：<br><a href="https://blog.csdn.net/guolindonggld/article/details/79547284" target="_blank" rel="noopener">https://blog.csdn.net/guolindonggld/article/details/79547284</a><br><a href="https://blog.csdn.net/qq_21460525/article/details/74918242" target="_blank" rel="noopener">https://blog.csdn.net/qq_21460525/article/details/74918242</a><br><a href="https://www.cnblogs.com/robert-dlut/p/7710735.html" target="_blank" rel="noopener">https://www.cnblogs.com/robert-dlut/p/7710735.html</a><br><a href="https://blog.csdn.net/bobobe/article/details/82867239" target="_blank" rel="noopener">https://blog.csdn.net/bobobe/article/details/82867239</a><br><a href="https://www.cnblogs.com/theodoric008/p/7874373.html" target="_blank" rel="noopener">https://www.cnblogs.com/theodoric008/p/7874373.html</a><br><a href="https://www.sohu.com/a/165856071_465975" target="_blank" rel="noopener">https://www.sohu.com/a/165856071_465975</a><br><a href="https://blog.csdn.net/qq_32782771/article/details/89404573" target="_blank" rel="noopener">https://blog.csdn.net/qq_32782771/article/details/89404573</a></p>
+</div></div></div></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年11月07日 23:13</p>
+        <p>原始链接： <a class="post-url" href="/2019/11/02/Miwa-2016-note/" title="【论文笔记】End-to-End Relation Extraction using LSTMs on Sequences and Tree">/2019/11/02/Miwa-2016-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/11/02/Miwa-2016-note/&title=《【论文笔记】End-to-End Relation Extraction using LSTMs on Sequences and Tree》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/48.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/11/02/Miwa-2016-note/&title=《【论文笔记】End-to-End Relation Extraction using LSTMs on Sequences and Tree》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/11/02/Miwa-2016-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】End-to-End Relation Extraction using LSTMs on Sequences and Tree》 — Fishwinwin&url=/2019/11/02/Miwa-2016-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/11/02/Miwa-2016-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/11/02/Miwa-2016-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+    <a href="/tags/联合抽取/" class="color5">联合抽取</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模型"><span class="post-toc-text">模型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#嵌入层-Embedding-Layer"><span class="post-toc-text">嵌入层 Embedding Layer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#序列层-Sequence-Layer"><span class="post-toc-text">序列层 Sequence Layer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实体检测-Entity-Detection"><span class="post-toc-text">实体检测 Entity Detection</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#依赖层-Dependency-Layer"><span class="post-toc-text">依赖层 Dependency Layer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#堆叠序列层和依赖层"><span class="post-toc-text">堆叠序列层和依赖层</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关系分类"><span class="post-toc-text">关系分类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#训练"><span class="post-toc-text">训练</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/11/03/leetcode-5247/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【LeetCode】5247.交换字符使得字符串相同
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/29/leetcode-89/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【LeetCode】89.格雷编码</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

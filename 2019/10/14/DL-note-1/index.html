@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【DL】学习笔记(持续更新) | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="放上几个学习的链接：https://www.jianshu.com/p/fe114409daafhttps://www.jianshu.com/p/c0215d26d20a莫烦的超棒学习资源 Logistic回归总结： Logistic Regression模型：$y’ = \sigma(W^tx+b)$，记住使用的激活函数是sigmoid函数。 损失函数：$L(y’,y) = -[y·\log(">
+<meta name="keywords" content="笔记,DL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【DL】学习笔记(持续更新)">
+<meta property="og:url" content="/2019/10/14/DL-note-1/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="放上几个学习的链接：https://www.jianshu.com/p/fe114409daafhttps://www.jianshu.com/p/c0215d26d20a莫烦的超棒学习资源 Logistic回归总结： Logistic Regression模型：$y’ = \sigma(W^tx+b)$，记住使用的激活函数是sigmoid函数。 损失函数：$L(y’,y) = -[y·\log(">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/10/14/DL-note-1/1.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/2.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/3.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/4.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/5.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/6.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/7.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/8.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/9.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/10.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/11.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/12.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/13.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/14.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/24.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/25.jpg">
+<meta property="og:image" content="/2019/10/14/DL-note-1/26.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/27.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/28.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/18.jpg">
+<meta property="og:image" content="/2019/10/14/DL-note-1/19.jpg">
+<meta property="og:image" content="/2019/10/14/DL-note-1/20.jpg">
+<meta property="og:image" content="/2019/10/14/DL-note-1/21.jpg">
+<meta property="og:image" content="/2019/10/14/DL-note-1/22.jpg">
+<meta property="og:image" content="/2019/10/14/DL-note-1/23.jpg">
+<meta property="og:image" content="/2019/10/14/DL-note-1/29.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/30.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/31.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/32.png">
+<meta property="og:updated_time" content="2019-11-07T06:50:26.911Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【DL】学习笔记(持续更新)">
+<meta name="twitter:description" content="放上几个学习的链接：https://www.jianshu.com/p/fe114409daafhttps://www.jianshu.com/p/c0215d26d20a莫烦的超棒学习资源 Logistic回归总结： Logistic Regression模型：$y’ = \sigma(W^tx+b)$，记住使用的激活函数是sigmoid函数。 损失函数：$L(y’,y) = -[y·\log(">
+<meta name="twitter:image" content="/2019/10/14/DL-note-1/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-DL-note-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【DL】学习笔记(持续更新)
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/DL/">DL</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-14
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>放上几个学习的链接：<br><a href="https://www.jianshu.com/p/fe114409daaf" target="_blank" rel="noopener">https://www.jianshu.com/p/fe114409daaf</a><br><a href="https://www.jianshu.com/p/c0215d26d20a" target="_blank" rel="noopener">https://www.jianshu.com/p/c0215d26d20a</a><br><a href="morvanzhou.github.io">莫烦的超棒学习资源</a></p>
+<h1 id="Logistic回归"><a href="#Logistic回归" class="headerlink" title="Logistic回归"></a>Logistic回归</h1><h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><ol>
+<li>Logistic Regression模型：$y’ = \sigma(W^tx+b)$，记住使用的激活函数是<strong>sigmoid函数</strong>。</li>
+<li>损失函数：$L(y’,y) = -[y·\log(y’)+(1-y)·\log(1-y’)]$衡量预测值y’与真实值y的差距，越小越好。</li>
+<li>代价函数：损失均值，$J(W,b) = \frac {1} {m}·\sum_{i=1}^{m} {L(y’(i),y(i)})$，是$W$和$b$的函数，学习的过程就是寻找$W$和$b$使得$J(W,b)$<strong>最小化</strong>的过程。求最小值的方法是用<strong>梯度下降法</strong>。</li>
+<li><strong>模型训练步骤</strong><br>1)初始化W和b<br>2)指定学习率和迭代次数<br>3)每次迭代，根据当前W和b计算对应的梯度（J对W，b的偏导数），然后更新W和b<br>4)迭代结束，学得W和b，带入模型进行预测，分别测试在训练集和测试集上的准确率，从而评价模型。</li>
+</ol>
+<p>参考：<a href="https://www.jianshu.com/p/4cf34bf158a1" target="_blank" rel="noopener">https://www.jianshu.com/p/4cf34bf158a1</a></p>
+<h1 id="神经网络详解"><a href="#神经网络详解" class="headerlink" title="神经网络详解"></a>神经网络详解</h1><h3 id="什么是神经网络"><a href="#什么是神经网络" class="headerlink" title="什么是神经网络"></a>什么是神经网络</h3><p>我们这里讲解的神经网络，就是在Logistic regression的基础上增加了一个或几个隐层（hidden layer），下面展示的是一个最最最简单的神经网络，只有两层：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/1.png" title="graph1"></div></p>
+<div>
+
+<p>这里，我们先规定一下记号（Notation）：</p>
+<ul>
+<li>z是x和w、b线性运算的结果，z=wx+b；</li>
+<li>a是z的激活值；</li>
+<li>下标的1,2,3,4代表该层的第i个神经元（unit）；</li>
+<li>上标的[1],[2]等代表当前是第几层。</li>
+<li>y^代表模型的输出，y才是真实值，也就是标签</li>
+</ul>
+<p>另外，有一点经常搞混：</p>
+<ul>
+<li>上图中的x1，x2，x3，x4<strong>不是</strong>代表4个样本！<br>而是<strong>一个样本的四个特征</strong>（4个维度的值）！<br>你如果有m个样本，代表要把上图的过程重复m次：</li>
+</ul>
+<p><div><br> <img src="/2019/10/14/DL-note-1/2.png" title="graph2"></div></p>
+<div>
+
+<h3 id="神经网络的“两个传播”："><a href="#神经网络的“两个传播”：" class="headerlink" title="神经网络的“两个传播”："></a>神经网络的“两个传播”：</h3><ul>
+<li><p><strong>前向传播</strong>（Forward Propagation）</p>
+<p> 前向传播就是从input，经过一层层的layer，不断计算每一层的z和a，最后得到输出y^ 的过程，计算出了y^，就可以根据它和真实值y的差别来计算损失（loss）。</p>
+</li>
+<li><p><strong>反向传播</strong>（Backward Propagation）<br> 反向传播就是根据损失函数L(y^,y)来反方向地计算每一层的z、a、w、b的偏导数（梯度），从而更新参数。</p>
+</li>
+</ul>
+<p><div><br> <img src="/2019/10/14/DL-note-1/3.png" title="graph3"></div></p>
+<div>
+
+<p>每经过一次前向传播和反向传播之后，参数就更新一次，然后用新的参数再次循环上面的过程。这就是神经网络训练的整个过程。</p>
+<h3 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h3><p>如果用for循环一个样本一个样本的计算，显然太慢，看过我的前几个笔记的朋友应该知道，我们是使用Vectorization，把m个样本压缩成一个向量X来计算，同样的把z、a都进行向量化处理得到Z、A，这样就可以对m的样本同时进行表示和计算了。</p>
+<p>这样，我们用公式在表示一下我们的两层神经网络的前向传播过程：<br><strong>Layer 1:</strong></p>
+<p>$Z^[1] = W^[1]·X + b^[1]$<br>$A^[1] = \sigma(Z^[1])$</p>
+<p><strong>Layer 2:</strong></p>
+<p>$Z^[2] = W^[2]·A^[1] + b^[2]$<br>$A^[2] = σ(Z^[2])$</p>
+<p>而我们知道，$X$其实就是$A^[0]$，所以不难看出:<br><strong>每一层的计算都是一样的：</strong></p>
+<p><strong>Layer i:</strong></p>
+<p>$Z^[i] = W^[i]·A^[i-1] + b^[i]$<br>$A^[i] = \sigma(Z^[i])$<br>（注：σ是sigmoid函数）<br>因此，其实不管我们神经网络有几层，都是将上面过程的重复。</p>
+<p>对于<strong>损失函数</strong>，就跟Logistic regression中的一样，使用<strong>“交叉熵（cross-entropy）”</strong>，公式就是</p>
+<blockquote>
+<p><strong>二分类问题：</strong></p>
+<p>$L(\hat{y},y) = -[y·log(\hat{y} )+(1-y)·log(1-\hat{y} )]$</p>
+<p><strong>多分类问题：</strong></p>
+<p>$L=-\sum y(j)·\hat{y}(j)$</p>
+</blockquote>
+<p>这个是每个样本的loss，我们一般还要计算整个样本集的loss，也称为cost，用J表示，J就是L的平均：<br>$J(W,b) = \frac{1}{m}·\sum_{i=1}^{m}{L(\hat{y}(i),y(i)})$</p>
+<p><strong>上面的求Z、A、L、J的过程就是正向传播。</strong></p>
+<h3 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h3><p>反向传播说白了根据根据J的公式对W和b求偏导，也就是求梯度。因为我们需要用梯度下降法来对参数进行更新，而更新就需要梯度。<br>但是，根据求偏导的链式法则我们知道，第l层的参数的梯度，需要通过l+1层的梯度来求得，因此我们求导的过程是“反向”的，这也就是为什么叫“反向传播”。</p>
+<p>各种<strong>深度学习框架TensorFlow、Keras</strong>，它们都是<strong>只需要我们自己构建正向传播过程</strong>，反向传播的过程是自动完成的。</p>
+<p>进行了反向传播之后，我们就可以根据每一层的参数的梯度来更新参数了，更新了之后，重复正向、反向传播的过程，就可以不断训练学习更好的参数了。</p>
+<h3 id="深层神经网络（Deep-Neural-Network）"><a href="#深层神经网络（Deep-Neural-Network）" class="headerlink" title="深层神经网络（Deep Neural Network）"></a>深层神经网络（Deep Neural Network）</h3><p>前面的讲解都是拿一个两层的很浅的神经网络为例的。<br>深层神经网络也没什么神秘，就是多了几个/几十个/上百个hidden layers罢了。<br>可以用一个简单的示意图表示：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/4.png" title="graph4"></div></p>
+<div>
+
+<p><strong>注意</strong>，在深层神经网络中，我们在中间层使用了<strong>“ReLU”激活函数</strong>，而不是sigmoid函数了，只有在最后的输出层才使用了sigmoid函数，这是<strong>因为ReLU函数在求梯度的时候更快，还可以一定程度上防止梯度消失现象，因此在深层的网络中常常采用。</strong>关于激活函数的问题，可以参阅：<br><a href="https://www.jianshu.com/p/24621c68dd9d" target="_blank" rel="noopener">神经网络中的激活函数及其对比</a></p>
+<p>关于深层神经网络，我们有必要再详细的观察一下它的结构，尤其是<strong>每一层的各个变量的维度</strong>，毕竟我们在搭建模型的时候，维度至关重要。</p>
+<h1 id="超快速理解深度学习的概念"><a href="#超快速理解深度学习的概念" class="headerlink" title="超快速理解深度学习的概念"></a>超快速理解深度学习的概念</h1><p>先理解，再看公式，其实公式就是在表达这个意思的数学语言而已。</p>
+<h3 id="优化器-Optimizer-加速神经网络训练过程"><a href="#优化器-Optimizer-加速神经网络训练过程" class="headerlink" title="优化器 Optimizer - 加速神经网络训练过程"></a>优化器 Optimizer - 加速神经网络训练过程</h3><p> 越复杂的网络，越多数据，训练花费的时间也就越多，因为计算量太大了。</p>
+<blockquote>
+<p>SGD 随机梯度下降：每次使用一个样本对参数进行更新。<br>BGD 批量梯度下降：每次使用所有样本进行梯度的更新。<br>MBGD 小批量梯度下降：上两种的折中，每次使用 <strong>batch_size</strong>个样本对参数进行更新。</p>
+<p>具体公式推导请参考：<a href="https://www.cnblogs.com/lliuye/p/9451903.html" target="_blank" rel="noopener">BGD,SGD,MBGD的理解</a><br><a href="https://www.cnblogs.com/bonelee/p/8392370.html" target="_blank" rel="noopener">深度学习必备：随机梯度下降（SGD）优化算法及可视化</a></p>
+</blockquote>
+<p>如果觉得SGD还不够快，怎么办？ 其实还有很多方法。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/5.png" title="graph5"></div></p>
+<p><div><br>大多其他方法是在更新神经网络参数的那一步上动动手脚。</div></p>
+<p>传统参数$W$的更新：<br>将原始<code>w</code>累加 - 学习率 * 校正值<br>$W += - Leraning rate \times \delta x$<br>这种方法可能会让学习曲折无比：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/6.png" title="graph6"></div></p>
+<div>
+
+<p>将走路的人放在一个下坡上，这样他走路的时候就不自觉地向下走，弯路也会变少，这是Momentum的更新方法：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/7.png" title="graph7"></div></p>
+<div>
+
+<p>AdaGrad，在学习率上动动手脚，使得每个参数的更新都有与众不同的学习效率，与Momentum不同，给他一个不好走路的鞋子，当他斜着走路的时候就会脚疼，逼着他直走。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/8.png" title="graph8"></div></p>
+<div>
+
+<p>结合Momentum和AdaGrad于是有了RMSProp</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/9.png" title="graph9"></div></p>
+<div>
+
+<p>但是会发现，关于学习率的部分并没有体现到，于是有了Adam方法.</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/10.png" title="graph10"></div></p>
+<div>
+
+<p>大多数时候使用Adam都能又快又好。</p>
+<h3 id="为什么需要激活函数-Activation-Functions"><a href="#为什么需要激活函数-Activation-Functions" class="headerlink" title="为什么需要激活函数 Activation Functions"></a>为什么需要激活函数 Activation Functions</h3><p>激活函数就是用来解决不能用线性方程解决的问题。（把线性方程掰弯）</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/11.png" title="graph10"></div></p>
+<div>
+
+<p>激活函数（非线性方程）套在$Wx$上，就可以达到效果。</p>
+<p>激活函数必须是可微分的，因为在反向传播的时候只有可微分的激励函数才能把误差传递回去。</p>
+<p>激活函数有：</p>
+<p>relu、sigmoid、tanh</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/12.png" title="graph10"><br> <img src="/2019/10/14/DL-note-1/13.png" title="graph10"><br> <img src="/2019/10/14/DL-note-1/14.png" title="graph10"></div></p>
+<div>
+
+<p><strong>层数较少时可以任选</strong><br><strong>CNN推荐relu</strong><br><strong>RNN推荐relu或tanh</strong></p>
+<p>更详细参考：<a href="https://blog.csdn.net/rogerchen1983/article/details/79380567" target="_blank" rel="noopener">深度学习中常用的激励函数</a></p>
+<h3 id="为什么要特征标准化-Feature-Normalization？"><a href="#为什么要特征标准化-Feature-Normalization？" class="headerlink" title="为什么要特征标准化 Feature Normalization？"></a>为什么要特征标准化 Feature Normalization？</h3><p>多个特征往往有不同的量纲和数量级，当他们之间差别过大时，如果直接用原始数据进行分析，那么数值较高的特征往往会起更大的作用，削弱数值较低特征的作用，因此需要对特征进行标准化处理。</p>
+<p>常用的标准化方法有两种：</p>
+<blockquote>
+<p>1.minmax normalization：将特征缩放到[0,1]区间</p>
+<p>2.std normalization：将数据缩放到（均值mean = 0，标准差std = 1）的区间</p>
+</blockquote>
+<p>更多参考：<br><a href="https://blog.csdn.net/zhaobinbin2015/article/details/81228027" target="_blank" rel="noopener">数据特征 标准化和归一化你了解多少？</a><br><a href="https://blog.csdn.net/bbbeoy/article/details/70185798" target="_blank" rel="noopener">三种常用数据标准化方法</a></p>
+<h3 id="为什么要-批标准化-Batch-Normalization"><a href="#为什么要-批标准化-Batch-Normalization" class="headerlink" title="为什么要 批标准化 Batch Normalization?"></a>为什么要 批标准化 Batch Normalization?</h3><p><strong>神经网络的输入层会发生什么问题？</strong></p>
+<p>当数据取值范围差距过大时，如下图，经过激活函数后$tanh(Wx2)\approx 0.96 $，很接近1了，因此神经网络在初期就对那些比较大的x的特征范围不敏感了。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/24.png" title="graph24"></div></p>
+<div>
+
+<p>这个问题可以通过上面的<strong>标准化</strong>来解决，但这个不敏感问题不仅仅发生在神经网络的输入层，在隐藏层中也常常会发生。</p>
+<p>这就是<code>Batch Normalization</code>来处理的。</p>
+<blockquote>
+<p>把数据分成小批小批的进行SGD，在每批数据进行前向传递的时候，对每一层都进行Normalization 的处理。</p>
+</blockquote>
+<p>Batch Normalization也可以被看作一个层面。它被添加在<strong>全连接层和激励函数之间</strong>。使激活前的数据分布在有效的范围内。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/25.jpg" title="graph25"><br> <img src="/2019/10/14/DL-note-1/26.png" title="graph26"></div></p>
+<div>
+
+<p>Batch Normalization还进行了反向Normalize。将标准化后的数据进行扩展和平移。是为了让神经网络自己学会使用和修改扩展参数$\gamma$ 和平移参数$\beta$,这样神经网络就能慢慢琢磨出来前面的Normalization操作是否起到优化作用，如果没起到优化作用，就使用$\gamma$和$\beta$来抵消一些Normalization的操作</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/27.png" title="graph27"></div></p>
+<div>
+
+<p><strong>Batch Normalization的总结</strong>：</p>
+<blockquote>
+<p>让每一层的值在有效的范围内传递下去。</p>
+</blockquote>
+<p><div><br> <img src="/2019/10/14/DL-note-1/28.png" title="graph28"></div></p>
+<div>
+
+
+<h3 id="什么是卷积神经网络-Convolutional-Neural-Network"><a href="#什么是卷积神经网络-Convolutional-Neural-Network" class="headerlink" title="什么是卷积神经网络 Convolutional Neural Network"></a>什么是卷积神经网络 Convolutional Neural Network</h3><p>基本概念参考<br><a href="https://blog.51cto.com/gloomyfish/2108390" target="_blank" rel="noopener">理解CNN卷积层与池化层计算</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650717691&amp;idx=2&amp;sn=3f0b66aa9706aae1a30b01309aa0214c#rd" target="_blank" rel="noopener">一片超棒的CNN学习资料</a></p>
+<p><strong>比较流行的搭建结构（在图片分类）是：</strong></p>
+<p>Classifier 分类器进行分类预测<br>Fully Connected 全连接层<br>Fully Connected 全连接层<br>Max Pooling 池化<br>Convolution 卷积层<br>Max Pooling 池化<br>Convolution 卷积层<br>IMAGE 输入的图片</p>
+<p>—预留例子的补充—</p>
+<h3 id="什么是循环神经网络-Recurrent-Neural-Network"><a href="#什么是循环神经网络-Recurrent-Neural-Network" class="headerlink" title="什么是循环神经网络 Recurrent Neural Network"></a>什么是循环神经网络 Recurrent Neural Network</h3><p>RNN是一种特殊的神经网络结构, 它是根据”人的认知是基于过往的经验和记忆”这一观点提出的. 它与DNN,CNN不同的是: 它不仅考虑前一时刻的输入,而且赋予了网络对前面的内容的一种<strong>‘记忆’</strong>功能.</p>
+<p>RNN之所以称为<strong>循环神经网络</strong>，即一个序列当前的输出与前面的输出也有关。具体的表现形式为网络会对前面的信息进行记忆并应用于当前输出的计算中，即隐藏层之间的节点不再无连接而是有连接的，并且隐藏层的输入不仅包括输入层的输出还包括上一时刻隐藏层的输出。</p>
+<p><strong>应用领域</strong></p>
+<ul>
+<li>自然语言处理(NLP): 主要有视频处理, 文本生成, 语言模型, 图像处理</li>
+<li>机器翻译, 机器写小说</li>
+<li>语音识别</li>
+<li>图像描述生成</li>
+<li>文本相似度计算</li>
+<li>音乐推荐、网易考拉商品推荐、Youtube视频推荐等新的应用领域.</li>
+</ul>
+<p>更具体的模型内容参考：<br><a href="https://blog.csdn.net/qq_32241189/article/details/80461635" target="_blank" rel="noopener">深度学习之RNN(循环神经网络)</a><br><a href="https://blog.csdn.net/weixin_42137700/article/details/94772567" target="_blank" rel="noopener">这篇很ok，一文看懂循环神经网络-RNN（独特价值+优化算法+实际应用）</a><br><a href="https://www.jianshu.com/p/77708f3bd230" target="_blank" rel="noopener">如何深度理解RNN？——看图就好！</a></p>
+<p><strong>如何让NN分析数据间的关联呢？</strong><br>分析Data 0的时候把结果存入记忆，分析Data 1的时候会产生新记忆，但新记忆和老记忆没有关系，因此就把老记忆调用过来一起分析。</p>
+<p><div class="image-size-80"><br> <img src="/2019/10/14/DL-note-1/18.jpg" title="graph18"></div></p>
+<div>
+
+<p><div class="image-size-80"><br> <img src="/2019/10/14/DL-note-1/19.jpg" title="graph19"></div></p>
+<div>
+
+<p><strong>RNN的结构很自由</strong></p>
+<p>用于分类问题：例如语句的情感分析，可以用只有最后一个时间点输出判断结果。</p>
+<p><div class="image-size-80"><br> <img src="/2019/10/14/DL-note-1/20.jpg" title="graph20"></div></p>
+<div>
+
+<p>用于图片描述：只需要一个输入，输出对图片描述的一段话</p>
+<p><div class="image-size-80"><br> <img src="/2019/10/14/DL-note-1/21.jpg" title="graph21"></div></p>
+<div>
+
+<p>用于翻译：给出英文翻译成中文</p>
+<p><div class="image-size-80"><br> <img src="/2019/10/14/DL-note-1/22.jpg" title="graph22"></div></p>
+<div>
+
+<h3 id="什么是-LSTM-RNN？"><a href="#什么是-LSTM-RNN？" class="headerlink" title="什么是 LSTM RNN？"></a>什么是 LSTM RNN？</h3><p>LSTM：Long Short-Term Memory 长短期记忆，是当下流行的RNN形式之一。</p>
+<p>RNN会有梯度消失(gradient vanishing)和梯度爆炸(gradient exploding)的问题。<br>关于梯度消失，更多参考：</p>
+<blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/28687529" target="_blank" rel="noopener">RNN梯度消失和爆炸的原因</a><br><a href="https://blog.csdn.net/qq_29340857/article/details/70556307" target="_blank" rel="noopener">深度学习中RNN梯度消失</a><br><a href="https://zhuanlan.zhihu.com/p/28749444" target="_blank" rel="noopener">LSTM如何解决梯度消失问题</a></p>
+</blockquote>
+<p>LSTM是为了解决这个问题产生的，它比RNN多了3个控制器。<code>输入</code>,<code>输出</code>,<code>忘记</code></p>
+<p><div class="image-size-80"><br> <img src="/2019/10/14/DL-note-1/23.jpg" title="graph23"></div></p>
+<div>
+
+<p>LSTM的超棒教程：<a href="https://www.jiqizhixin.com/articles/2018-10-24-13" target="_blank" rel="noopener">BiLSTM介绍及代码实现</a></p>
+<h3 id="什么是自编码-Autoencoder-？"><a href="#什么是自编码-Autoencoder-？" class="headerlink" title="什么是自编码 Autoencoder ？"></a>什么是自编码 Autoencoder ？</h3><p>自编码器是一种能够通过无监督学习，学到输入数据高效表示的人工神经网络。输入数据的这一高效表示称为编码（codings），其维度一般远小于输入数据，使得自编码器可用于降维。更重要的是，自编码器可作为强大的特征检测器（feature detectors），应用于深度神经网络的预训练。此外，自编码器还可以随机生成与训练数据类似的数据，这被称作生成模型（generative model）。比如，可以用人脸图片训练一个自编码器，它可以生成新的图片。</p>
+<p>更多参考：<br><a href="https://www.cnblogs.com/royhoo/p/Autoencoders.html" target="_blank" rel="noopener">第十五章——自编码器（Autoencoders）</a></p>
+<h3 id="什么是超参数"><a href="#什么是超参数" class="headerlink" title="什么是超参数"></a>什么是超参数</h3><ol>
+<li><p><strong>参数(parameters)/模型参数</strong></p>
+<blockquote>
+<p>由模型通过学习得到的变量，比如权重和偏置</p>
+</blockquote>
+</li>
+<li><p><strong>超参数(hyperparameters)/算法参数</strong></p>
+<blockquote>
+<p>根据经验进行设定，影响到权重和偏置的大小，比如迭代次数、隐藏层的层数、每层神经元的个数、学习速率等.</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="什么是消融实验（Ablation-experiment"><a href="#什么是消融实验（Ablation-experiment" class="headerlink" title="什么是消融实验（Ablation experiment)"></a>什么是消融实验（Ablation experiment)</h3><p>该想法源自于神经科学领域的研究，该领域的主要目标是理解我们的大脑是如何工作的。</p>
+<p>许多关于大脑功能的见解看法都是通过消融研究获得的，本质上来说，消融即选择性地切除或破坏大脑特定区域的组织，以可控的方式进行消融，检测大脑该部分对诸如言语生成、运动等日常工作的影响。</p>
+<p>在人工神经网络上应用消融的方法十分简单的，首先，我们训练神经网络来完成特定的任务，比如说识别手写数字。第二步，我们切除网络的某一部分，然后评估由这种破坏导致的性能变化。第三步，我们确定网络性能的改变和被破坏的位置之间是否有联系。通过这种方法，我们发现网络的某些特定能力，比如控制机器人执行前进动作，是通过局部网络控制的。</p>
+<p>更多：<a href="https://blog.csdn.net/cf2SudS8x8F0v/article/details/86521408" target="_blank" rel="noopener">对人工神经网络“开刀”，利用神经科学消融法检测人工神经网络</a></p>
+<h3 id="什么是encoder-decoder模型框架？"><a href="#什么是encoder-decoder模型框架？" class="headerlink" title="什么是encoder-decoder模型框架？"></a>什么是encoder-decoder模型框架？</h3><p>准确的说，Encoder-Decoder并不是一个具体的模型，而是一类框架。Encoder和Decoder部分可以是任意的文字，语音，图像，视频数据，模型可以采用CNN，RNN，BiRNN、LSTM、GRU等等。所以基于Encoder-Decoder，我们可以设计出各种各样的应用算法。</p>
+<h3 id="什么是Seq2Seq？"><a href="#什么是Seq2Seq？" class="headerlink" title="什么是Seq2Seq？"></a>什么是Seq2Seq？</h3><p>更多来自：<a href="https://blog.csdn.net/program_developer/article/details/78752680" target="_blank" rel="noopener">轰炸理解深度学习里面的encoder-decoder模型</a></p>
+<p>所谓的Sequence2Sequence任务主要是泛指一些Sequence到Sequence的映射问题，Sequence在这里可以理解为一个字符串序列，当我们在给定一个字符串序列后，希望得到与之对应的另一个字符串序列（如 翻译后的、如语义上对应的）时，这个任务就可以称为Sequence2Sequence了。</p>
+<p>在现在的深度学习领域当中，通常的做法是将输入的源Sequence编码到一个中间的context当中，这个context是一个特定长度的编码（可以理解为一个向量），然后再通过这个context还原成一个输出的目标Sequence。 </p>
+<p>如果用人的思维来看，就是我们先看到源Sequence，将其读一遍，然后在我们大脑当中就记住了这个源Sequence，并且存在大脑的某一个位置上，形成我们自己的记忆（对应Context），然后我们再经过思考，将这个大脑里的东西转变成输出，然后写下来。</p>
+<p>那么我们大脑读入的过程叫做Encoder，即将输入的东西变成我们自己的记忆，放在大脑当中，而这个记忆可以叫做Context，然后我们再根据这个Context，转化成答案写下来，这个写的过程叫做Decoder。其实就是编码-存储-解码的过程。</p>
+<p>而对应的，大脑怎么读入（Encoder怎么工作）有一个特定的方式，怎么记忆（Context）有一种特定的形式，怎么转变成答案（Decoder怎么工作）又有一种特定的工作方式。</p>
+<p>好了，现在我们大体了解了一个工作的流程Encoder-Decoder后，我们来介绍一个深度学习当中，最经典的Encoder-Decoder实现方式，即用RNN来实现。</p>
+<p><div class="image-size-100"><br> <img src="/2019/10/14/DL-note-1/29.png" title="graph 29"></div></p>
+<div>
+
+<hr>
+<p>基本的Encoder-Decoder模型非常经典，但是也有局限性。最大的局限性就在于编码和解码之间的唯一联系就是一个固定长度的语义向量c。也就是说，编码器要将整个序列的信息压缩进一个固定长度的向量中去。但是这样做有两个弊端，一是语义向量无法完全表示整个序列的信息，还有就是先输入的内容携带的信息会被后输入的信息稀释掉，或者说，被覆盖了。输入序列越长，这个现象就越严重。这就使得在解码的时候一开始就没有获得输入序列足够的信息， 那么解码的准确度自然也就要打个折扣了.</p>
+<p>为解决这个问题，提出了Attention模型。</p>
+<h3 id="什么是Attention模型？"><a href="#什么是Attention模型？" class="headerlink" title="什么是Attention模型？"></a>什么是Attention模型？</h3><p>简单的说，这种模型在产生输出的时候，还会产生一个“注意力范围”表示接下来输出的时候要重点关注输入序列中的哪些部分，然后根据关注的区域来产生下一个输出，如此往复。模型的大概示意图如下所示:</p>
+<p><div class="image-size-100"><br> <img src="/2019/10/14/DL-note-1/30.png" title="graph 30"></div></p>
+<div>
+
+<p>相比于之前的encoder-decoder模型，attention模型<strong>最大的区别</strong>就在于<strong>它不在要求编码器将所有输入信息都编码进一个固定长度的向量之中</strong>。相反，此时编码器需要将输入编码成一个向量的序列，而在解码的时候，每一步都会选择性的从向量序列中挑选一个子集进行进一步处理。这样，在产生每一个输出的时候，都能够做到充分利用输入序列携带的信息。而且这种方法在翻译任务中取得了非常不错的成果。</p>
+<p>更多参考：<br><a href="https://blog.csdn.net/u011734144/article/details/80230633" target="_blank" rel="noopener">Encoder-Decoder模型和Attention模型</a><br><a href="https://samaelchen.github.io/deep_learning_step6/" target="_blank" rel="noopener">台大李宏毅深度学习——seq2seq</a><br><a href="https://www.cnblogs.com/hiyoung/p/9860561.html" target="_blank" rel="noopener">Attention注意力机制介绍</a></p>
+<h3 id="什么是dropout"><a href="#什么是dropout" class="headerlink" title="什么是dropout"></a>什么是dropout</h3><p>想要提高CNN的表达或分类能力，最直接的方法就是采用更深的网络和更多的神经元，即deeper and wider。但是，复杂的网络也意味着更加容易过拟合。于是就有了Dropout，大部分实验表明其具有一定的防止过拟合的能力。</p>
+<p>最早的Dropout可以看Hinton的这篇文章<br>《Improving neural networks by preventing co-adaptation of feature Detectors》</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/31.png" title="graph 31"></div></p>
+<div>
+
+<p>需要注意的是：论文中Dropout被使用在全连接层之后，而目前的caffe框架中，其可以使用在各种层之后。</p>
+<p>如上图左，为没有Dropout的普通2层全连接结构，记为 r=a(Wv)，其中a为激活函数。</p>
+<p>如上图右，为在第2层全连接后添加Dropout层的示意图。即在 模 型 训 练 时 随机让网络的某些节点不工作（输出置0），其它过程不变。</p>
+<p>对于Dropout这样的操作为何可以防止训练过拟合，原作者也没有给出数学证明，只是有一些直观的理解或者说猜想。下面说几个我认为比较靠谱的解释：</p>
+<p>(1) 由于随机的让一些节点不工作了，因此可以避免某些特征只在固定组合下才生效，有意识地让网络去学习一些普遍的共性（而不是某些训练样本的一些特性）</p>
+<p>(2) Bagging方法通过对训练数据有放回的采样来训练多个模型。而Dropout的随机意味着每次训练时只训练了一部分，而且其中大部分参数还是共享的，因此和Bagging有点相似。因此，Dropout可以看做训练了多个模型，实际使用时采用了模型平均作为输出<br>（具体可以看一下论文，论文讲的不是很明了，我理解的也够呛）</p>
+<p>训练的时候，我们通常设定一个dropout ratio = p,即每一个输出节点以概率 p 置0(不工作)。假设每一个输出都是相互独立的，每个输出都服从二项伯努利分布B(1-p)，则大约认为训练时 只使用了 (1-p)比例的输出。</p>
+<p>测试的时候，最直接的方法就是保留Dropout层的同时，将一张图片重复测试M次，取M次结果的平均作为最终结果。假如有N个节点，则可能的情况为R=2^N,如果M远小于R，则显然平均效果不好；如果M≈N，那么计算量就太大了。因此作者做了一个近似：可以直接去掉Dropout层，将所有输出 都使用 起来，为此需要将尺度对齐，即比例缩小输出 r=r*(1-p)。<br>即如下公式：<br>这里写图片描述<br>特别的， 为了使用方便，我们不在测试时再缩小输出，而在训练时直接将输出放大1/(1-p)倍。</p>
+<p>结论： Dropout得到了广泛的使用，但具体用到哪里、训练一开始就用还是后面才用、dropout_ratio取多大，还要自己多多尝试。有时添加Dropout反而会降低性能。</p>
+<p>更多参考：<br><a href="https://blog.csdn.net/seasermy/article/details/53760670" target="_blank" rel="noopener">理解droupout</a></p>
+<h3 id="什么是-beam-search"><a href="#什么是-beam-search" class="headerlink" title="什么是 beam search?"></a>什么是 beam search?</h3><p>集束搜索(beam search)：</p>
+<p>集束搜索可以认为是维特比算法的贪心形式，在维特比所有中由于利用动态规划导致当字典较大时效率低，而集束搜索使用beam size参数来限制在每一步保留下来的可能性词的数量。集束搜索是在测试阶段为了获得更好准确性而采取的一种策略，在训练阶段无需使用。</p>
+<p>假设字典为[a,b,c]，beam size选择2，则如下图有：</p>
+<p>1：在生成第1个词的时候，选择概率最大的2个词，那么当前序列就是a或b</p>
+<p>2：生成第2个词的时候，我们将当前序列a或b，分别与字典中的所有词进行组合，得到新的6个序列aa ab ac ba bb bc,然后从其中选择2个概率最高的，作为当前序列，即ab或bb</p>
+<p>3：不断重复这个过程，直到遇到结束符为止。最终输出2个概率最高的序列。</p>
+<p>显然集束搜索属于贪心算法，不能保证一定能够找到全局最优解，因为考虑到搜索空间太大，而采用一个相对的较优解。而维特比算法在字典大小较小时能够快速找到全局最优解。</p>
+<p>而贪心搜索由于每次考虑当下词的概率，而通常英文中有些常用结构，如“is going”，出现概率较大，会导致模型最终生成的句子过于冗余。如“is visiting”和“is going to be visiting”。贪心搜索可以认为beam size为1时的集束搜索特例。</p>
+<p>更多来自：<a href="https://blog.csdn.net/qq_16234613/article/details/83012046" target="_blank" rel="noopener">NLP 自然语言处理 集束搜索beam search和贪心搜索greedy search</a></p>
+<h3 id="什么是end2end"><a href="#什么是end2end" class="headerlink" title="什么是end2end"></a>什么是end2end</h3><p>传统的图像识别问题往往通过分治法将其分分解为预处理、特征提取和选择、分类器设计等若干步骤。分治法的动机是将图像识别的母问题分解为简单、可控且清晰的若干小的子问题。不过分步解决子问题时，尽管可以在子问题上得到最优解，但子问题上的最优解并不意味着就能得到全局问题的最后解。</p>
+<p>深度学习提供了一种“端到端”的学习范式，整个学习的流程并不进行人为的子问题划分，而是完全交给深度学习模型直接学习从原始数据到期望输出的映射。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/32.png" title="end2end"></div></p>
+<div>
+
+<p>如图所示，对深度模型而言，其输入数据是未经任何人为加工的原始样本形式，后续则是堆叠在输入层上的众多操作层。这些操作层整体可以看作一个复杂的函数Fcnn，最终的损失函数由数据损失（data loss）和模型参数的正则化损失（regularization loss）共同组成，模型深度的训练则是在最终损失驱动下对模型进行参数更新并将误差反向传播至网络各层。模型的训练可以简单抽象为从原始数据向最终目标的直接拟合，而中间的这些部件起到了将原始数据映射为特征随后在映射为样本标记的作用。</p>
+<p>总结一下：端到端的学习其实就是不做其他额外处理，从原始数据输入到任务结果输出，整个训练和预测过程，都是在模型里完成的。</p>
+<p><strong>end2end的好处：</strong></p>
+<p>​通过缩减人工预处理和后续处理，尽可能使模型从原始输入到最终输出，给模型更多的可以根据数据自动调节的空间，增加模型的整体契合度。end2end强调的是全局最优，中间部分局部最优并不能代表整体最优</p>
+<h3 id="什么是Scheduled-Sampling"><a href="#什么是Scheduled-Sampling" class="headerlink" title="什么是Scheduled Sampling"></a>什么是Scheduled Sampling</h3><p>基础模型只会使用真实lable数据作为输入， 现在，train-decoder不再一直都是真实的lable数据作为下一个时刻的输入。<br>train-decoder时以一个概率P选择模型自身的输出作为下一个预测的输入,以1-p选择真实标记作为下一个预测的输入。<br>Secheduled sampling(计划采样)，即采样率P在训练的过程中是变化的。<br>一开始训练不充分，先让P小一些，尽量使用真实的label作为输入，随着训练的进行，将P增大，多采用自身的输出作为下一个预测的输入。<br>随着训练的进行，P越来越大大，train-decoder模型最终变来和inference-decoder预测模型一样，消除了train-decoder与inference-decoder之间的差异</p>
+<p>总之：<br>通过这个scheduled-samping方案，抹平了训练decoder和预测decoder之间的差异！让预测结果和训练时的结果一样。</p>
+<p>更多参考：<a href="https://www.cnblogs.com/panfengde/p/10315576.html" target="_blank" rel="noopener">seq2seq聊天模型（二）——Scheduled Sampling</a></p>
+<h3 id="什么是反向传播算法（BP）？"><a href="#什么是反向传播算法（BP）？" class="headerlink" title="什么是反向传播算法（BP）？"></a>什么是反向传播算法（BP）？</h3><p>具体参考：<a href="https://www.jianshu.com/p/74bb815f612e" target="_blank" rel="noopener">读懂反向传播算法（bp算法）</a></p>
+</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年11月07日 14:50</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/14/DL-note-1/" title="【DL】学习笔记(持续更新)">/2019/10/14/DL-note-1/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/14/DL-note-1/&title=《【DL】学习笔记(持续更新)》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/18.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/14/DL-note-1/&title=《【DL】学习笔记(持续更新)》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/14/DL-note-1/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【DL】学习笔记(持续更新)》 — Fishwinwin&url=/2019/10/14/DL-note-1/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/14/DL-note-1/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/14/DL-note-1/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/DL/" class="color3">DL</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Logistic回归"><span class="post-toc-text">Logistic回归</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结："><span class="post-toc-text">总结：</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#神经网络详解"><span class="post-toc-text">神经网络详解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是神经网络"><span class="post-toc-text">什么是神经网络</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#神经网络的“两个传播”："><span class="post-toc-text">神经网络的“两个传播”：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#前向传播"><span class="post-toc-text">前向传播</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反向传播"><span class="post-toc-text">反向传播</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#深层神经网络（Deep-Neural-Network）"><span class="post-toc-text">深层神经网络（Deep Neural Network）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#超快速理解深度学习的概念"><span class="post-toc-text">超快速理解深度学习的概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优化器-Optimizer-加速神经网络训练过程"><span class="post-toc-text">优化器 Optimizer - 加速神经网络训练过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么需要激活函数-Activation-Functions"><span class="post-toc-text">为什么需要激活函数 Activation Functions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么要特征标准化-Feature-Normalization？"><span class="post-toc-text">为什么要特征标准化 Feature Normalization？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么要-批标准化-Batch-Normalization"><span class="post-toc-text">为什么要 批标准化 Batch Normalization?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是卷积神经网络-Convolutional-Neural-Network"><span class="post-toc-text">什么是卷积神经网络 Convolutional Neural Network</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是循环神经网络-Recurrent-Neural-Network"><span class="post-toc-text">什么是循环神经网络 Recurrent Neural Network</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-LSTM-RNN？"><span class="post-toc-text">什么是 LSTM RNN？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是自编码-Autoencoder-？"><span class="post-toc-text">什么是自编码 Autoencoder ？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是超参数"><span class="post-toc-text">什么是超参数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是消融实验（Ablation-experiment"><span class="post-toc-text">什么是消融实验（Ablation experiment)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是encoder-decoder模型框架？"><span class="post-toc-text">什么是encoder-decoder模型框架？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Seq2Seq？"><span class="post-toc-text">什么是Seq2Seq？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Attention模型？"><span class="post-toc-text">什么是Attention模型？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是dropout"><span class="post-toc-text">什么是dropout</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-beam-search"><span class="post-toc-text">什么是 beam search?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是end2end"><span class="post-toc-text">什么是end2end</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Scheduled-Sampling"><span class="post-toc-text">什么是Scheduled Sampling</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是反向传播算法（BP）？"><span class="post-toc-text">什么是反向传播算法（BP）？</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/15/leetcode-15/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【LeetCode】15. 三数之和
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/14/leetcode-11/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【LeetCode】11. 盛最多水的容器</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

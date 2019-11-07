@@ -2564,7 +2564,10 @@ pre .javascript .function {
   text-decoration: none;
 }
 .image-size-80 img {
-  width: 80%;
+  width: 70%;
+}
+.image-size-100 img {
+  width: 100%;
 }
 .pace {
   -webkit-pointer-events: none;

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Modeling Joint Entity and Relation Extraction with Table Representation | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要本文提出了一种基于历史的结构化学习方法，该方法可以联合抽取句子中的实体和关系。我们介绍了一种新的实体和关系的table表示形式。我们在table上不精确搜索的情况下，调查了几种特征设置，搜索顺序和学习方法，实验结果表明，联合学习方法通过合并全局特征并选择合适的学习方法和搜索顺序，大大优于pipeline方法。 结论本文提出了基于历史的结构化学习方法，可以共同检测实体和关系。我们介绍了一种新的实">
+<meta name="keywords" content="笔记,论文,NLP,关系抽取,联合抽取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Modeling Joint Entity and Relation Extraction with Table Representation">
+<meta property="og:url" content="/2019/10/28/Miwa-2014-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要本文提出了一种基于历史的结构化学习方法，该方法可以联合抽取句子中的实体和关系。我们介绍了一种新的实体和关系的table表示形式。我们在table上不精确搜索的情况下，调查了几种特征设置，搜索顺序和学习方法，实验结果表明，联合学习方法通过合并全局特征并选择合适的学习方法和搜索顺序，大大优于pipeline方法。 结论本文提出了基于历史的结构化学习方法，可以共同检测实体和关系。我们介绍了一种新的实">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/10/28/Miwa-2014-note/1.png">
+<meta property="og:image" content="/2019/10/28/Miwa-2014-note/2.png">
+<meta property="og:image" content="/2019/10/28/Miwa-2014-note/3.png">
+<meta property="og:image" content="/2019/10/28/Miwa-2014-note/4.png">
+<meta property="og:image" content="/2019/10/28/Miwa-2014-note/5.png">
+<meta property="og:image" content="/2019/10/28/Miwa-2014-note/6.png">
+<meta property="og:updated_time" content="2019-10-31T13:45:01.249Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Modeling Joint Entity and Relation Extraction with Table Representation">
+<meta name="twitter:description" content="摘要本文提出了一种基于历史的结构化学习方法，该方法可以联合抽取句子中的实体和关系。我们介绍了一种新的实体和关系的table表示形式。我们在table上不精确搜索的情况下，调查了几种特征设置，搜索顺序和学习方法，实验结果表明，联合学习方法通过合并全局特征并选择合适的学习方法和搜索顺序，大大优于pipeline方法。 结论本文提出了基于历史的结构化学习方法，可以共同检测实体和关系。我们介绍了一种新的实">
+<meta name="twitter:image" content="/2019/10/28/Miwa-2014-note/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Miwa-2014-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Modeling Joint Entity and Relation Extraction with Table Representation
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-28
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种基于历史的结构化学习方法，该方法可以联合抽取句子中的实体和关系。我们介绍了一种新的实体和关系的table表示形式。我们在table上不精确搜索的情况下，调查了几种特征设置，搜索顺序和学习方法，实验结果表明，联合学习方法通过合并全局特征并选择合适的学习方法和搜索顺序，大大优于pipeline方法。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>本文提出了基于历史的结构化学习方法，可以共同检测实体和关系。我们介绍了一种新的实体和关系table，可以联合表示实体和关系，并且展示如何将实体和关系抽取任务映射到一个简单的表填充问题。我们调查了先前研究中确定了的搜索顺序和学习方法。实验结果表明，联合学习方法比pipeline方法更优秀，正确选择学习方法和搜索顺序对于在此任务上产生高性能至关重要。在将来的工作中，我们计划将这种方法应用到其他关系抽取任务中并且为关系抽取任务探索更合适的搜索顺序。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>传统上从文本中抽取实体和关系被视为两个单独的子任务的pipeline：实体识别和关系抽取。这种分离使得任务易于处理，但忽略了子任务之间和内部的潜在依赖性。首先，由于实体识别不受关系抽取的影响，因此实体识别中的错误将会传播到关系抽取。其次，关系抽取通常被当做对成对实体的多分类问题，因此pairs之间的依赖被忽略了。</p>
+<p>这种依赖关系如图1所示，对于子任务之间的依赖，<em>Live_in</em>关系需要实体PER和LOC，反之亦然。对于子任务内的依赖，“Mrs.Tsutayama”和“Japan”间的关系<em>Live_in</em>可以从其他两个关系中推断出来。</p>
+<p><div><br> <img src="/2019/10/28/Miwa-2014-note/1.png" title="figure 1"></div></p>
+<div>
+
+<p>图1还显示了该任务具有灵活的图形结构，与其他NLP任务（POS标记和依存关系分析）不同，此结构通常不会覆盖句子中所有单词，因此在该任务中，局部约束被认为更重要。</p>
+<p>联合学习方法在模型中合并了这些依赖以及局部约束(Yang,2013;Singh,2013)，但是，大多数方法很耗时，并且采用由多个模型组成的复杂结构。Li和Ji（2014）最近提出了一种基于历史的结构化学习方法，该方法比其他方法更简单且计算效率更高。尽管该方法很有希望，但它仍然具有搜索的复杂性，并且由于其semi-Markov表示，部分地限制了搜索顺序，因此，尚未充分研究基于历史的学习的潜力。</p>
+<p>本文中，我们介绍了一个实体和关系table来解决在表示任务上的困难。我们提出实体和关系的联合抽取，使用基于历史的结构在table上学习。这种table表示将任务简化为表填充问题，并使任务具有足够的灵活性，以合并以前基于历史纪录的方法未解决的一些增强功能，例如解码中的搜索顺序，从关系到实体的全局特征以及不精确搜索的几种学习方法。</p>
+<h2 id="研究方法"><a href="#研究方法" class="headerlink" title="研究方法"></a>研究方法</h2><p>本节中，首先介绍实体和关系table，该table用于表示句子中的整个实体和关系结构。然后，在该table上概述我们的模型。最后解释模型中的decoding，learning，search order和features。</p>
+<h3 id="实体和关系表-Entity-and-realtion-table"><a href="#实体和关系表-Entity-and-realtion-table" class="headerlink" title="实体和关系表(Entity and realtion table)"></a>实体和关系表(Entity and realtion table)</h3><p>在这项工作中解决的任务是从句子中提取实体和他们之间的关系。实体是类型化的并且可能跨越多个单词，关系是类型化并且直接的。</p>
+<p>我们使用单词来表示实体和关系。假设实体不重叠。我们采用BILOU（Begin，Inside，Last，Outside，Unit）编码方案，该方案已证明优于传统的BIO方法（Ratinov and Roth，2009），并且我们将证明该方法会引起单词之间以及单词和关系间的标签依赖（label dependencies）。</p>
+<p>根据与单词对应的实体的相对位置和实体类型，将标签分配给单词。关系用类型和方向表示。<code>⊥</code>表示非关系对，<code>→</code>表示从左到右，<code>←</code>表示从右到左。关系定义在单词上而非实体，因为抽取关系时并不总是给出实体。实体上的关系被映射到实体最后一个词上的关系。 </p>
+<p>基于这种表示，我们提出实体和关系table，能够联合表示句子中的实体和关系。图2阐述了与图1中例子相关的实体和关系table。由于表格对称，我们只用下三角，因此当句子中有$n$个单词时，共有$n(n+1)/2$个单元格。通过这种实体和关系table的表示，联合抽取问题被映射为表填充问题，因为标签被分配给table的单元格。</p>
+<p><div class="image-size-100"><br> <img src="/2019/10/28/Miwa-2014-note/2.png" title="figure 2"></div></p>
+<div>
+
+<blockquote>
+<p>稍微解释一下表格的意义，对角线是用BILOU编码表示每个单词的编码，如<code>Mrs.</code>是人名的起始，<code>Tsutayama</code>是人名的结束，<code>is</code>和<code>from</code>是实体之外的词（用<code>O</code>表示），<code>Japan</code>是用一个单词就能表示的实体，因此用<code>Unit</code>来表示。</p>
+<p>通过<code>Tsutayama</code>能够推出与<code>Kumamoto Prefecture</code>的<em>Live_in</em>关系，以此类推。</p>
+</blockquote>
+<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>我们通过基于历史的结构化学习方法处理表填充问题，该方法一个一个地为单元格分配标签。除了table表示之外，这和传统基于历史的模型（Collins，2002）很相似。</p>
+<p>假设$\bf x$是输入表，$\bf Y(x)$是对该表的所有可能赋值，$s(\bf x,y)$是一个打分函数，用于评估$y \in \bf Y(x)$对$\bf x$的取值。根据这些定义，我们定义了模型来预测最有可能的分配：</p>
+<p><div><br> <img src="/2019/10/28/Miwa-2014-note/3.png" title="公式1"></div></p>
+<div>
+
+<p>这个打分函数是可分解的，每个分解函数都会对分配给表中单元格的标签进行评估。</p>
+<p><div><br> <img src="/2019/10/28/Miwa-2014-note/4.png" title="公式2"></div></p>
+<div>
+
+<p>此处，$i$代表单元格的索引，将在<code>Table-to-sequence mapping</code>一节解释。分解函数$s(\bf x,y,\it 1,i)$对应第$i$个单元格。分解函数表示为线性模型，即，特征及其对应权重的内积。<br>$s(\bf x,y, \it 1,i) = \bf w\cdot f(x,y,\it,1,i) \tag{3}$</p>
+<p>打分函数随后被划分为如下两个函数：<br>$s(\bf x,y, \it 1,i) = s_{local}(\bf x,y,\it i) + s_{global}(\bf x,y,\it 1,i) \tag{4}$</p>
+<p>此处，$ s_{local}(\bf x,y,\it i)$是局部打分函数，它在不考虑其他分配的情况下评估了对第$i$个单元的分配。而$ s_{global}(\bf x,y,\it 1,i)$是全局打分函数，它在第1个到第$i-1$个分配的上下文中评估每个分配。该全局打分函数表示实体之间，关系之间以及实体和关系之间的依赖性。同样，特征$\bf f$被划分为局部特征$\bf f_{local}$以及全局特征$f_{global}$,他们被定义在目标单元格以及周围的上下文中。特征将在<code>Features</code>部分解释。权重$\bf w$也能划分，但是在学习中可以共同调整他们。</p>
+<h3 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h3><p>公式(2)中的打分函数$s(\bf x,y,\it 1,i)$使用所有之前的分配并且不依赖于马尔可夫假设，因此我们不能使用动态规划。</p>
+<p>相反，我们使用集束搜索来找到得分最高的最佳分配（Collins and Roark,2004)。在从一个单元格移动到下一个单元格时，集束搜索依次为单元格分配标签，并保持最好的K个分配。用于解码的集束搜索伪代码如图3所示：</p>
+<p><div><br> <img src="/2019/10/28/Miwa-2014-note/5.png" title="图3"></div></p>
+<div>
+
+<p>我们将在下面的子章节解释如何将table映射到序列(第2行)，以及如何计算可能的分配（第6行）。</p>
+<h4 id="table-到-sequence的映射"><a href="#table-到-sequence的映射" class="headerlink" title="table 到 sequence的映射"></a>table 到 sequence的映射</h4><p>输入表的单元格最初是通过二维进行索引的。为了将<code>模型</code>部分介绍的的模型应用到单元格，我们需要将二维table映射到一维的sequence。这等价于在table中定义搜索顺序，因此我们将交替使用术语<code>映射</code>和<code>搜索顺序</code>。</p>
+<p>由于尝试所有可能的映射是不可行的，因此我们定义了6个有希望的静态映射（搜索顺序），如图4所示。注意，标题中的<code>left</code>和<code>right</code>对应的是表格而不是单词顺序。定义了两个映射(a)和(b)在<code>up to down</code>顺序上有最高优先级，它从句子开头检查一个句子。同样，定义了两个映射(c)和(d)，并在<code>right to left</code>顺序有最高优先级，它从句尾开始检查句子。</p>
+<p>从另一个角度来看，(b)和(c)中，实体在关系之前被检测到，而在(a)和(d)中优先考虑句子的顺序。</p>
+<p>进一步定义了<code>close-first</code>的映射，因为实体比关系更容易找到，近的关系比远的关系更容易找到。</p>
+<p><div><br> <img src="/2019/10/28/Miwa-2014-note/6.png" title="图4"></div></p>
+<div>
+
+<p>我们还研究了采用<code>easy-first</code>策略（Goldberg和elhadad，2010）的动态映射。动态映射与静态映射不同，因为会在每次decoding之前对单元进行重排序（在decoding中进行重排序也是有必要的，但它很大地加大了计算开销）。<strong>我们用局部打分函数评估单元格，并且为单元格分配索引，以使得分更高的单元格具有更高优先级。</strong>除了这种简单的<code>easy-first</code>策略外，还定义了两个动态映射，通过将<code>esay-first</code>策略与以下两个策略之一组合来限制重排序：<code>entity-first实体优先,所有实体在关系之前被探测</code>和<code>close-first 近距离优先，较近的单元格在较远的之前被探测</code>。</p>
+<h4 id="标签依赖-label-dependencies"><a href="#标签依赖-label-dependencies" class="headerlink" title="标签依赖 label dependencies"></a>标签依赖 label dependencies</h4><p>为了避免对表的非法分配，必须根据前面的分配将可能的分配限制到单元格，该限制还能减少计算成本。我们考虑单元格之间的所有依赖，以允许以任意顺序将标签分配给单元。在<code>Entity and realtion table</code>这一部分引入了实体间的依赖以及实体和关系间的依赖。</p>
+<p>表1-3总结了句子中第i个词$w_i$上的这些依赖。如果某些实体类型涉及有限数量的关系类型，则我们可以进一步利用实体类型和关系类型之间的依赖关系，反之亦然。我们注意到实体类型和关系类型之间的依赖性不仅包括参与关系的词，还包括其周围的单词。例如$w_{i-1}$上的标签可以限制涉及$w_i$的关系类型，我们在评估中采用了这些类型依赖，但是由于这些依赖取决于任务，因此在此省略这些依赖。</p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p>学习目标是通过调整公式3的打分函数权重$\bf w$来最小化预测分配<em>y</em>和最佳分配$y^gold$间的误差。</p>
+<hr>
+<p>这篇文章的问题：需要设计复杂的特征工程，严重依赖于NLP工具，这可能会导致错误传播问题。</p>
+<p>链接：</p>
+<p><a href="https://www.cnblogs.com/theodoric008/p/7874373.html" target="_blank" rel="noopener">https://www.cnblogs.com/theodoric008/p/7874373.html</a></p>
+<p><a href="https://www.jianshu.com/p/4b78e109811a" target="_blank" rel="noopener">https://www.jianshu.com/p/4b78e109811a</a><br><a href="https://zhuanlan.zhihu.com/p/23635696" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/23635696</a><br><a href="https://www.sohu.com/a/165856071_465975" target="_blank" rel="noopener">https://www.sohu.com/a/165856071_465975</a><br><a href="https://blog.csdn.net/qq_32782771/article/details/89404573" target="_blank" rel="noopener">https://blog.csdn.net/qq_32782771/article/details/89404573</a></p>
+</div></div></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月31日 21:45</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/28/Miwa-2014-note/" title="【论文笔记】Modeling Joint Entity and Relation Extraction with Table Representation">/2019/10/28/Miwa-2014-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/10/28/Miwa-2014-note/&title=《【论文笔记】Modeling Joint Entity and Relation Extraction with Table Representation》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/44.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/10/28/Miwa-2014-note/&title=《【论文笔记】Modeling Joint Entity and Relation Extraction with Table Representation》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/10/28/Miwa-2014-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Modeling Joint Entity and Relation Extraction with Table Representation》 — Fishwinwin&url=/2019/10/28/Miwa-2014-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/10/28/Miwa-2014-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/10/28/Miwa-2014-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+    <a href="/tags/联合抽取/" class="color5">联合抽取</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#研究方法"><span class="post-toc-text">研究方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实体和关系表-Entity-and-realtion-table"><span class="post-toc-text">实体和关系表(Entity and realtion table)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型"><span class="post-toc-text">模型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解码"><span class="post-toc-text">解码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#table-到-sequence的映射"><span class="post-toc-text">table 到 sequence的映射</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#标签依赖-label-dependencies"><span class="post-toc-text">标签依赖 label dependencies</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#学习"><span class="post-toc-text">学习</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/29/leetcode-259/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【LeetCode】259.较小的三数之和
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/10/28/sentence-level-attention-entity-description-2017-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【论文笔记】Distant Supervision for Relation Extraction with Sentence-Level Attention and Entity Descriptions</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
