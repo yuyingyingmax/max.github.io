@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要作者想解决什么问题？  句子中的关系事实通常很复杂，一个句子中不同的关系三元组可能有重叠。现有方法主要是focus on Normal这类问题（不重叠的情况），且不能精确的抽取关系三元组。因此作者想设计一个模型，解决重叠问题。  作者通过什么理论/模型来解决这个问题？   通过观察数据，根据三元组重叠度将句子分成3部分，重叠度包括Normal（没有重叠）,EntityPairOverlap（整">
+<meta name="keywords" content="笔记,论文,NLP,关系抽取,联合抽取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism">
+<meta property="og:url" content="/2019/11/20/Zeng-2018-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要作者想解决什么问题？  句子中的关系事实通常很复杂，一个句子中不同的关系三元组可能有重叠。现有方法主要是focus on Normal这类问题（不重叠的情况），且不能精确的抽取关系三元组。因此作者想设计一个模型，解决重叠问题。  作者通过什么理论/模型来解决这个问题？   通过观察数据，根据三元组重叠度将句子分成3部分，重叠度包括Normal（没有重叠）,EntityPairOverlap（整">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/1.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/2.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/3.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/4.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/5.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/6.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/7.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/8.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/9.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/10.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/11.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/12.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/13.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/14.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/15.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/16.png">
+<meta property="og:image" content="/2019/11/20/Zeng-2018-note/17.png">
+<meta property="og:updated_time" content="2019-11-23T14:10:28.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism">
+<meta name="twitter:description" content="摘要作者想解决什么问题？  句子中的关系事实通常很复杂，一个句子中不同的关系三元组可能有重叠。现有方法主要是focus on Normal这类问题（不重叠的情况），且不能精确的抽取关系三元组。因此作者想设计一个模型，解决重叠问题。  作者通过什么理论/模型来解决这个问题？   通过观察数据，根据三元组重叠度将句子分成3部分，重叠度包括Normal（没有重叠）,EntityPairOverlap（整">
+<meta name="twitter:image" content="/2019/11/20/Zeng-2018-note/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Zeng-2018-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-11-20
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p><strong>作者想解决什么问题？</strong></p>
+<blockquote>
+<p>句子中的关系事实通常很复杂，一个句子中不同的关系三元组可能有重叠。现有方法主要是focus on <code>Normal</code>这类问题（不重叠的情况），且不能精确的抽取关系三元组。<br>因此作者想设计一个模型，<strong>解决重叠问题</strong>。</p>
+</blockquote>
+<p><strong>作者通过什么理论/模型来解决这个问题？</strong></p>
+<blockquote>
+<ol>
+<li>通过观察数据，根据三元组重叠度将句子分成3部分，重叠度包括<em>Normal</em>（没有重叠）,<em>EntityPairOverlap</em>（整个实体对都有重叠）,<em>SingleEntityOverlap</em>（单个实体是重叠的）</li>
+</ol>
+<p>2.模型是一个<code>加入了拷贝机制的基于seq2seq学习的encoder-decoder模型</code>，<code>encoder</code>先把原句表示成一个语义向量，<code>decoder</code>读入语义向量开始解码，当解码一个三元组的时候，首先预测一个关系，然后从原句子中拷贝头实体，最后从原句子中拷贝尾实体。拷贝第二个实体的时候，有一个<strong>约束</strong>，一个合法三元组的两个实体是不一样的，所以拷贝第二个实体时不能和头实体一样。<strong>具体解码时采用了2个策略</strong>：第1种是用一个解码器解码所有三元组，第2种是多解码器，每个三元组分别用一个解码器来解码。</p>
+</blockquote>
+<p><strong>作者给出的答案是什么？</strong></p>
+<blockquote>
+<p><strong>多解码器模型</strong>能够取得最好的F1值<br><strong>单解码器模型</strong>也可以比基准实验模型要好一些。<br>ps.<strong>基准实验</strong>用的是Novel Tagging模型，能够在NYT和WebNLG数据集上取得较好的准确率但召回率比较低。<br>多解码器和单解码器在整个实体对都是有重叠(<em>EntityPairOverlap</em>)和单个实体重叠(<em>SingleEntityOverlap</em>)上比基准实验模型要好，基准实验在无重叠（<em>Normal</em>）类型上比我们的模型更好，当句子只有一个三元组事实的时候，基准实验能够取得很好的结果，当句子中包含三元组个数越来越多时，我们的模型远好于基准模型。</p>
+</blockquote>
+<h2 id="结论及未来工作"><a href="#结论及未来工作" class="headerlink" title="结论及未来工作"></a>结论及未来工作</h2><p><strong>这篇文章存在哪些不足？</strong></p>
+<blockquote>
+<p>并不能完全解决三元组重叠问题，除了文中描述的3种情况外，还有一种<code>一个关系对应多个实体对</code>的情况，这种用论文中方案无法解决。</p>
+</blockquote>
+<p><strong>未来工作</strong></p>
+<blockquote>
+<p>1.如何改进模型使得拥有更好的性能。<br>2.将模型应用在其他NLP任务上，例如事件抽取。</p>
+</blockquote>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>之前的工作主要集中在<strong>关系抽取或分类任务</strong>，该任务识别两个预分配实体间的语义关系。</p>
+<ul>
+<li>Hendrickx et al., 2010</li>
+<li>Zeng et al., 2014</li>
+<li>Xu et al., 2015a,b</li>
+</ul>
+<p>这些都<strong>假设实体是事先识别的并且忽略了实体的提取</strong>。</p>
+<p>为了<strong>共同提取实体和关系</strong>，使用了pipeline方法，首先进行实体识别，接着预测抽取出的实体间的关系。</p>
+<ul>
+<li>Zelenko et al., 2003</li>
+<li>Chan and Roth, 2011</li>
+</ul>
+<p>但是<strong>pipeline方法忽略了实体识别和关系预测间的相关性</strong>（Li and Ji, 2014）</p>
+<p>最近的工作都在尝试<strong>联合抽取实体和关系</strong>。</p>
+<ul>
+<li>Yu and Lam 2010</li>
+<li>Li and Ji 2014</li>
+<li>Miwa and Sasaki 2014</li>
+</ul>
+<p>以上工作都是通过<strong>精心设计特征</strong>搭建这两个子任务间的桥梁，和其他NLP任务一样，它们<strong>需要复杂的特征工程，并且严重依赖现有NLP工具进行特征提取</strong>。</p>
+<p>随着<strong>深度学习</strong>在很多NLP任务上的成功应用，也可以将它应用在关系事实抽取中。</p>
+<ul>
+<li>Zeng et al.(2014)</li>
+<li>Xu et al. (2015a,b)</li>
+</ul>
+<p>以上<strong>引入CNN或RNN用于关系分类。</strong></p>
+<ul>
+<li>Miwa and Bansal(2016)</li>
+<li>Gupta et al.,(2016)</li>
+<li>Zhang et al.(2017)</li>
+</ul>
+<p>以上<strong>将关系抽取任务视作end2end表填充问题</strong>。</p>
+<ul>
+<li>Zheng et al.(2017)</li>
+</ul>
+<p><strong>提出新颖的标注方案并且使用基于RNN的序列标注模型联合抽取实体和关系。</strong></p>
+<p>然而，句子中的关系事实往往很复杂，<strong>一个句子中的不同关系三元组可能会重叠，无论是基于深度学习的模型还是基于传统特征工程的联合模型，都无法精确提取关系三元组</strong>。</p>
+<p>通过我们的观察，根据三元组重叠度将句子划分为3种类型，包括<em>Normal</em>（不重叠），<em>EntityPairOverlap(EPO)</em>（整个实体对都有重叠）,<em>SingleEntityOverlap(SEO)</em>（单个实体重叠）， 如图1所示。</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/1.png" title="figure 1"></div></p>
+<div>
+
+<p>据我们所知，<strong>大多数以前的方法都集中在<em>Normal</em>类型</strong>上而很少考虑其他类型，即便是基于神经网络的联合模型(Zheng et al., 2017)也只为一个单词分配单个标签，这意味着一个单词最多只能加入一个三元组。因此，<strong>重叠三元组的问题并没有真正得到解决。</strong></p>
+<p>为了解决上述挑战，我们的<strong>目标是设计一个模型，该模型能够从上述3个类型(Normal,EPO,SEO)的句子中提取三元组，包括实体和关系。</strong>为了解决三元组重叠问题，<strong>必须允许一个实体能够自由地加入多个三元组。</strong></p>
+<p>与以往的神经模型不同，我们提出了<code>加入拷贝机制的基于Seq2Seq学习的end2end模型</code>，能够从任何类型句子中联合抽取关系事实。该模型的<strong>两个重要组成部分</strong>是：<code>encoder</code> 和 <code>decoder</code>.</p>
+<blockquote>
+<p><strong>encoder</strong>:将自然语言句子（源句子）转换为固定长度的语义向量。<br><strong>decoder</strong>:读入该向量并直接生成三元组。</p>
+</blockquote>
+<p>为了<strong>生成三元组</strong>，decoder首先生成关系，接着采用拷贝机制，从源句中拷贝第一个实体（头实体)，最后拷贝第二个实体（尾实体），通过这种方法，能够抽取出多个三元组，我们还采用了<strong>不同策略：</strong></p>
+<blockquote>
+<p><strong>OneDecoder</strong>:用一个解码器解码所有三元组<br><strong>MultiDecoder</strong>:多解码器，每个三元组分别用一个解码器来解码。</p>
+</blockquote>
+<p>我们的方法中，<strong>一个实体允许被拷贝多次，当它需要加入不同三元组时。</strong>因此，我们的方法能够解决三元组重叠问题，并且可以处理<em>EntityPairOverlap</em>和<em>SingleEntityOverlap</em>句子类型。此外，由于在单个end2end神经网络中抽取实体和关系，我们的模型能够联合抽取实体和关系。</p>
+<p><strong>主要贡献:</strong><br>1.提出<code>加入拷贝机制的基于Seq2Seq学习的end2end神经模型</code>来抽取关系事实。<br>2.我们的模型能够<code>通过拷贝机制来考虑关系重叠的问题</code>，据我们所知关系重叠问题之前还没被解决。<br>3.在两个公共数据集上进行实验，结果表明我们以39.8%以及31.1%的改进领先于最新技术。</p>
+<hr>
+<p><strong>作者为什么研究这个课题？</strong></p>
+<blockquote>
+<p>重叠关系是之前大多数方法没有考虑到的，因此作者设计一个能够提取重叠关系的模型。</p>
+</blockquote>
+<p>作者使用理论基于哪些假设？（现在也许有点明白了，不明白再去查）</p>
+<h2 id="2-相关工作-Related-Work"><a href="#2-相关工作-Related-Work" class="headerlink" title="2.相关工作 Related Work"></a>2.相关工作 Related Work</h2><p>通过给出一个<strong>带标注实体</strong>的句子，以下工作将句子中的关系识别问题视为<strong>多分类问题</strong>：</p>
+<ul>
+<li>Hendrickx et al.(2010)</li>
+<li>Zeng et al. (2014)：最早将CNN引入关系分类</li>
+<li>Xu et al(2015a,b)：通过CNN或RNN从最短依存路径中学习关系表示</li>
+</ul>
+<p>尽管这些模型取得了成功，<strong>但其忽略了从句子中提取实体的过程，无法真正提取关系事实。</strong></p>
+<p>通过给出一个<strong>不带任何标注实体</strong>的句子，研究人员提出了几种方法来提取实体和关系：<br><code>基于pipeline的方法</code> - 忽略了实体抽取和关系预测的相关性</p>
+<ul>
+<li>Zelenko et al.(2003)</li>
+<li>Chan and Roth(2011)</li>
+</ul>
+<p>为解决该问题，提出<code>联合模型</code>：<br><strong>早期工作需要复杂的特征工程处理并且严重依赖于NLP工具来进行特征提取：</strong></p>
+<ul>
+<li>Yu and Lam,2010</li>
+<li>Li and Ji,2014</li>
+<li>Miwa and Sasaki,2014</li>
+</ul>
+<p><strong>最近的模型基于神经网络联合抽取实体和关系：</strong></p>
+<ul>
+<li>Miwa and Bansal(2016)</li>
+<li>Gupta et al.(2016)</li>
+<li>Zhang et al.(2017)</li>
+<li>Zheng et al.(2017)</li>
+</ul>
+<p>这些模型都是<strong>基于标注框架的，它们为单词或单词对分配关系标签。</strong></p>
+<p>虽然这些都是成功的，<strong>但这些模型没有考虑第一部分提到的三元组重叠问题，原因在于他们的假设，即，一个单词（或单词对）只能被分配一个关系标签</strong>。</p>
+<p>本工作是<strong>带拷贝机制的基于Seq2Seq学习的encoder-decoder模型</strong>，在一些NLP任务中也有采用：</p>
+<ul>
+<li>Dong and Lapata(2016):提出了一种基于注意力增强的encoder-decoder模型，其对输入语音进行编码并且生成其逻辑形式。</li>
+<li>Gu et al. (2016)</li>
+<li>He et al. (2017)</li>
+</ul>
+<p>后两个将拷贝机制用在句子生成上，从原序列拷贝一个segment到目标序列上。</p>
+<blockquote>
+<p>思路tips：采用的这个拷贝机制实际上被之前的人用在别的任务，那我们是不是可以借鉴这个思路，从别的任务中寻找可行思路用在关系抽取上？</p>
+</blockquote>
+<h2 id="3-模型-Model"><a href="#3-模型-Model" class="headerlink" title="3.模型 Model"></a>3.模型 Model</h2><p>本部分介绍一个<code>带拷贝机制的基于Seq2Seq的可微神经模型</code>，该模型能够以end2end的方式提取多个关系事实。</p>
+<p>我们的神经模型首先将可变长度的句子编码为固定长度的向量表示，然后将该向量解码为相应的关系事实（三元组）。解码时，我们可以使用一个统一的decoder解码所有三元组，也可以使用单独的decoder解码每个三元组。我们将他们分别表示为<code>OneDecoder</code>模型和<code>MultiDecoder</code>模型。</p>
+<h3 id="3-1-单解码器模型-OneDecoder-Model"><a href="#3-1-单解码器模型-OneDecoder-Model" class="headerlink" title="3.1 单解码器模型 OneDecoder Model"></a>3.1 单解码器模型 OneDecoder Model</h3><p>OneDecoder模型的整体结构如图2所示。</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/2.png" title="figure 2"></div></p>
+<div>
+
+<h4 id="3-1-1-Encoder"><a href="#3-1-1-Encoder" class="headerlink" title="3.1.1 Encoder"></a>3.1.1 Encoder</h4><p><strong>需要编码的句子(原句子)</strong>：$s = [w_1,…,w_n]$，其中，$w_t$表示第<code>t</code>个单词，$n$表示句子长度。</p>
+<p><strong>原句子的向量表示</strong>：$X = [x_1,…,x_n]$，其中，$x_t$是第<code>t</code>个单词的embedding。</p>
+<p>传统RNN encoder顺序读入矩阵$X$，生成时间步<code>t</code>$(1\leq t \leq n)$的输出$o_t^E$和隐藏层状态$h_t^E$，公式如下，其中$f(\cdot)表示encoder函数$：<br>$o_t^E,h_t^E = f(x_t,h_{t-1}^E) \tag 1$</p>
+<p>根据(Gu et al., 2016)，我们的encoder使用<strong>双向LSTM</strong>(Chung et al., 2014)来编码输入的句子。</p>
+<p><strong>前向RNN</strong>获取<strong>输出</strong>的句子：$\{ \overrightarrow{o_1^E},\cdots, \overrightarrow{o_n^E} \}$</p>
+<p><strong>后向RNN</strong>获取<strong>输出</strong>的句子：$\{ \overleftarrow{o_n^E},\cdots, \overleftarrow{o_1^E} \}$</p>
+<p>然后<strong>串联</strong>$\bf \overrightarrow{o_t^E}$和$ \bf \overleftarrow{o_{n-t+1}^E}$来表示第<code>t</code>个单词。</p>
+<p>串联结果：$ \bf o_t^E = [\overrightarrow{o_t^E};\overleftarrow{o_{n-t+1}^E}]$</p>
+<p>用 $\bf O^E = [o_1^E,\cdots,o_n^E]$来表示。</p>
+<p>相似地，<strong>前向和后向RNN隐藏层状态的串联作为句子的表示</strong>：$\bf s = [\overrightarrow{h_n^E};\overleftarrow{h_n^E}]$</p>
+<h4 id="3-1-2-Decoder"><a href="#3-1-2-Decoder" class="headerlink" title="3.1.2 Decoder"></a>3.1.2 Decoder</h4><p>decoder用来<strong>直接生成三元组</strong>。</p>
+<blockquote>
+<ol>
+<li>decoder为三元组生成<strong>关系</strong>。</li>
+<li>decoder从源句子中拷贝一个实体作为三元组的<strong>头实体</strong>。</li>
+<li>decoder从源句子中拷贝第二个实体作为<strong>尾实体</strong>。</li>
+</ol>
+</blockquote>
+<p>重复该过程，decoder能生成<strong>多个三元组。</strong></p>
+<p>当所有有效的三元组都生成完毕，decoder将会生成<code>NA三元组</code>,意味着”停止”，与神经句子生成的”<em>eos</em>“类似。<strong>注意，NA三元组由NA-relation和NA-entity pair组成</strong>。</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/3.png" title="figure 3"></div></p>
+<div>
+
+
+<p>如图3(a)，在时间步<code>t</code>($1 \leq t$)时，</p>
+<p>以下公式计算decoder的输出$o_t^D$和隐层状态$h_t^D$:<br>$o_t^D,h_t^D = g(u_t,h_{t-1}^D) \tag 2$<br>其中，$g(\cdot)$是decoder函数，$h_{t-1}^D$是上一个时间步<code>t-1</code>的隐层状态。</p>
+<p>初始化$h_0^D$：用源句子$s$</p>
+<p>$u_t$是时间步<code>t</code>的decoder输入，用以下公式计算：<br>$u_t = [v_t;c_t]\cdot W^u \tag 3$<br>其中，$c_t$是attention 向量，$v_t$是<code>t-1</code>时刻拷贝的实体或者预测的关系的embedding，$W^u$是权重矩阵。</p>
+<p><strong>Attention 向量 Attention Vector.</strong></p>
+<p>Attention向量$c_t$计算如下：</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/4.png" title="公式4，5，6"></div></p>
+<div>
+
+<p>$o_i^E$是encoder在时间步<code>t</code>的输出。<br>$\alpha = [\alpha_1,\cdots,\alpha_n]$和$\beta = [\beta_1,\cdots,\beta_n]$是向量。<br>$w^c$是权重向量。<br>$selu(\cdot)$是激活函数（Klambauer et al., 2017)</p>
+<p>获得时间步<code>t</code>时刻decoder的输出$o_t^D$后，<br>当$t\%3=1 (t=1,4,7,…)$，使用$o_t^D$预测关系，意味着我们正在解码一个新的三元组。<br>当$t\%3=2 （t=2,5,8,…）$，使用$o_t^D$从源句子中拷贝第一个实体。<br>当$t\%3=0 （t=3,6,9,…)$ ，使用$o_t^D$从源句子拷贝第二个实体。</p>
+<p><strong>预测关系 Predict Relation</strong></p>
+<p>假设有$m$个有效的关系。使用<strong>全连接层</strong>为所有有效关系计算置信向量$q^r = [q_1^r,\cdots,q_m^r]$：</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/5.png" title="公式7"></div></p>
+<p><div><br>其中$W^r$是权重向量，$b^r$是偏置。</div></p>
+<p>预测关系时，当模型试图生成NA-三元组时，有必要预测NA-关系。考虑到这点，计算NA-关系的置信值如下：</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/6.png" title="公式8"></div></p>
+<div>
+
+<p>其中$W^{NA}$是权重向量，$b^{NA}$是偏置。</p>
+<p>接下来，我们串联$q^r$和$q^{NA}$形成<strong>所有关系（包括NA关系）的置信向量</strong>，应用<code>softmax</code>来获取概率分布$p^r=[p_1^r,\cdots,p_{m+1}^r]$</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/7.png" title="公式9"></div></p>
+<div>
+
+<p><strong>选择概率最高的关系作为预测关系，使用它的embedding作为下一个时间步的输入$v_{t+1}$</strong></p>
+<p><strong>拷贝第一个实体 Copy the First Entity</strong></p>
+<p>拷贝第一个实体，计算源句子中所有单词的置信向量$q^e=[q_1^e,…,q_n^e]$</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/8.png" title="公式10"></div></p>
+<div>
+
+<p>其中，$w^e$是权重向量，和关系预测类似，我们串联$q^e$和$q^{NA}$形成置信向量，并且应用<code>softmax</code>获取概率分布$p^e=[p_1^e,…,p_{n+1}^e]$:</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/9.png" title="公式11"></div></p>
+<div>
+
+<p>同样的，选择概率最高的单词作为预测单词，使用它的embedding作为下一个时间步的输入$v_{t+1}$</p>
+<p><strong>拷贝第二个实体 Copy the Second Entity</strong></p>
+<p>和拷贝第一个实体类似，<strong>唯一不同点在于，拷贝第二个实体时，不能和第一个实体相同</strong>，<strong>因为一个有效三元组中的两个实体一定不同。</strong>假设拷贝的第一个实体是源句子中的第k个单词，引入带有n个(n是句子长度)元素的<code>mask vector</code>$M$：</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/10.png" title="公式12"></div></p>
+<div>
+
+<p>然后计算概率分布$p^e$:</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/11.png" title="公式13"></div></p>
+<div>
+
+<p>其中$\bigotimes$是逐元素乘法，选择概率最高的单词作为预测单词，使用它的embedding作为下一个时间步的输入$v_{t+1}$</p>
+<h3 id="3-2-多解码器模型-MultiDecoder-Model"><a href="#3-2-多解码器模型-MultiDecoder-Model" class="headerlink" title="3.2 多解码器模型 MultiDecoder Model"></a>3.2 多解码器模型 MultiDecoder Model</h3><p>多解码器模型是单解码器模型的扩展。主要区别在于，当解码三元组时，<strong>多解码器模型使用多个单独的解码器来解码三元组</strong>。图3(b)展示了多解码器模型的输入和输出。这里有两个解码器(带阴影的绿色和蓝色正方形)，解码器<strong>按顺序</strong>工作：第一个解码器生成第一个三元组，第二个解码器生成第二个三元组。</p>
+<p>和<code>公式2</code>类似，计算时间步<code>t</code>时第<code>i</code>个decoder的隐层状态$h_t^{D_i}$和输出$o_t^{D_i}$如下：</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/12.png" title="公式14"></div></p>
+<div>
+
+<p>$g(\cdot)$是第<code>i</code>个decoder的函数。<br>$u_t$是时间步<code>t</code>时decoder的输入，可以如<code>公式3</code>那样计算。<br>$h_{t-1}^{D_i}$是时间步<code>t-1</code>时第<code>i</code>个decoder的隐藏状态。<br>$\hat{h}_{t-1}^{D_i}$是第<code>i</code>个decoder的初始隐藏状态，计算如下：</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/13.png" title="公式15"></div></p>
+<div>
+
+<h3 id="训练-Training"><a href="#训练-Training" class="headerlink" title="训练 Training"></a>训练 Training</h3><p>单解码器和多解码器模型都是用<strong>负对数似然损失函数</strong>来训练。给一批带有<code>B</code>个句子的数据$S=\{ s_1,…,s_B\}$，也带有目标结果$Y=\{ y_1,…,y_B\}$，其中$y_i = [y_i^1,…,y_i^T]$是$s_i$的目标结果，损失函数定义如下：</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/14.png" title="公式16"></div></p>
+<div>
+
+<p>$T$是decoder的最大时间步。<br>$p(x|y)$是给定y情况下x的条件概率。<br>$\theta$是整个模型的参数。</p>
+<hr>
+<p><strong>模型分哪几步？</strong></p>
+<blockquote>
+<p>提出了两个模型： 单解码器模型，多解码器模型<br>单解码器模型结构：<br>1.Encoder：先用Bi-LSTM对输入的句子进行编码<br>2.Decoder：<br>对于单解码器模型来说：一个解码器解码所有三元组</p>
+<ul>
+<li>为三元组生成关系：使用全连接层为有效关系计算置信向量，生成NA三元组，预测NA关系，串联所有关系的置信向量，用softmax获取概率分布</li>
+<li>拷贝第一个实体：计算置信向量，用softmax获取概率分布</li>
+<li>拷贝第二个实体：类似上一步，但不能和第一个实体相同<br>都是选择概率最高的关系/单词</li>
+</ul>
+<p>对于多解码器模型来说：多解码器模型使用多个单独的解码器来解码三元组，第一个解码器生成第一个三元组，第二个解码器生成第二个三元组…</p>
+</blockquote>
+<p><strong>每一步分别得出了什么结论？（结论应该在下一部分）</strong></p>
+<h2 id="4-实验-Experiments"><a href="#4-实验-Experiments" class="headerlink" title="4.实验 Experiments"></a>4.实验 Experiments</h2><h3 id="4-1数据集-Dataset"><a href="#4-1数据集-Dataset" class="headerlink" title="4.1数据集 Dataset"></a>4.1数据集 Dataset</h3><p>使用New York Times(NYT)和WebNLG数据集。</p>
+<h4 id="NYT数据集"><a href="#NYT数据集" class="headerlink" title="NYT数据集"></a>NYT数据集</h4><p>NYT数据集是由<strong>远程监督</strong>方法生成的(Riedel et al., 2010)。数据集包括<code>1.18M</code>个句子，是从<code>294K</code>个 1987-2007年《纽约时报》新闻文章中抽取的；共有<code>24</code>个有效关系。本文将该数据集视作有监督数据，和Zheng et al.(2017)一样。我们过滤了超过100个单词的句子和不包含positive三元组的句子，剩下<code>66195</code>个句子。从中随机选择<code>5000</code>当作测试集，<code>5000</code>当作验证集，剩下的<code>56195</code>当作训练集。</p>
+<h4 id="WebNLG数据集"><a href="#WebNLG数据集" class="headerlink" title="WebNLG数据集"></a>WebNLG数据集</h4><p>WebNLG数据集（Garden et al.,2017），起初是为自然语言生成（NLG）任务创建的。该数据集包含246个有效关系，一个实例包含一组三元组以及一些标准句子standard sentence（人类写的），每个标准句子包含这个实例的全部三元组。实验中我们只用第一个标准句子，如果在标准句子中没找到三元组的所有实体，我们就过滤掉这些实例。原始的WebNLG数据集包含训练集和验证集，在我们的实验中，我们将原始的验证集作为测试集，并且随机分割原始训练集为验证集和训练集。过滤和分割之后，训练集包含<code>5019</code>个实例，测试集包含<code>703</code>个实例，验证集包含<code>500</code>个实例。</p>
+<p>NYT和WebNLG中的每个类的句子数量如表1所示，值得注意的是，句子可以同时属于<em>EntityPairOverlap</em>类以及<em>SingleEntityOverlap</em>类。</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/15.png" title="table 1"></div></p>
+<div>
+
+<h3 id="4-2-设置-Settings"><a href="#4-2-设置-Settings" class="headerlink" title="4.2 设置 Settings"></a>4.2 设置 Settings</h3><p>实验中，对于每个数据集，都使用LSTM（Hochreiter and Schmidhuber,1997）作为模型的细胞；</p>
+<p>细胞单元数设置为<code>1000</code>；<br>embedding的维度设置为<code>100</code>；<br>batch size设置为<code>100</code>；<br>学习率设置为<code>0.001</code>；<br>最大时间步T设置为<code>15</code>，意味着对于每个句子最多预测5个三元组（因此，多解码器模型包含5个decoder）</p>
+<p>这些超参数都在验证集上调整，使用<code>Adam</code>(Kingma and Ba, 2015)来优化参数，当在验证集上发现最好结果时停止训练。</p>
+<h3 id="4-3-基线以及评估指标-Baseline-and-Evaluation-Metrics"><a href="#4-3-基线以及评估指标-Baseline-and-Evaluation-Metrics" class="headerlink" title="4.3 基线以及评估指标 Baseline and Evaluation Metrics"></a>4.3 基线以及评估指标 Baseline and Evaluation Metrics</h3><p>将我们的模型与<strong>NovelTagging模型</strong>（Zheng et al., 2017)进行比较，该模型在关系事实抽取上性能最好。直接跑Zheng et al.(2017)提供的代码来得到结果。</p>
+<p>跟随Zheng et al.(2017)，我们用标准的micro Precision，召回率以及F1值来评估结果。<strong>当关系和实体都正确时，三元组被认为是正确的</strong>。拷贝实体时，<strong>只拷贝它的最后一个单词</strong>。当且仅当关系是NA-relation并且含有NA-实体对时，认为一个三元组是NA-三元组。预测的NA-三元组会被排除。</p>
+<h3 id="4-4-结果-Results"><a href="#4-4-结果-Results" class="headerlink" title="4.4 结果 Results"></a>4.4 结果 Results</h3><p>如表二。</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/16.png" title="table 2"></div></p>
+<div>
+
+<p><strong>多解码器模型</strong>在<strong>NYT</strong>上取得了最好的F1值<code>0.587</code>，比NovelTagging模型(<code>0.420</code>)改进了<code>39.8%</code>。<strong>单解码器模型也比NovelTagging模型表现好</strong>。在<strong>WebNLG</strong>数据集上，<strong>多解码器模型取得了最高的F1值(<code>0.371</code>)</strong>，相比于NovelTagging模型，多解码器模型改进了<code>31.1%</code>，单解码器模型改进了<code>7.8%</code>。观察结果验证了我们的模型的有效性。</p>
+<p>观察发现，在NYT和WebNLG数据集上，NovelTagging模型的precision值最高但recall最低，相反，我们的模型更佳均衡。我们认为<strong>原因在于所提出模型的结构上。NovelTagging模型通过标注单词发现三元组，然而他们假定一个标签只能分配给一个单词，那么一个单词最多只能参与一个三元组。因此NovelTagging模型只能召回一小部分三元组，这影响了recall的表现。</strong>与NovelTagging不同的是，<strong>我们的模型使用拷贝机制来发现三元组中的实体，当一个单词需要参与多个不同三元组时，该单词能够被拷贝多次</strong>，意料之中的是，我们的模型能够召回更多三元组，并且达到更到的召回率，之后的实验将会证明。</p>
+<h3 id="4-5-不同句子类型的详细结果-Detailed-Results-on-Different-Sentence-Types"><a href="#4-5-不同句子类型的详细结果-Detailed-Results-on-Different-Sentence-Types" class="headerlink" title="4.5 不同句子类型的详细结果 Detailed Results on Different Sentence Types"></a>4.5 不同句子类型的详细结果 Detailed Results on Different Sentence Types</h3><p>为了验证模型处理重叠问题的能力，进一步在NYT数据集上进行实验。</p>
+<p>图4展示了NovelTagging，OneDecoder以及MultiDecoder模型在<em>Normal</em>，<em>EntityPairOverlap</em>以及<em>SingleEntityOverlap</em>类型上的结果。</p>
+<p><div><br> <img src="/2019/11/20/Zeng-2018-note/17.png" title="figure 4"></div></p>
+<div>
+
+<p>在<em>EntityPairOverlap</em>以及<em>SingleEntityOverlap</em>类型上，我们的模型比NovelTagging模型表现更好，具体来说，<strong>我们的模型在所有指标上都有更高的表现</strong>。另外，NovelTagging模型在<em>Normal</em>类型上取得了最好的表现，因为它被设计的更适合<em>Normal</em>类型，然而我们的模型更适合重叠问题。此外，我们的模型很难评估输入的句子需要多少三元组，因此，我们的模型在<em>Normal</em>类型上有些损失。尽管如此，我们的模型总体上来讲比NovelTagging模型表现好。我们还注意到，在<em>EntityPairOverlap</em>以及<em>SingleEntityOverlap</em>类型上整体抽取的表现都比<em>Normal</em>类型要低，这说明从<em>EntityPairOverlap</em>以及<em>SingleEntityOverlap</em>类型抽取关系事实比<em>Normal</em>类型更有挑战性。</p>
+<p>我们也比较了<strong>从包含不同数量三元组的句子中抽取关系的能力</strong>。将NYT测试集的句子划分成5个子类，每个类的句子包含$1，2，3，4，\geq 5$个三元组。结果如图5所示，<strong>当从包含1个三元组的抽取关系时，NovelTagging模型能达到最好的效果，然而当三元组的数量增加时，NovelTagging模型的性能明显下降。同样也能观察到NovelTagging模型的recall值大幅下降。</strong>这些实验结果<strong>证明了我们的模型处理多重关系抽取的能力</strong>。</p>
+<h3 id="4-6-单解码器vs多解码器-OneDecoder-vs-MultiDecoder"><a href="#4-6-单解码器vs多解码器-OneDecoder-vs-MultiDecoder" class="headerlink" title="4.6 单解码器vs多解码器 OneDecoder vs. MultiDecoder"></a>4.6 单解码器vs多解码器 OneDecoder vs. MultiDecoder</h3><p>在之前的实验中（表2，图4和图5），多解码器模型比单解码器模型以及NovelTagging模型表现地更好。为了找出多解码器比单解码器性能更好的原因，我们分析了他们生成实体和生成关系的能力，实验结果如表3和表4.</p>
+<p><div><br> </div></p>
+<div>
+
+<p>在NYT和WebNLG数据集上，这两个模型在关系生成上具有可比性，然而多解码器在实体生成上表现得更好，我们认为这是因为多解码器模型利用了不同的decoder来生成不同的三元组，使得实体生成的结果更佳多样化。</p>
+<hr>
+<p><strong>研究的数据从哪里来？</strong></p>
+<blockquote>
+<p>NYT<br>WebNLG<br>具体介绍在4.1</p>
+</blockquote>
+<p><strong>研究中用到的重要指标有哪些？</strong></p>
+<blockquote>
+<p>precision,recall,F1 score<br>实验比较了整个抽取任务、处理重叠问题的能力、句子中包含三元组数量、单解码器模型和多解码器模型。</p>
+</blockquote>
+<p><strong>结论？</strong></p>
+<blockquote>
+<p>1.<strong>多解码器模型</strong>在NYT上取得了最好的F1值<br>2.<strong>单解码器模型</strong>比NovelTagging模型表现好<br>3.<strong>NovelTagging召回低的原因</strong>是因为模型的结构，因为它假设一个标签只能分给一个单词，因此一个单词只能参与一个三元组，而本文模型采用拷贝机制来发现实体，当一个单词需要参与不同三元组时，能够被拷贝多次。<br>4.重叠问题的处理上，本文的模型在所有指标上都有更高的表现，NovelTaggin在Normal类型表现最好，因为它被设计的更适合Normal类型，本文的模型在其他两类有重叠的类型上表现的好。<br>5.在EntityPairOverlap以及SingleEntityOverlap类型上抽取的整体表现都比Normal类型低，说明从前两个重叠的类型中抽取关系事实更有挑战性。<br>6.比较了从包含不同数量三元组的句子中抽取关系的能力，NovelTagging在一个三元组的情况下效果最好，然而当三元组的数量增加时，NovelTagging模型的性能明显下降。<br>7.多解码器比单解码器模型表现更好，通过比较生成实体和生成关系的能力，发现是因为多解码器模型利用了不同的decoder来生成不同的三元组，使得实体生成的结果更加多样化。</p>
+</blockquote>
+</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年11月23日 22:10</p>
+        <p>原始链接： <a class="post-url" href="/2019/11/20/Zeng-2018-note/" title="【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism">/2019/11/20/Zeng-2018-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/11/20/Zeng-2018-note/&title=《【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/55.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/11/20/Zeng-2018-note/&title=《【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/11/20/Zeng-2018-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism》 — Fishwinwin&url=/2019/11/20/Zeng-2018-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/11/20/Zeng-2018-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/11/20/Zeng-2018-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+    <a href="/tags/联合抽取/" class="color5">联合抽取</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论及未来工作"><span class="post-toc-text">结论及未来工作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-引言"><span class="post-toc-text">1.引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-相关工作-Related-Work"><span class="post-toc-text">2.相关工作 Related Work</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-模型-Model"><span class="post-toc-text">3.模型 Model</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-单解码器模型-OneDecoder-Model"><span class="post-toc-text">3.1 单解码器模型 OneDecoder Model</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-1-Encoder"><span class="post-toc-text">3.1.1 Encoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-2-Decoder"><span class="post-toc-text">3.1.2 Decoder</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-2-多解码器模型-MultiDecoder-Model"><span class="post-toc-text">3.2 多解码器模型 MultiDecoder Model</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#训练-Training"><span class="post-toc-text">训练 Training</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-实验-Experiments"><span class="post-toc-text">4.实验 Experiments</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-1数据集-Dataset"><span class="post-toc-text">4.1数据集 Dataset</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#NYT数据集"><span class="post-toc-text">NYT数据集</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#WebNLG数据集"><span class="post-toc-text">WebNLG数据集</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-2-设置-Settings"><span class="post-toc-text">4.2 设置 Settings</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-基线以及评估指标-Baseline-and-Evaluation-Metrics"><span class="post-toc-text">4.3 基线以及评估指标 Baseline and Evaluation Metrics</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-4-结果-Results"><span class="post-toc-text">4.4 结果 Results</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-5-不同句子类型的详细结果-Detailed-Results-on-Different-Sentence-Types"><span class="post-toc-text">4.5 不同句子类型的详细结果 Detailed Results on Different Sentence Types</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-6-单解码器vs多解码器-OneDecoder-vs-MultiDecoder"><span class="post-toc-text">4.6 单解码器vs多解码器 OneDecoder vs. MultiDecoder</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/12/02/reinforcement-learning-2019/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/11/11/dairy-20191111/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【日记】十一月</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/NLP/">NLP</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

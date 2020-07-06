@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要作者想解决什么问题？  1.大多数方法都是基于显式实体情况，即在实体识别之后抽取关系类型， 这样的话关系类型和实体间的相互作用就没有完全建模，也就是存在两个弊端：一是没有充分挖掘实体和关系之间的联系，而是把他们割裂作为两个子任务去处理；二是很多和关系无关的实体会带来噪声。 2.关系抽取存在重叠关系问题（一对多问题）。在一句话中，一个实体可能会存在多个关系，或者一个实体对可能存在多种关系。目前已">
+<meta name="keywords" content="笔记,论文,NLP,关系抽取,联合抽取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning">
+<meta property="og:url" content="/2019/12/02/reinforcement-learning-2019/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要作者想解决什么问题？  1.大多数方法都是基于显式实体情况，即在实体识别之后抽取关系类型， 这样的话关系类型和实体间的相互作用就没有完全建模，也就是存在两个弊端：一是没有充分挖掘实体和关系之间的联系，而是把他们割裂作为两个子任务去处理；二是很多和关系无关的实体会带来噪声。 2.关系抽取存在重叠关系问题（一对多问题）。在一句话中，一个实体可能会存在多个关系，或者一个实体对可能存在多种关系。目前已">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/1.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/2.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/3.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/4.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/5.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/6.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/7.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/8.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/9.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/10.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/11.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/12.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/13.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/14.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/15.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/16.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/17.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/18.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/19.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/20.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/21.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/22.png">
+<meta property="og:image" content="/2019/12/02/reinforcement-learning-2019/23.png">
+<meta property="og:updated_time" content="2019-12-06T06:08:02.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning">
+<meta name="twitter:description" content="摘要作者想解决什么问题？  1.大多数方法都是基于显式实体情况，即在实体识别之后抽取关系类型， 这样的话关系类型和实体间的相互作用就没有完全建模，也就是存在两个弊端：一是没有充分挖掘实体和关系之间的联系，而是把他们割裂作为两个子任务去处理；二是很多和关系无关的实体会带来噪声。 2.关系抽取存在重叠关系问题（一对多问题）。在一句话中，一个实体可能会存在多个关系，或者一个实体对可能存在多种关系。目前已">
+<meta name="twitter:image" content="/2019/12/02/reinforcement-learning-2019/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-reinforcement-learning-2019" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-12-02
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p><strong>作者想解决什么问题？</strong></p>
+<blockquote>
+<p><strong>1.大多数方法都是基于显式实体情况，即在实体识别之后抽取关系类型，</strong> 这样的话关系类型和实体间的相互作用就没有完全建模，也就是存在<strong>两个弊端</strong>：一是没有充分挖掘实体和关系之间的联系，而是把他们割裂作为两个子任务去处理；二是很多和关系无关的实体会带来噪声。</p>
+<p><strong>2.关系抽取存在重叠关系问题（一对多问题）</strong>。在一句话中，一个实体可能会存在多个关系，或者一个实体对可能存在多种关系。目前已知只有CopyR方法研究了这个问题，但本文作者实验证明了这种方法严重依赖数据，并且无法抽取多词语关系。</p>
+</blockquote>
+<p><strong>作者通过什么理论/模型来解决这个问题？</strong></p>
+<blockquote>
+<p>1.提出了关系抽取的新范式，<strong>将相关的实体作为关系的参数</strong>。<br>2.应用了<strong>分层强化学习</strong>（HRL）框架来<strong>增强实体和关系类型间的交互。</strong><br>3.整个抽取过程被分解为两级RL策略的层次结构，分别用于关系检测和实体提取，因此处理<strong>重叠关系</strong>更加可行和自然。</p>
+</blockquote>
+<p><strong>作者给出的答案是什么？</strong></p>
+<blockquote>
+<p>通过在远程监督生成的数据集上评估模型，结果表明它比现存方法都要好，且对于抽取重叠关系更有效。</p>
+</blockquote>
+<h2 id="结论以及未来工作"><a href="#结论以及未来工作" class="headerlink" title="结论以及未来工作"></a>结论以及未来工作</h2><p>本文提出了一种通过分层强化学习进行关系抽取的分层抽取范式，该范式将实体视为关系的参数，并将关系抽取任务分解为两个子任务的层次结构：High-level 指示符检测和 Low-level 实体抽取。<strong>关系检测的 High-level 策略识别句子中的多个关系，实体提取的 Low-level 策略启动子任务以进一步提取每个关系的相关实体。这种方法擅长于建模两个子任务之间的交互，尤其擅长于提取重叠关系</strong>。</p>
+<p>实验证明，该方法优于最先进的baselines。目前，强化学习在 NLP 的应用较少，该工作为关系抽取任务带来了启发，事实证明，基于强化学习的关系抽取是可以成功的。</p>
+<p><strong>未来工作</strong></p>
+<blockquote>
+<p>分层抽取框架能够被推广到许多其他成对或三重抽取任务，例如方面意见挖掘或本体归纳。</p>
+</blockquote>
+<h2 id="引言-Introduction"><a href="#引言-Introduction" class="headerlink" title="引言 Introduction"></a>引言 Introduction</h2><p>从非结构化文本中提取实体，关系或事件对于构建<strong>可促进许多其他任务的大规模可重用知识</strong>至关重要。</p>
+<ul>
+<li>Mintz et al. 2009</li>
+<li>Nadeau and Sekine 2007</li>
+</ul>
+<p>包括知识库的构建：</p>
+<ul>
+<li>Dong et al. 2014</li>
+<li>Luan et al. 2018</li>
+</ul>
+<p>QA:</p>
+<ul>
+<li>Fader, Zettlemoyer, and Etzioni 2014</li>
+</ul>
+<p>生物医学文本挖掘：</p>
+<ul>
+<li>Huang and Lu 2015</li>
+</ul>
+<p><strong>关系抽取任务是识别关系三元组。</strong></p>
+<p>本文提出了一种在<strong>分层强化学习框架下的新型联合提取范例</strong>(Sutton, Precup, and Singh 1999)，我们首先检测一个关系，然后提取相应的实体作为关系的参数。</p>
+<p>我们的模型通过high-level 强化学习（RL）过程检测<strong>关系指标</strong>，并通过low-level RL过程识别参与关系的参与实体。</p>
+<p>如图一所示：</p>
+<p><div class="image-size-100"><br> <img src="/2019/12/02/reinforcement-learning-2019/1.png" title="figure 1"></div></p>
+<div>
+
+<p><strong>Ⅰ</strong>：抽取的过程是从句子头部顺序扫描到句子尾部。high-level过程是在某个特定的位置检测关系指示器。</p>
+<p><strong>Ⅱ</strong>：如果确定了某个关系，将触发一个low-level顺序过程来标识该关系的相应实体。</p>
+<p><strong>Ⅲ</strong>：当实体抽取的low-level子任务完成时，</p>
+<p><strong>Ⅳ</strong>：high-level RL过程继续在句子中扫描，以寻找下一个关系。</p>
+<p>该范例在处理先前研究中存在的两个问题方面具有优势。</p>
+<p><strong>首先，</strong>大多数传统方法只会在所有实体识别之后才检测关系类型，而两个任务之间的相互作用并没有被完全捕捉到。</p>
+<ul>
+<li>Gormley, Yu, and Dredze 2015</li>
+<li>Hoffmann et al. 2011</li>
+<li>Miwa and Bansal 2016</li>
+</ul>
+<p>从某种意义上来说，这些方法是<strong>将关系与实体pair对齐，因此可能会引入额外噪声，和关系无关的实体pair会带来噪声</strong>（Zhang et al. 2013），或者可能描述多重关系 (Takamatsu, Sato, and Nakagawa 2012)。</p>
+<p><strong>第二，</strong>仍然缺乏处理重叠关系问题（一对多）的优雅的联合抽取方法。在一句话中，一个实体可能会存在多个关系，或者一个实体对可能存在多种关系。目前已知只有CopyR方法研究了这个问题，但实验证明了这种方法严重依赖数据，并且无法抽取多词语关系。</p>
+<p>我们的范式中，<strong>第一个问题是通过将实体视为关系参数来处理的</strong>。实体提及和关系类型间的依赖关系是通过在<code>high-level</code>和<code>low-level</code> RL过程中设计<code>state representations 状态表示</code>以及<code>rewards 奖励</code>来指定的。由于主要任务（用于关系检测的high-level RL 过程）在启动子任务（用于实体提取的low-level过程）时会传递消息，因此交互能被很好地捕获，并将表示子任务完成情况的low-level奖励传递回主任务。这样，可以更好地对关系类型和实体提及间的交互进行建模。</p>
+<p><strong>第二个问题由层次结构来解决。</strong>通过将关系抽取分解为用于关系检测的high-level任务，以及用于实体抽取的low-level任务，句子中的多重关系能够被分别地、顺序地处理。如图1所示，当主任务检测到第一个关系类型（parent-children）时，第一个关系被抽取出来，并且第二个关系类型（place-of-death）被触发时，顺序地抽取出第二个关系，尽管这俩任务共享相同的实体（Steve Blichick）。</p>
+<p>实验证明，提出的范式在提取重叠关系方面，在baseline上实现了强大的性能。</p>
+<p><strong>总地来说，贡献有以下2点：</strong></p>
+<p>1.设计了新颖的end2end 层次范式，以联合识别实体提及和关系类型，这种方法将任务分解为用于关系检测的high-level任务，以及用于实体抽取的low-level任务。</p>
+<p>2.通过将强化学习纳入该范式，该方法在建模两个任务之间的相互作用以及提取重叠关系方面优于基线</p>
+<hr>
+<p><strong>作者为什么研究这个课题？</strong></p>
+<blockquote>
+<p>见“作者想解决什么问题？”</p>
+</blockquote>
+<p><strong>作者使用理论基于哪些假设？（现在也许有点明白了，不明白再去查）</strong></p>
+<h2 id="相关工作-Related-Work"><a href="#相关工作-Related-Work" class="headerlink" title="相关工作 Related Work"></a>相关工作 Related Work</h2><p><strong>传统pipeline方法将实体抽取和关系分类视为两个独立的任务</strong></p>
+<ul>
+<li>Mintz et al. 2009</li>
+<li>Gormley, Yu, and Dredze 2015</li>
+<li>Tang et al. 2015</li>
+</ul>
+<p>它们首先提取文本中的标记跨度来检测实体提及，然后发现实体提及间的关系结构。尽管构建pipeline方法很灵活，这些方法会存在<em>误差传播</em>，因为下游模块受上游模块引入的错误影响很大。</p>
+<p>为解决这个问题，提出了许多<strong>联合学习</strong>方法。</p>
+<ul>
+<li>Kate and Mooney（2010）提出卡金字塔结构</li>
+<li>Hoffmann et al.(2011) 提出基于图的多实例学习算法</li>
+</ul>
+<p>然而，这两种方法都采用贪婪搜索策略来减少搜索空间，从而限制了性能。</p>
+<p>其他研究引入了一种<strong>结构化</strong>的学习方法</p>
+<ul>
+<li>Li and Ji 2014</li>
+<li>Miwa and Sasaki 2014</li>
+</ul>
+<p>所有这些方法都依赖于<em>严重的特征工程</em>，这需要大量人工和领域知识。</p>
+<p>另一方面，Bjorne et al. (2011) 提出了首先抽取<strong>关系触发器</strong>，该触发器指的是一个短语，它<strong>明确</strong>表达了句子中某个关系的出现，然后确定其参数来降低任务的复杂性。</p>
+<p>最近的研究引入了<strong>联合关系抽取的神经模型</strong></p>
+<ul>
+<li>katiyar and Cardie 2016</li>
+<li>Zhang，zhang，and Fu 2017</li>
+</ul>
+<p><em>Miwa and Bansal(2016)</em>为实体抽取和关系分类提出了共享参数的神经模型，<strong>但这两个任务是分开处理的，通过详尽枚举检测到的实体提及和关系类型之间的组合来获得最终决策。</strong></p>
+<p>与上述需要<strong>首先是别所有实体</strong>的方法不同，Zheng et al.(2017)使用了<strong>标注方案</strong>，该方案应用了关系类型标签和实体提及标签的笛卡儿积，因此为每个单词分配了一个唯一的标签，该标签同时编码实体和关系类型。</p>
+<p>然而，这并不能处理句子中的<strong>重叠关系问题</strong>：如果一个实体是多个关系的参数，那这个实体的标签不应该是唯一的。最近的研究（Zeng et al. 2018)和我们的很相似，他的目标是处理重叠关系。它基于Seq2Seq学习引入多解码器，一个解码器从原句子中拷贝实体单词，句子中每个三元组都是由不同的decoder生成的，<strong>但这种方法强烈依赖训练数据的标注，并且他不能抽取包含多个单词的实体。</strong></p>
+<p>近年来，<strong>强化学习在信息抽取中得到了广泛的应用</strong>。</p>
+<ul>
+<li>Narasimhan, Yala, and Barzilay 2016，RL被用来在时间抽取中获取并整合外部证据</li>
+<li>Feng et al.(2018) 使用RL训练实例选择器来降低关系抽取中，通过远程监督获取的训练数据的噪声。在远程监督关系类型抽取中引入RL，通过重新将false positives(FP)分配为负样本，证明是有改进的。</li>
+</ul>
+<h2 id="层次抽取框架-Hierarchical-Extraction-Framework"><a href="#层次抽取框架-Hierarchical-Extraction-Framework" class="headerlink" title="层次抽取框架 Hierarchical Extraction Framework"></a>层次抽取框架 Hierarchical Extraction Framework</h2><h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><p>首先，我们来定义<strong>关系指示符</strong>：</p>
+<p><strong>定义1</strong>：当在一句话中的某个位置有足够信息去识别语义关系时，我们把这个位置就叫做<code>关系指示符</code>。和<code>关系触发器(明确的关系提及)</code>不同，它可以是名词(如，father)、动词(例如，die of)、介词（例如，from/by），或者是一些其他的符号比如逗号、时间等等（图1中的关系类型<code>palce-of-death</code>就能够被逗号的位置指出）。</p>
+<p><code>关系指示符</code>在本结构中非常重要，因为整个的关系抽取任务可以分解为<code>关系指示符探测</code>和<code>“关系中的实体抽取”</code>。 </p>
+<p>整个<strong>关系抽取过程</strong>如下：</p>
+<p>一个 agent 在顺序扫描句子时预测特定位置的关系类型。不同于识别实体对之间关系的关系分类，该过程不需要对实体进行标注。当在一个时间步中没有足够的信息来指示语义关系时，agent 可以选择<code>NR</code>，这是一种指示没有关系的特殊关系类型。否则，触发一个关系指示符，agent 启动一个用于实体提取的子任务，以识别两个实体之间的关系。当实体被识别时，子任务完成，代理继续扫描句子的其余部分寻找其他关系。 </p>
+<p>这种过程可以被表述为<strong>半马尔可夫决策过程</strong>(Sutton, Precup, and Singh 1999)：1）检测句子中关系指示符的high-level RL 过程；2）识别对应关系的相关实体的low-level RL 过程。 </p>
+<p>通过将任务分解成两个 RL 过程的层次结构，该模型有利于<strong>处理对于同一实体对具有多种关系类型的句子，或者一个实体涉及多种关系</strong>的情况。过程如图：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/2.png" title="figure 2"></div></p>
+<div>
+
+<p>下面分别介绍两个决策过程。</p>
+<h3 id="High-level-RL的关系探测-Relation-Detection-with-High-level-RL"><a href="#High-level-RL的关系探测-Relation-Detection-with-High-level-RL" class="headerlink" title="High-level RL的关系探测 Relation Detection with High-level RL"></a>High-level RL的关系探测 Relation Detection with High-level RL</h3><p>High-level RL 的策略（policy）$\mu$ 旨在从句子$S = w_1w_2\cdots w_L$中找到存在的关系，可以看做是带有 options 的 常规RL policy。option 指的是一旦 agent 执行了某个选项(option)，就会启动low-level的 RL 策略。 </p>
+<p><strong>Option:</strong>选项$o_t$从集合$ O = \{NR\} \bigcup R$中选择，其中$NR$表示没有关系，$R$是关系类型集合。当 low-level RL 进入结束状态，agent 的控制将被 high-level 接管去执行下一个 option。 </p>
+<p><strong>State:</strong>状态$s_t^h$ 由以下三者共同决定:<br>1)当前隐层状态$h_t$<br>2)关系类型向量$v_t^r$(最后一个option $o_{t’}$的embedding，$o_{t’}\neq NR$，是可学习的参数）<br>3)上一个时间步$s_{t-1}$的状态，如果agent在上一个时间步采样了high-level选项，那么$s_{t-1} = s_{t-1}^h$，如果agen采样了low-level action，那么$s_{t-1} = s_{t-1}^l$</p>
+<p>公式如下：</p>
+<p>$s_t^{h} = f^h(W_s^h[h_t;v_t^r;s_{t-1}]) \tag 1$</p>
+<p>其中$f^h(\cdot)$是非线性方程，用MLP实现。<br>为了获得隐层状态$h_t$,在当前输入词嵌入$w_t$上引入序列Bi-LSTM：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/3.png" title="公式 2"></div></p>
+<div>
+
+<p><strong>Policy:</strong>关系检测的随机策略$\mu$：$S \to O$，也就是options的概率分布：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/4.png" title="公式 3"></div></p>
+<div>
+
+<p><strong>Reward:</strong>然后，环境提供一个中间reward $r_t^h$（可量化的标量反馈信号）来评估当执行$o_t$时的未来反馈，reward计算如下：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/5.png" title="公式 4"></div></p>
+<div>
+
+<p>如果当前时间步$o_t = NR$，下一个时间步 agent转换到一个新的high-level中间选项状态。否则low-level策略将会执行实体抽取过程。中间选项状态直到子任务(当前选项$o_t$)完成才会转换，这可能会消耗多个时间步。这样的半马尔可夫过程会一直执行，直到采样到$S$的最后一个单词$w_L$的最后一个选项。最后，用一个最终的 reward $r_{fin}^h$ 来评价句子级别的抽取效果：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/6.png" title="公式 5"></div></p>
+<div>
+
+<p>其中$F_{\beta}$是从$S$中关系的角度来看的precision和recall的加权调和均值。 $Prec/Rec$表示precision/recall，用一个句子来计算。</p>
+<h3 id="Low-level-RL的实体抽取-Entity-Extraction-with-Low-level-RL"><a href="#Low-level-RL的实体抽取-Entity-Extraction-with-Low-level-RL" class="headerlink" title="Low-level RL的实体抽取 Entity Extraction with Low-level RL"></a>Low-level RL的实体抽取 Entity Extraction with Low-level RL</h3><p>当 High-level RL policy 预测了一个非 $NR$ 的relation，Low-level RL 策略$\pi$ 会抽取 relation 中的实体。action的low-level policy（原始action）的定义与option的high-level policy很相似。为了让预测的关系类型在low-level过程中可访问，High-level RL 的 option $o_{t’}$会作为 Low-level RL 的额外输入。 </p>
+<p><strong>Action</strong>：每个时间步的action 会给当前的词分配一个实体tag，实体tag空间(即action空间) 包括 $A=(\{S,T,O\}\times\{B,I\})\bigcup\{N\}$。其中，$S$ 是参与的源实体，$T$ 是目标实体，$O$ 是和关系$o_{t’}$无关的实体，$N$ 是非实体单词，B 和 I 表示一个实体的开始和结束。需要注意的是，相同的实体也许会被分配不同的$S/T/O$tag，取决于当前时刻的不同关系类型。可参看下图4：</p>
+<p><div class="image-size-100"><br> <img src="/2019/12/02/reinforcement-learning-2019/7.png" title="图2"></div></p>
+<div>
+
+<p><strong>State</strong>：类似 High-level RL 中的关系检测，low-level intra-option的状态$s_t^l$通过以下4者共同决定：<br>1) 当前单词embedding $w_t$的隐藏状态$h_t$<br>2) 实体tag向量$v_t^e$，是$a_{t-1}$可学习的embedding<br>3) 上一个时间步$s_{t-1}$的状态<br>4）上下文向量$c_{t’}$，使用等式1中分配给最新option的关系的状态$s_{t’}^h$表示</p>
+<p>公式如下：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/8.png" title="公式 6"></div></p>
+<div>
+
+<p>$h_t$是当前单词的隐状态，同样也是经过 Bi-LSTM 计算得到(等式2)，$v_t^e$ 是可学习的实体标签向量，$s_{t-1}$是上一阶段的状态（注意，既可以是 High-level 的状态，也可以是 Low-level 的状态）。g 和 f 都是多层感知机(非线性方程，MLP:多层感知机)。</p>
+<p><strong>Policy</strong>：实体抽取的随机策略$\pi$:$S\to A$给定内部option(intra-option)状态$s_t^l$和启动当前子任务的high-level option $o_{t’}$的情况下输出一个action的分布，也就是，由句子到实体的概率计算如下： </p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/9.png" title="公式 7"></div></p>
+<div>
+
+<p>其中$W_{\pi}$是矩阵$|R|$的数组。</p>
+<p><strong>Reward</strong>：给定一个关系类型$o_{t’}$，通过 policy采样actions 可以很容易得到每个单词的实体标签。因此，当action$a_t$通过在gold-standard标注上简单衡量预测误差，提供即时reward $r_t^l$，也就是说我们需要用 reward 来衡量预测的标签是否准确：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/10.png" title="公式 8"></div></p>
+<div>
+
+<p>其中$sign(\cdot)$是符号函数，$y(o_{t’})$是基于预测关系类型$o_{t’}$的gold-standard 实体标签。$\lambda(y)$是用来降低非实体(non-entity)标签权重的偏置权重，定义如下：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/11.png" title="公式 9"></div></p>
+<div>
+
+<p>较小的$\alpha$导致对不是实体的单词的reward较少。以这种方式，模型避免学习将所有词都预测为N(non-entity words)的trivial策略。当所有action都被采样，将计算额外最终reward$r_{fin}^l$。如果所有实体标签都正确预测了，接下来agent 得到+1reward，否则-1.</p>
+<h3 id="层次策略学习-Hierarchical-Policy-Learning"><a href="#层次策略学习-Hierarchical-Policy-Learning" class="headerlink" title="层次策略学习 Hierarchical Policy Learning"></a>层次策略学习 Hierarchical Policy Learning</h3><p>在优化 High-level policy 时，我们的目标是在agent遵循high-level 策略 $\mu$跟踪轨迹时，在每个时间步t上最大化预期累积回报(rewards)，计算如下：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/12.png" title="公式 10"></div></p>
+<div>
+
+<p>其中，$\mu$由$\theta_\mu$参数化，$\gamma$是 RL 中的折扣因子。在结束前，整个采样过程需要 T 个时间步长。 </p>
+<p>同样的，在优化 Low-level policy 时，我们也需要最大化累计回报，公式如下：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/13.png" title="公式 11"></div></p>
+<div>
+
+<p>把累计回报分解成 Bellman 方程，得到：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/14.png" title="公式 12"></div></p>
+<div>
+
+<p>当实体提取策略根据选项$O_t$运行时，子任务持续的时间步数是 N，所以agent的下一个选项是$o_{t+n}$。当 option 是 NR 时，N=1。</p>
+<p>然后，使用带REINFORCE算法(Williams 1992)的策略梯度方法（Sutton et al. 2000）,可以一同优化 High-level 和 Low-level 两段策略，High-level 的梯度是：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/15.png" title="公式 13"></div></p>
+<div>
+
+<p>Low-level 的梯度是：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/16.png" title="公式 14"></div></p>
+<div>
+
+<p>整个训练过程描述为如下面的算法1：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/17.png" title="算法1"></div></p>
+<div>
+
+<hr>
+<p><strong>模型分哪几步？</strong></p>
+<blockquote>
+<p>层次强化学习过程，分为：<br><strong>high-level RL的关系探测</strong><br>high-level RL的策略是从句子中找到存在的关系，选项option从关系集合中选择，一旦执行了某个option，就会启动low-level RL策略。</p>
+<p><strong>low-level RL的实体抽取</strong><br>当high-level RL 策略预测了一个非NR的关系，low-level RL策略会抽取这个关系中的实体。</p>
+</blockquote>
+<p><strong>HRL的整个训练过程</strong></p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/18.png" title="训练过程"></div></p>
+<div> 
+
+<h2 id="实验-Experiments"><a href="#实验-Experiments" class="headerlink" title="实验 Experiments"></a>实验 Experiments</h2><h3 id="实验设置-Experimental-Setting"><a href="#实验设置-Experimental-Setting" class="headerlink" title="实验设置 Experimental Setting"></a>实验设置 Experimental Setting</h3><h4 id="数据集-Datasets"><a href="#数据集-Datasets" class="headerlink" title="数据集 Datasets"></a>数据集 Datasets</h4><p>通过远程监督得到的NYT语料(包含噪声关系)，包括两个版本：<br>1) 原始版本 <strong>NYT10</strong>：通过将原始数据与Freebase的关系对齐生成(Riedel, Yao, and McCallum 2010)<br>2) 更小的版本 <strong>NYT11</strong>：测试集是人工标注的（Hoffmann et al. 2011)</p>
+<p>从NYT11中分割部分训练数据来构建NYT11-plus，稍后会介绍。</p>
+<p>我们对数据集进行了预处理，通过移除：<br>1) 在训练集出现而在测试集没有的关系<br>2) 没有关系的句子</p>
+<p>这样的预处理也符合文献中的设置（例如，Tagging），为了公平比较，所有的baseline都在这样的设置下进行评估。预处理后的数据集如下表1：</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/19.png" title="table 1"></div></p>
+<div> 
+
+<p>对每个数据集，我们随机从训练集中选择0.5%作为验证。</p>
+<h4 id="参数设置-Parameter-Settings"><a href="#参数设置-Parameter-Settings" class="headerlink" title="参数设置 Parameter Settings"></a>参数设置 Parameter Settings</h4><p>所有的<code>超参数</code>都在验证集中调整。<br>等式1，2，6的向量维数是<code>300维的Glove词向量</code>(Pennington, Socher, and Manning 2014,斯坦福NLP开发的)，通过训练更新。</p>
+<p><code>relation type vectors</code> 和 <code>entity tag vectors</code> 都是随机初始化的。<code>学习率</code>：4e - 5，<code>mini-batch size</code>：16，等式9的$\alpha$：0.1，等式5的$\beta$：0.9，discount factor $\gamma$:0.95</p>
+<h4 id="评价方法-Evaluation-Metrics"><a href="#评价方法-Evaluation-Metrics" class="headerlink" title="评价方法 Evaluation Metrics"></a>评价方法 Evaluation Metrics</h4><p>采用斯坦福 <code>micro-F1</code> 评价方法，如果关系类型和两个对应的实体都正确，则认为三元组是正确的。</p>
+<h4 id="Baselines"><a href="#Baselines" class="headerlink" title="Baselines"></a>Baselines</h4><p>选择了两种类型的baseline。使用开源代码，亲自进行实验。</p>
+<p>pipeline方法：</p>
+<ul>
+<li><strong>FCM</strong>(Gormley, Yu, and Dredze 2015)：一个组合模型，将词汇化的语言上下文和单词嵌入相结合，以学习关系提取中句子的子结构的表示形式。（没看过）</li>
+</ul>
+<p>联合学习方法：<br>1）基于特征的：</p>
+<ul>
+<li><strong>MultiR</strong>（Hoffmann et al.2011）:典型的远程监督方法，执行句子级和语料库级的抽取，它使用多实例加权来处理训练数据中的噪声标签。</li>
+<li><strong>CoType</strong>(Ren et al. 2017)：领域无关框架，通过将实体提及，关系提及，文本特征和类型标签共同嵌入表示形式，从而将公式化的抽取转换为全局嵌入问题。（没看过）</li>
+</ul>
+<p>2）神经网络：</p>
+<ul>
+<li><strong>SPTree</strong>（Miwa and Bansal 2016）：end2end关系抽取模型，同时将单词序列和依赖树结构使用双向序列和树结构的LSTM-RNNs表示。</li>
+<li><strong>Tagging</strong>(Zheng et al. 2017)：使用标注方案将联合抽取转换为序列标注问题的方法，其中每个tag同时encode 实体提及和关系类型。</li>
+<li><strong>CopyR</strong>(Zeng et al. 2018)： 带有拷贝机制Seq2Seq学习框架，用于联合抽取。应用多解码器生成三元组来处理重叠关系。</li>
+</ul>
+<h3 id="实验主要结果-Main-Results"><a href="#实验主要结果-Main-Results" class="headerlink" title="实验主要结果 Main Results"></a>实验主要结果 Main Results</h3><p>关系抽取的结果如表2所示。</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/20.png" title="table 2"></div></p>
+<div> 
+
+<p>需要注意的是，由于所有模型都是根据噪声数据进行训练的，因此在噪声数据（NYT10）和干净数据（NYT11）之间，表现上有很大差距。<strong>能够看出，我们的方法（HRL）在这两个数据集上的表现优于baseline。</strong>可以在NYT10上观察到显着的改进，这表明我们的方法对噪声的数据更可靠。NYT11上的结果表明，神经模型（SPTree，Tagging和CopyR）比流水线（FCM）或基于特征（MultiRandCoType）的方法更有效。引入CopyR来提取重叠关系，但是在NYT11测试集上，句子中几乎没有重叠关系时（369个句子中有370个关系）会产生较差的性能。我们的模型仍可与SPTree相提并论，并且比其他baseline具有更好的性能。注意，SPTree使用了更多的语言资源（例如，POS tag，chunks，句法解析树）。这意味着我们的模型对于关系的数据分布也很健壮。</p>
+<h3 id="重叠关系抽取-Overlapping-Relation-Extraction"><a href="#重叠关系抽取-Overlapping-Relation-Extraction" class="headerlink" title="重叠关系抽取 Overlapping Relation Extraction"></a>重叠关系抽取 Overlapping Relation Extraction</h3><p>我们准备了另外两个测试集，以验证我们的模型在提取重叠关系方面的有效性。注意，重叠关系可以分为两种类型。</p>
+<ul>
+<li>类型1：句子中两个三元组共享一个实体</li>
+<li>类型2：句子中两个三元组共享两个实体（head entity, tail entity)</li>
+</ul>
+<p>第一组<code>NYT11-plus</code>是人工标注的，由149个句子从原始<code>NYT11</code>训练数据中拆分而成。该组分别包含I / II类型的210/97个重叠关系。</p>
+<p>第二组<code>NYT10-sub</code>是NYT10测试集的子集，有715个句子，但没有人工注释。该集合分别包含类型I/II 的90/2082个重叠关系。</p>
+<p>综上所述，<code>NYT11-plus</code>中的大多数重叠关系都属于<code>I型</code>。而<code>NYT10-sub</code>中的大多数属于II型。表3显示了通过不同方法提取重叠关系的性能。</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/21.png" title="table 3"></div></p>
+<div> 
+
+<p><code>NYT10-sub</code>上的结果表明，baseline在有噪声的数据上提取<code>II型</code>重叠关系非常弱，这与我们关于<strong>现有联合提取方法本质上无法有效处理重叠关系</strong>的说法是一致的。相比之下，与表2相比，我们的方法的性能没有太大的下降，甚至在精度上获得了更大的收益。</p>
+<p><code>NYT11-plus</code>上的结果表明，在干净数据上提取I型重叠关系时，我们的方法在所有基线上都有显着的F1改进，表明我们的方法可以更准确地提取重叠关系。<strong>SPTree</strong>具有很高的精度，但是召回率却很低，因为它只将一个关系类型与一个实体对匹配，而忽略了重叠关系的情况。<strong>Tagging</strong>在提取重叠关系方面的性能很差，因为即使该实体参与重叠关系，它也只会为该实体分配一个唯一的标签。尽管<strong>CopyR</strong>声称它可以提取两种类型的重叠关系，但由于它强烈依赖于有噪声的训练数据的标注，因此无法有效地从干净数据中提取关系。</p>
+<h3 id="两种策略间的交互-Interaction-between-the-Two-Policies"><a href="#两种策略间的交互-Interaction-between-the-Two-Policies" class="headerlink" title="两种策略间的交互 Interaction between the Two Policies"></a>两种策略间的交互 Interaction between the Two Policies</h3><p>为了证明<strong>将实体集成到关系中以及两个策略之间如何建立交互的有效性</strong>，我们研究了<strong>关系检测</strong>（分类）的性能。在此设置下，<strong>只要正确预测了关系类型，预测就被视为正确的</strong>。该预测源自high-level policy。</p>
+<p>表5中的结果表明，我们的方法在两个数据集的关系检测中均表现更好。<code>NYT11-plus</code>的改进更加显着，因为我们的范例从句子中提取多个关系的功能更强大。结果表明，将实体作为关系参数的提取范式可以更好地捕获文本中的关系信息。</p>
+<p><div><br> <img src="/2019/12/02/reinforcement-learning-2019/22.png" title="table 5"></div></p>
+<div> 
+
+<p>当从我们的模型（HRL-Ent）中删除low-level实体抽取策略时，由于<code>NYT11</code>上的每个句子几乎只包含一个关系（369个句子中的370个关系），因此性能在NYT11上略有变化。<strong>在这种情况下，两个策略之间的交互对关系检测几乎没有影响</strong>。但是，在<code>NYT11-plus</code>上观察到急剧的下降，因为149个句子中我们有327个关系，这意味着我们的方法（HRL）捕获了多个提取任务之间的依赖性，并且这种交互对high-level策略有利。因此，我们的分层提取框架实际上增强了关系检测和实体提取之间的交互作用。</p>
+<h3 id="案例研究-Case-Study"><a href="#案例研究-Case-Study" class="headerlink" title="案例研究 Case Study"></a>案例研究 Case Study</h3><p>表4给出了我们的模型的一些提取示例，以演示提取重叠关系的能力。</p>
+<p><div class="image-size-100"><br> <img src="/2019/12/02/reinforcement-learning-2019/23.png" title="table 4"></div></p>
+<div> 
+
+<blockquote>
+<p>括号中的word表示模型抽取的实体。<br>Es表示源实体，Et表示目标实体。<br>预测的关系指示符用背景色标记（如第一个例子中的“Murdoch”)。<br>组成一个三元组的实体用相同颜色的括号。</p>
+</blockquote>
+<p><code>第一个句子</code>展示了<strong>一个实体对有多种关系（类型2）</strong>的情况。两个关系（Rupert Murdoch， person-company，News Corporation）和 (News Corporation, company-founder, Ruper Murdoch)共享相同的实体对，但拥有不同的关系。模型<strong>首先</strong>在 <em>“Murdoch”</em> 处检测关系类型<code>person-company</code>，然后在 <em>逗号</em> 位置(Murdoch旁边)检测其他关系类型。这表明当在特定位置收集到足够的evidence时，将触发关系检测。并且，模型可以将相同的实体分类为源实体或目标实体（例如，<em>Rupert Murdoch</em> 在 <code>person-company</code>中是源实体，而在<code>company-founder</code>中是目标实体）。这样证明了我们的层次模型的优势，因为它可以基于不同关系类型为单词分配动态tag。此外，<em>Rupert Murdoch</em> 与 <em>Australia</em> 也拥有关系，这俩实体距离较远，我们的模型也能正确提取关系。</p>
+<p><code>第二个句子</code>给出了另一个例子，<strong>一个实体参与多个关系（类型1）</strong>。在该句中，（Steven A. Ballmer, person-company, Microsoft）和(Bill Gates, person-company, Microsoft)共享相同的关系类型以及目标实体，但源实体不同。当agent扫描到单词<code>“Microsoft”</code>时，模型探测到第一个关系，当扫描到单词<code>&quot;Gates&quot;</code>时，agent接着探测第二个关系。这进一步证明了我们的层次结构框架的好处，该层次结构在<strong>通过首先检测关系然后找到实体参数来提取重叠关系</strong>方面具有优势。此外，模型还预测了另一个关系（Bill Gates, founder-of, Microsoft)，对这个句子来讲是错误的，因为并没有该关系明确提及。这可能是由于远程监督产生噪声所致。</p>
+</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年12月06日 14:08</p>
+        <p>原始链接： <a class="post-url" href="/2019/12/02/reinforcement-learning-2019/" title="【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning">/2019/12/02/reinforcement-learning-2019/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/12/02/reinforcement-learning-2019/&title=《【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/56.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/12/02/reinforcement-learning-2019/&title=《【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/12/02/reinforcement-learning-2019/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning》 — Fishwinwin&url=/2019/12/02/reinforcement-learning-2019/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/12/02/reinforcement-learning-2019/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/12/02/reinforcement-learning-2019/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+    <a href="/tags/联合抽取/" class="color5">联合抽取</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论以及未来工作"><span class="post-toc-text">结论以及未来工作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言-Introduction"><span class="post-toc-text">引言 Introduction</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相关工作-Related-Work"><span class="post-toc-text">相关工作 Related Work</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#层次抽取框架-Hierarchical-Extraction-Framework"><span class="post-toc-text">层次抽取框架 Hierarchical Extraction Framework</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#概览"><span class="post-toc-text">概览</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#High-level-RL的关系探测-Relation-Detection-with-High-level-RL"><span class="post-toc-text">High-level RL的关系探测 Relation Detection with High-level RL</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Low-level-RL的实体抽取-Entity-Extraction-with-Low-level-RL"><span class="post-toc-text">Low-level RL的实体抽取 Entity Extraction with Low-level RL</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#层次策略学习-Hierarchical-Policy-Learning"><span class="post-toc-text">层次策略学习 Hierarchical Policy Learning</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验-Experiments"><span class="post-toc-text">实验 Experiments</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实验设置-Experimental-Setting"><span class="post-toc-text">实验设置 Experimental Setting</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数据集-Datasets"><span class="post-toc-text">数据集 Datasets</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参数设置-Parameter-Settings"><span class="post-toc-text">参数设置 Parameter Settings</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#评价方法-Evaluation-Metrics"><span class="post-toc-text">评价方法 Evaluation Metrics</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Baselines"><span class="post-toc-text">Baselines</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实验主要结果-Main-Results"><span class="post-toc-text">实验主要结果 Main Results</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重叠关系抽取-Overlapping-Relation-Extraction"><span class="post-toc-text">重叠关系抽取 Overlapping Relation Extraction</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#两种策略间的交互-Interaction-between-the-Two-Policies"><span class="post-toc-text">两种策略间的交互 Interaction between the Two Policies</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#案例研究-Case-Study"><span class="post-toc-text">案例研究 Case Study</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/12/28/char-cnn-2015-note/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【论文笔记】Character-level Convolutional Networks for Text Classification
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/11/20/Zeng-2018-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【论文笔记】Extracting Relational Facts by an End-to-End Neural Model withCopy Mechanism</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/NLP/">NLP</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

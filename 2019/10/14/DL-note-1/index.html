@@ -45,7 +45,30 @@
 <meta property="og:image" content="/2019/10/14/DL-note-1/30.png">
 <meta property="og:image" content="/2019/10/14/DL-note-1/31.png">
 <meta property="og:image" content="/2019/10/14/DL-note-1/32.png">
-<meta property="og:updated_time" content="2019-11-07T06:50:26.911Z">
+<meta property="og:image" content="/2019/10/14/DL-note-1/33.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/34.jpg">
+<meta property="og:image" content="/2019/10/14/DL-note-1/36.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/37.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/38.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/39.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/40.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/41.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/42.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/43.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/44.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/45.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/46.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/47.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/48.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/49.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/50.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/51.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/52.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/53.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/54.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/55.png">
+<meta property="og:image" content="/2019/10/14/DL-note-1/56.png">
+<meta property="og:updated_time" content="2019-12-16T19:19:56.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【DL】学习笔记(持续更新)">
 <meta name="twitter:description" content="放上几个学习的链接：https://www.jianshu.com/p/fe114409daafhttps://www.jianshu.com/p/c0215d26d20a莫烦的超棒学习资源 Logistic回归总结： Logistic Regression模型：$y’ = \sigma(W^tx+b)$，记住使用的激活函数是sigmoid函数。 损失函数：$L(y’,y) = -[y·\log(">
@@ -355,13 +378,13 @@
 <h3 id="什么是-LSTM-RNN？"><a href="#什么是-LSTM-RNN？" class="headerlink" title="什么是 LSTM RNN？"></a>什么是 LSTM RNN？</h3><p>LSTM：Long Short-Term Memory 长短期记忆，是当下流行的RNN形式之一。</p>
 <p>RNN会有梯度消失(gradient vanishing)和梯度爆炸(gradient exploding)的问题。<br>关于梯度消失，更多参考：</p>
 <blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/28687529" target="_blank" rel="noopener">RNN梯度消失和爆炸的原因</a><br><a href="https://blog.csdn.net/qq_29340857/article/details/70556307" target="_blank" rel="noopener">深度学习中RNN梯度消失</a><br><a href="https://zhuanlan.zhihu.com/p/28749444" target="_blank" rel="noopener">LSTM如何解决梯度消失问题</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/28687529" target="_blank" rel="noopener">RNN梯度消失和爆炸的原因</a><br><a href="https://blog.csdn.net/qq_29340857/article/details/70556307" target="_blank" rel="noopener">深度学习中RNN梯度消失</a><br><a href="https://zhuanlan.zhihu.com/p/28749444" target="_blank" rel="noopener">如何解决梯度消失问题</a></p>
 </blockquote>
 <p>LSTM是为了解决这个问题产生的，它比RNN多了3个控制器。<code>输入</code>,<code>输出</code>,<code>忘记</code></p>
 <p><div class="image-size-80"><br> <img src="/2019/10/14/DL-note-1/23.jpg" title="graph23"></div></p>
 <div>
 
-<p>LSTM的超棒教程：<a href="https://www.jiqizhixin.com/articles/2018-10-24-13" target="_blank" rel="noopener">BiLSTM介绍及代码实现</a></p>
+<p>LSTM的超棒教程：<a href="https://www.jiqizhixin.com/articles/2018-10-24-13" target="_blank" rel="noopener">BiLSTM介绍及代码实现</a><br>搭配食用：<br><a href="https://blog.csdn.net/zhangbaoanhadoop/article/details/81952284" target="_blank" rel="noopener">LSTM结构详解</a><br><a href="https://www.cnblogs.com/Zhi-Z/p/8693349.html" target="_blank" rel="noopener">LSTM（Long Short-Term Memory）长短期记忆网络</a></p>
 <h3 id="什么是自编码-Autoencoder-？"><a href="#什么是自编码-Autoencoder-？" class="headerlink" title="什么是自编码 Autoencoder ？"></a>什么是自编码 Autoencoder ？</h3><p>自编码器是一种能够通过无监督学习，学到输入数据高效表示的人工神经网络。输入数据的这一高效表示称为编码（codings），其维度一般远小于输入数据，使得自编码器可用于降维。更重要的是，自编码器可作为强大的特征检测器（feature detectors），应用于深度神经网络的预训练。此外，自编码器还可以随机生成与训练数据类似的数据，这被称作生成模型（generative model）。比如，可以用人脸图片训练一个自编码器，它可以生成新的图片。</p>
 <p>更多参考：<br><a href="https://www.cnblogs.com/royhoo/p/Autoencoders.html" target="_blank" rel="noopener">第十五章——自编码器（Autoencoders）</a></p>
 <h3 id="什么是超参数"><a href="#什么是超参数" class="headerlink" title="什么是超参数"></a>什么是超参数</h3><ol>
@@ -381,6 +404,7 @@
 <p>在人工神经网络上应用消融的方法十分简单的，首先，我们训练神经网络来完成特定的任务，比如说识别手写数字。第二步，我们切除网络的某一部分，然后评估由这种破坏导致的性能变化。第三步，我们确定网络性能的改变和被破坏的位置之间是否有联系。通过这种方法，我们发现网络的某些特定能力，比如控制机器人执行前进动作，是通过局部网络控制的。</p>
 <p>更多：<a href="https://blog.csdn.net/cf2SudS8x8F0v/article/details/86521408" target="_blank" rel="noopener">对人工神经网络“开刀”，利用神经科学消融法检测人工神经网络</a></p>
 <h3 id="什么是encoder-decoder模型框架？"><a href="#什么是encoder-decoder模型框架？" class="headerlink" title="什么是encoder-decoder模型框架？"></a>什么是encoder-decoder模型框架？</h3><p>准确的说，Encoder-Decoder并不是一个具体的模型，而是一类框架。Encoder和Decoder部分可以是任意的文字，语音，图像，视频数据，模型可以采用CNN，RNN，BiRNN、LSTM、GRU等等。所以基于Encoder-Decoder，我们可以设计出各种各样的应用算法。</p>
+<p>更多：<a href="https://blog.csdn.net/baidu_33718858/article/details/85112271" target="_blank" rel="noopener">Seq2Seq(Encoder-Decoder)、Attention的详细介绍</a></p>
 <h3 id="什么是Seq2Seq？"><a href="#什么是Seq2Seq？" class="headerlink" title="什么是Seq2Seq？"></a>什么是Seq2Seq？</h3><p>更多来自：<a href="https://blog.csdn.net/program_developer/article/details/78752680" target="_blank" rel="noopener">轰炸理解深度学习里面的encoder-decoder模型</a></p>
 <p>所谓的Sequence2Sequence任务主要是泛指一些Sequence到Sequence的映射问题，Sequence在这里可以理解为一个字符串序列，当我们在给定一个字符串序列后，希望得到与之对应的另一个字符串序列（如 翻译后的、如语义上对应的）时，这个任务就可以称为Sequence2Sequence了。</p>
 <p>在现在的深度学习领域当中，通常的做法是将输入的源Sequence编码到一个中间的context当中，这个context是一个特定长度的编码（可以理解为一个向量），然后再通过这个context还原成一个输出的目标Sequence。 </p>
@@ -437,10 +461,350 @@
 <p>总之：<br>通过这个scheduled-samping方案，抹平了训练decoder和预测decoder之间的差异！让预测结果和训练时的结果一样。</p>
 <p>更多参考：<a href="https://www.cnblogs.com/panfengde/p/10315576.html" target="_blank" rel="noopener">seq2seq聊天模型（二）——Scheduled Sampling</a></p>
 <h3 id="什么是反向传播算法（BP）？"><a href="#什么是反向传播算法（BP）？" class="headerlink" title="什么是反向传播算法（BP）？"></a>什么是反向传播算法（BP）？</h3><p>具体参考：<a href="https://www.jianshu.com/p/74bb815f612e" target="_blank" rel="noopener">读懂反向传播算法（bp算法）</a></p>
-</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+<h3 id="什么是Word-Embedding？"><a href="#什么是Word-Embedding？" class="headerlink" title="什么是Word Embedding？"></a>什么是Word Embedding？</h3><p>具体参考：<a href="https://www.jianshu.com/p/af8f20fe7dd3" target="_blank" rel="noopener">Word Embedding&amp;word2vec</a></p>
+<h3 id="什么是准确率、精确率、召回率、F1？"><a href="#什么是准确率、精确率、召回率、F1？" class="headerlink" title="什么是准确率、精确率、召回率、F1？"></a>什么是准确率、精确率、召回率、F1？</h3><h4 id="TP、TN、FP、FN"><a href="#TP、TN、FP、FN" class="headerlink" title="TP、TN、FP、FN"></a>TP、TN、FP、FN</h4><p><div><br> <img src="/2019/10/14/DL-note-1/33.png" title="混淆矩阵"></div></p>
+<div>
+
+<h4 id="准确率-Accuracy"><a href="#准确率-Accuracy" class="headerlink" title="准确率 Accuracy"></a>准确率 Accuracy</h4><p>所有的预测正确（正类负类）的占总的比重。</p>
+<p>$Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$</p>
+<h4 id="精确率-Precision"><a href="#精确率-Precision" class="headerlink" title="精确率 Precision"></a>精确率 Precision</h4><p>查准率，即<strong>正确预测为正的占全部预测为正</strong>的比例，也就是，真正正确的占所有预测为正的比例。</p>
+<p>$Precision = \frac{TP}{TP+FP}$</p>
+<h4 id="召回率-Recall"><a href="#召回率-Recall" class="headerlink" title="召回率 Recall"></a>召回率 Recall</h4><p>查全率，即<strong>正确预测为正的占全部实际为正</strong>的比例，也就是，真正正确的占所有实际为正的比例。</p>
+<p>$Recall = \frac{TP}{TP + FN}$</p>
+<h4 id="F1值（H-mean值）"><a href="#F1值（H-mean值）" class="headerlink" title="F1值（H-mean值）"></a>F1值（H-mean值）</h4><p>调和均值，算术平均数除以几何平均数，且越大越好。</p>
+<p>$F1 = \frac{2TP}{2TP+FP+FN}$</p>
+<h3 id="什么是-word2vec"><a href="#什么是-word2vec" class="headerlink" title="什么是 word2vec?"></a>什么是 word2vec?</h3><p>首先，word2vec可以在百万数量级的词典和上亿的数据集上进行高效地训练；其次，该工具得到的训练结果——<strong>词向量（word embedding），可以很好地度量词与词之间的相似性</strong>。随着深度学习（Deep Learning）在自然语言处理中应用的普及，很多人误以为word2vec是一种深度学习算法。其实word2vec算法的背后是一个<strong>浅层神经网络</strong>。另外需要强调的一点是，word2vec是一个计算word vector的开源工具。当我们在说word2vec算法或模型的时候，其实指的是其背后用于计算word vector的<strong>CBoW模型和Skip-gram模型</strong>。很多人以为word2vec指的是一个算法或模型，这也是一种谬误。</p>
+<p><a href="https://www.cnblogs.com/guoyaohua/p/9240336.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/9240336.html</a><br><a href="https://www.jianshu.com/p/5f04e97d1b27" target="_blank" rel="noopener">https://www.jianshu.com/p/5f04e97d1b27</a><br><a href="https://blog.csdn.net/qq_27586341/article/details/90025288" target="_blank" rel="noopener">https://blog.csdn.net/qq_27586341/article/details/90025288</a><br><a href="https://www.cnblogs.com/pinard/p/7160330.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/7160330.html</a><br><a href="https://www.jianshu.com/p/af8f20fe7dd3" target="_blank" rel="noopener">https://www.jianshu.com/p/af8f20fe7dd3</a><br><a href="https://www.jianshu.com/p/471d9bfbd72f" target="_blank" rel="noopener">https://www.jianshu.com/p/471d9bfbd72f</a></p>
+<h3 id="什么是强化学习？"><a href="#什么是强化学习？" class="headerlink" title="什么是强化学习？"></a>什么是强化学习？</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h4><p>强化学习是机器学习的一个重要分支，是多学科多领域交叉的一个产物，它的本质是解决<strong> decision making 问题</strong>，即自动进行决策，并且可以做连续决策。</p>
+<p>它主要包含四个元素，<strong>agent，环境状态，行动，奖励</strong>, 强化学习的目标就是获得最多的累计奖励。</p>
+<p>让我们以小孩学习走路来做个形象的例子：</p>
+<p>小孩想要走路，但在这之前，他需要先站起来，站起来之后还要保持平衡，接下来还要先迈出一条腿，是左腿还是右腿，迈出一步后还要迈出下一步。</p>
+<p>小孩就是 agent，他试图通过采取行动（即行走）来操纵环境（行走的表面），并且从一个状态转变到另一个状态（即他走的每一步），当他完成任务的子任务（即走了几步）时，孩子得到奖励（给巧克力吃），并且当他不能走路时，就不会给巧克力。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/34.jpg" title="agent,state,reward,action"></div></p>
+<div>
+
+<h4 id="2-和监督式学习-非监督式学习的区别"><a href="#2-和监督式学习-非监督式学习的区别" class="headerlink" title="2.和监督式学习, 非监督式学习的区别"></a>2.和监督式学习, 非监督式学习的区别</h4><p>在机器学习中，我们比较熟知的是监督式学习，非监督学习，此外还有一个大类就是强化学习：</p>
+<p><div><br> </div></p>
+<div>
+
+<p><strong>强化学习和监督式学习的区别：</strong></p>
+<p>监督式学习就好比你在学习的时候，<strong>有一个导师在旁边指</strong>点，他知道怎么是对的怎么是错的，但在很多实际问题中，例如 chess，go，这种有成千上万种组合方式的情况，不可能有一个导师知道所有可能的结果。</p>
+<p>而这时，强化学习会在没有任何标签的情况下，通过先尝试做出一些行为得到一个结果，通过这个结果是对还是错的反馈，调整之前的行为，就这样不断的调整，算法能够学习到在什么样的情况下选择什么样的行为可以得到最好的结果。</p>
+<p><strong>就好比你有一只还没有训练好的小狗</strong>，每当它把屋子弄乱后，就减少美味食物的数量（惩罚），每次表现不错时，就加倍美味食物的数量（奖励），那么小狗最终会学到一个知识，就是把客厅弄乱是不好的行为。</p>
+<p>两种学习方式都会学习出输入到输出的一个映射，监督式学习出的是之间的关系，可以告诉算法什么样的输入对应着什么样的输出，强化学习出的是<strong>给机器的反馈 reward function</strong>，即用来判断这个行为是好是坏。</p>
+<p>另外强化学习的结果反馈有延时，有时候可能需要走了很多步以后才知道以前的某一步的选择是好还是坏，而监督学习做了比较坏的选择会立刻反馈给算法。</p>
+<p>而且强化学习面对的输入总是在变化，每当算法做出一个行为，它影响下一次决策的输入，而监督学习的输入是独立同分布的。</p>
+<p>通过强化学习，一个 agent 可以在探索和开发（exploration and exploitation）之间做权衡，并且选择一个最大的回报。<br>exploration 会尝试很多不同的事情，看它们是否比以前尝试过的更好。<br>exploitation 会尝试过去经验中最有效的行为。</p>
+<p>一般的监督学习算法不考虑这种平衡，就只是是 exploitative。</p>
+<p><strong>强化学习和非监督式学习的区别：</strong></p>
+<p>非监督式不是学习输入到输出的映射，而是模式。例如在向用户推荐新闻文章的任务中，非监督式会找到用户先前已经阅读过类似的文章并向他们推荐其一，而强化学习将通过向用户先推荐少量的新闻，并不断获得来自用户的反馈，最后构建用户可能会喜欢的文章的“知识图”。</p>
+<h4 id="3-主要算法和分类"><a href="#3-主要算法和分类" class="headerlink" title="3.主要算法和分类"></a>3.主要算法和分类</h4><p>从强化学习的几个元素的角度划分的话，方法主要有下面几类：</p>
+<ul>
+<li>Policy based, 关注点是找到最优策略。</li>
+<li>Value based, 关注点是找到最优奖励总和。</li>
+<li>Action based, 关注点是每一步的最优行动。<br>我们可以用一个最熟知的旅行商例子来看，</li>
+</ul>
+<p>我们要从 A 走到 F，每两点之间表示这条路的成本，我们要选择路径让成本越低越好：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/36.png" title="旅行商问题"></div></p>
+<div>
+
+<p>那么几大元素分别是：</p>
+<ul>
+<li>states ，就是节点 {A, B, C, D, E, F}</li>
+<li>action ，就是从一点走到下一点 {A -&gt; B, C -&gt; D, etc}</li>
+<li>reward function ，就是边上的 cost</li>
+<li>policy，就是完成任务的整条路径 {A -&gt; C -&gt; F}</li>
+</ul>
+<p>有一种走法是这样的，在 A 时，可以选的 (B, C, D, E)，发现 D 最优，就走到 D，此时，可以选的 (B, C, F)，发现 F 最优，就走到 F，此时完成任务。<br>这个算法就是强化学习的一种，叫做 epsilon greedy，是一种 Policy based 的方法，当然了这个路径并不是最优的走法。</p>
+<h4 id="此外还可以从不同角度使分类更细一些："><a href="#此外还可以从不同角度使分类更细一些：" class="headerlink" title="此外还可以从不同角度使分类更细一些："></a>此外还可以从不同角度使分类更细一些：</h4><p>如下图所示的四种分类方式，分别对应着相应的主要算法：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/37.png" title="算法"></div></p>
+<div>
+
+<p><strong> Model-free</strong>：不尝试去理解环境, 环境给什么就是什么，一步一步等待真实世界的反馈, 再根据反馈采取下一步行动。</p>
+<p><strong> Model-based</strong>：先理解真实世界是怎样的, 并建立一个模型来模拟现实世界的反馈，通过想象来预判断接下来将要发生的所有情况，然后选择这些想象情况中最好的那种，并依据这种情况来采取下一步的策略。它比 Model-free 多出了一个虚拟环境，还有想象力。</p>
+<p><strong>Policy based</strong>：通过感官分析所处的环境, 直接输出下一步要采取的各种动作的概率, 然后根据概率采取行动。</p>
+<p><strong>Value based</strong>：输出的是所有动作的价值, 根据最高价值来选动作，这类方法不能选取连续的动作。</p>
+<p><strong>Monte-carlo update</strong>：游戏开始后, 要等待游戏结束, 然后再总结这一回合中的所有转折点, 再更新行为准则。</p>
+<p><strong>Temporal-difference update</strong>：在游戏进行中每一步都在更新, 不用等待游戏的结束, 这样就能边玩边学习了。</p>
+<p><strong>On-policy</strong>：必须本人在场, 并且一定是本人边玩边学习。</p>
+<p><strong>Off-policy</strong>：可以选择自己玩, 也可以选择看着别人玩, 通过看别人玩来学习别人的行为准则。</p>
+<h4 id="主要算法有下面几种，今天先只是简述："><a href="#主要算法有下面几种，今天先只是简述：" class="headerlink" title="主要算法有下面几种，今天先只是简述："></a>主要算法有下面几种，今天先只是简述：</h4><p><strong>1. Sarsa</strong></p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/38.png" title="Sarsa算法"></div></p>
+<div>
+
+<p>Q 为动作效用函数（action-utility function），用于评价在特定状态下采取某个动作的优劣，可以将之理解为智能体（Agent）的大脑。</p>
+<p>SARSA 利用马尔科夫性质，<strong>只利用了下一步信息, 让系统按照策略指引进行探索，在探索每一步都进行状态价值的更新</strong>，更新公式如上图中所示：</p>
+<p>s 为当前状态，a 是当前采取的动作，s’ 为下一步状态，a’ 是下一个状态采取的动作，r 是系统获得的奖励， α 是学习率， γ 是衰减因子。</p>
+<p><strong>2. Q learning</strong><br>Q Learning 的算法框架和 SARSA 类似, 也是让系统按照策略指引进行探索，在探索每一步都进行状态价值的更新。关键在于 Q Learning 和 SARSA 的更新公式不一样，Q Learning 的更新公式如下：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/39.png" title="Q learning算法"></div></p>
+<div>
+
+<p><div><br> <img src="/2019/10/14/DL-note-1/40.png" title="Q learning"></div></p>
+<div>
+
+<p><strong>3. Policy Gradients</strong></p>
+<p>系统会从一个固定或者随机起始状态出发，策略梯度让系统探索环境，生成一个从起始状态到终止状态的状态-动作-奖励序列，s1,a1,r1,…..,sT,aT,rT，在第 t 时刻，我们让 gt=rt+γrt+1+… 等于 q(st,a) ，从而求解策略梯度优化问题。</p>
+<p><strong>4. Actor-Critic</strong></p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/41.png" title="Actor-Critic"></div></p>
+<div>
+
+<p>算法分为两个部分：Actor 和 Critic。Actor 更新策略， Critic 更新价值。Critic 就可以用之前介绍的 SARSA 或者 Q Learning 算法。</p>
+<p><strong>5.Monte-carlo learning</strong></p>
+<p>用当前策略探索产生一个完整的状态-动作-奖励序列:<br>s1,a1,r1,….,sk,ak,rk∼π</p>
+<p>在序列第一次碰到或者每次碰到一个状态 s 时，计算其衰减奖励:</p>
+<p>最后更新状态价值:</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/42.png" title="公式"></div></p>
+<div>
+
+
+<p><strong>6.Deep-Q-Network</strong></p>
+<p>DQN 算法的主要做法是 Experience Replay，将系统探索环境得到的数据储存起来，然后随机采样样本更新深度神经网络的参数。它也是在每个 action 和 environment state 下达到最大回报，不同的是加了一些改进，加入了经验回放和决斗网络架构。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/43.png" title="Deep-Q-Network"></div></p>
+<div>
+
+<h4 id="4-应用举例"><a href="#4-应用举例" class="headerlink" title="4. 应用举例"></a>4. 应用举例</h4><p>强化学习有很多应用，除了无人驾驶，AlphaGo，玩游戏之外，还有下面这些工程中实用的例子：</p>
+<p>1.Manufacturing</p>
+<p>例如一家日本公司 Fanuc，工厂机器人在拿起一个物体时，会捕捉这个过程的视频，记住它每次操作的行动，操作成功还是失败了，积累经验，下一次可以更快更准地采取行动。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/44.png" title="Fanuc机器人"></div></p>
+<div>
+
+<p>2.Inventory Management</p>
+<p>在库存管理中，因为库存量大，库存需求波动较大，库存补货速度缓慢等阻碍使得管理是个比较难的问题，可以通过建立强化学习算法来减少库存周转时间，提高空间利用率。</p>
+<p>3.Dynamic pricing</p>
+<p>强化学习中的 Q-learning 可以用来处理动态定价问题。</p>
+<p>4.Customer Delivery</p>
+<p>制造商在向各个客户运输时，想要在满足客户的所有需求的同时降低车队总成本。通过 multi-agents 系统和 Q-learning，可以降低时间，减少车辆数量。</p>
+<p>5.ECommerce Personalization</p>
+<p>在电商中，也可以用强化学习算法来学习和分析顾客行为，定制产品和服务以满足客户的个性化需求。</p>
+<p>6.Ad Serving</p>
+<p>例如算法 LinUCB （属于强化学习算法 bandit 的一种算法），会尝试投放更广范围的广告，尽管过去还没有被浏览很多，能够更好地估计真实的点击率。</p>
+<p>再如双 11 推荐场景中，阿里巴巴使用了深度强化学习与自适应在线学习，通过持续机器学习和模型优化建立决策引擎，对海量用户行为以及百亿级商品特征进行实时分析，帮助每一个用户迅速发现宝贝，提高人和商品的配对效率。还有，利用强化学习将手机用户点击率提升了 10-20%。</p>
+<p>7.Financial Investment Decisions</p>
+<p>例如这家公司 Pit.ai，应用强化学习来评价交易策略，可以帮助用户建立交易策略，并帮助他们实现其投资目标。</p>
+<p>8.Medical Industry</p>
+<p>动态治疗方案（DTR）是医学研究的一个主题，是为了给患者找到有效的治疗方法。 例如癌症这种需要长期施药的治疗，强化学习算法可以将患者的各种临床指标作为输入 来制定治疗策略。</p>
+<hr>
+<p>学习资料：<br><a href="https://blog.csdn.net/qq_39521554/article/details/80715615" target="_blank" rel="noopener">强化学习通俗导论（一）：什么是强化学习</a><br><a href="http://www.sohu.com/a/157819140_114877" target="_blank" rel="noopener">上面这篇的带图片版本</a></p>
+<h3 id="Tensor的通俗理解"><a href="#Tensor的通俗理解" class="headerlink" title="Tensor的通俗理解"></a>Tensor的通俗理解</h3><h4 id="tensor（张量）是什么？"><a href="#tensor（张量）是什么？" class="headerlink" title="tensor（张量）是什么？"></a>tensor（张量）是什么？</h4><p>张量 = 容器</p>
+<p>张量是现代机器学习的基础。它的<strong>核心是一个数据容器</strong>，多数情况下，它包含<strong>数字</strong>，有时候它也包含<strong>字符串</strong>，但这种情况比较少。因此把它想象成一个<strong>数字的水桶</strong>。</p>
+<p>张量有多种形式，首先让我们来看<strong>最基本的形式</strong>，你会在深度学习中偶然遇到，它们在<strong>0维到5维之间</strong>。我们可以把张量的各种类型看作这样：</p>
+<p><div class="image-size-100"><br> <img src="/2019/10/14/DL-note-1/45.png" title="tensor 1"></div></p>
+<div>
+
+<h4 id="0维张量-标量"><a href="#0维张量-标量" class="headerlink" title="0维张量/标量"></a>0维张量/标量</h4><p>装在张量/容器水桶中的每个数字称为“标量”。</p>
+<p><strong>标量是一个数字。</strong></p>
+<p>你会问为什么不干脆叫它们一个数字呢？</p>
+<p>我不知道，也许数学家只是喜欢听起来酷？标量听起来确实比数字酷。</p>
+<p>实际上，你可以使用<strong>一个数字的张量</strong>，我们称为<strong>0维张量</strong>，也就是一个只有0维的张量。它仅仅只是带有一个数字的水桶。想象水桶里只有一滴水，那就是一个0维张量。</p>
+<p>本教程中，我将使用Python，Keras，TensorFlow和Python库Numpy。在Python中，<strong>张量通常存储在Nunpy数组</strong>，Numpy是在大部分的AI框架中，一个使用频率非常高的用于科学计算的数据包。</p>
+<p><strong>我们为什么想把数据转换为Numpy数组？</strong></p>
+<p>很简单。因为我们需要把所有的输入数据，如字符串文本，图像，股票价格，或者视频，转变为一个<strong>统一的标准</strong>，以便能够容易的处理。</p>
+<p>这样我们把数据转变成数字的水桶，我们就能用TensorFlow处理。</p>
+<p>它仅仅是组织数据成为可用的格式。在网页程序中，你也许通过XML表示，所以你可以定义它们的特征并快速操作。同样，在深度学习中，我们使用张量水桶作为基本的乐高积木。</p>
+<h4 id="1维张量-向量"><a href="#1维张量-向量" class="headerlink" title="1维张量/向量"></a>1维张量/向量</h4><p>如果你是名程序员，那么你已经了解，类似于<strong>1维张量：数组。</strong></p>
+<p>每个编程语言都有数组，它只是单列或者单行的一组数据块。<strong>在深度学习中称为1维张量</strong>。<strong>张量是根据一共具有多少坐标轴来定义</strong>。1维张量只有一个坐标轴。</p>
+<p><strong>1维张量称为“向量”</strong>。</p>
+<p>我们可以把向量视为一个单列或者单行的数字。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/46.png" title="一维张量"></div></p>
+<div>
+
+<p>如果想在Numpy得出此结果，按照如下方法：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/47.png" title="numpy构造一维张量"></div></p>
+<div>
+
+<p>我们可以通过NumPy’s <code>ndim函数</code>，查看张量具有多个坐标轴。我们可以尝试1维张量。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/48.png" title="ndim函数"></div></p>
+<div>
+
+<h4 id="2维张量-矩阵"><a href="#2维张量-矩阵" class="headerlink" title="2维张量/矩阵"></a>2维张量/矩阵</h4><p>你可能已经知道了另一种形式的张量，矩阵——<strong>2维张量称为矩阵。</strong></p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/49.png" title="二维张量--矩阵"></div></p>
+<div>
+
+<p>我们可以把它看作为一个带有行和列的数字网格。</p>
+<p>这个行和列表示两个坐标轴，<strong>一个矩阵是二维张量</strong>，意思是有两维，也就是<strong>有两个坐标轴的张量</strong>。</p>
+<p>在Numpy中，我们可以如下表示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([[<span class="number">5</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">30</span>,<span class="number">25</span>],</span><br><span class="line"></span><br><span class="line">[<span class="number">20</span>,<span class="number">30</span>,<span class="number">65</span>,<span class="number">70</span>,<span class="number">90</span>],</span><br><span class="line"></span><br><span class="line">[<span class="number">7</span>,<span class="number">80</span>,<span class="number">95</span>,<span class="number">20</span>,<span class="number">30</span>]])</span><br></pre></td></tr></table></figure>
+<p>我们可以把人的特征存储在一个二维张量。有一个典型的例子是<strong>邮件列表</strong>。</p>
+<p>比如我们有<strong>10000</strong>人，我们有每个人的如下<strong>特性和特征</strong>：</p>
+<blockquote>
+<p>First Name（名）</p>
+<p>Last Name（姓）</p>
+<p>Street Address（街道地址）</p>
+<p>City（城市）</p>
+<p>State（州/省）</p>
+<p>Country（国家）</p>
+<p>Zip（邮政编码）</p>
+</blockquote>
+<p>这意味着我们有10000人的七个特征。</p>
+<p>张量具有<strong>“形状”</strong>，它的形状是一个水桶，即装着我们的数据也定义了张量的最大尺寸。我们可以把所有人的数据放进二维张量中，它是<strong>（10000,7）</strong>。</p>
+<p>你也许想说它有10000列，7行。</p>
+<p>不。</p>
+<p>张量能够被转换和操作，从而使<strong>列变为行或者行变为列</strong>。</p>
+<h4 id="3维张量"><a href="#3维张量" class="headerlink" title="3维张量"></a>3维张量</h4><p>这时张量真正开始变得有用，我们经常需要<strong>把一系列的二维张量存储在水桶中，这就形成了3维张量</strong>。</p>
+<p>在NumPy中，我们可以表示如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([[[<span class="number">5</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">30</span>,<span class="number">25</span>],</span><br><span class="line"></span><br><span class="line">[<span class="number">20</span>,<span class="number">30</span>,<span class="number">65</span>,<span class="number">70</span>,<span class="number">90</span>],</span><br><span class="line"></span><br><span class="line">[<span class="number">7</span>,<span class="number">80</span>,<span class="number">95</span>,<span class="number">20</span>,<span class="number">30</span>]]</span><br><span class="line"></span><br><span class="line">[[<span class="number">3</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">45</span>],</span><br><span class="line"></span><br><span class="line">[<span class="number">12</span>,<span class="number">-2</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">90</span>],</span><br><span class="line"></span><br><span class="line">[<span class="number">18</span>,<span class="number">-9</span>,<span class="number">95</span>,<span class="number">120</span>,<span class="number">30</span>]]</span><br><span class="line"></span><br><span class="line">[[<span class="number">17</span>,<span class="number">13</span>,<span class="number">25</span>,<span class="number">30</span>,<span class="number">15</span>],</span><br><span class="line"></span><br><span class="line">[<span class="number">23</span>,<span class="number">36</span>,<span class="number">9</span>,<span class="number">7</span>,<span class="number">80</span>],</span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>,<span class="number">-7</span>,<span class="number">-5</span>,<span class="number">22</span>,<span class="number">3</span>]]])</span><br></pre></td></tr></table></figure>
+<p>你已经猜到，一个三维张量有三个坐标轴，可以这样看到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x.ndim</span><br><span class="line"></span><br><span class="line">输出为：</span><br><span class="line"></span><br><span class="line">3</span><br></pre></td></tr></table></figure></p>
+<p>让我们再看一下上面的邮件列表，现在我们有10个邮件列表，我们将存储2维张量在另一个水桶里，创建一个3维张量，它的形状如下：</p>
+<p>(number_of_mailing_lists, number_of_people, number_of_characteristics_per_person)</p>
+<p>(10,10000,7)</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/50.png" title="三维张量--立方体"></div></p>
+<div>
+
+<p>你也许已经猜到它，但是<strong>一个3维张量是一个数字构成的立方体</strong>。</p>
+<p>我们可以继续<strong>堆叠立方体</strong>，创建一个越来越大的张量，来编辑不同类型的数据，也就是4维张量，5维张量等等，直到N维张量。N是数学家定义的未知数，它是一直持续到无穷集合里的附加单位。它可以是5,10或者无穷。</p>
+<p>实际上，3维张量最好视为一层网格，看起来有点像下图：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/51.png" title="三维张量--网络"></div></p>
+<div>
+
+<h4 id="存储在张量数据中的公用数据类型"><a href="#存储在张量数据中的公用数据类型" class="headerlink" title="存储在张量数据中的公用数据类型"></a>存储在张量数据中的公用数据类型</h4><p>这里有一些存储在各种类型张量的公用数据集类型：</p>
+<blockquote>
+<p>3维=时间序列</p>
+<p>4维=图像</p>
+<p>5维=视频</p>
+</blockquote>
+<p>几乎所有的这些张量的<strong>共同之处是样本量</strong>。<strong>样本量是集合中元素的数量</strong>，它可以是一些图像，一些视频，一些文件或者一些推特。</p>
+<p>通常，真实的数据至少是一个数据量。</p>
+<p><strong>把形状里不同维数看作字段。我们找到一个字段的最小值来描述数据。</strong></p>
+<p>因此，<strong>即使4维张量通常存储图像，那是因为样本量占据张量的第4个字段。</strong></p>
+<p>例如，一个图像可以用三个字段表示：</p>
+<blockquote>
+<p>(width, height, color_depth) = 3D</p>
+</blockquote>
+<p>但是，在机器学习工作中，我们经常要处理不止一张图片或一篇文档——我们要<strong>处理一个集合</strong>。我们可能有10,000张郁金香的图片，这意味着，我们将用到<strong>4D张量</strong>，就像这样：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/52.png" title="4D张量"></div></p>
+<div>
+
+<blockquote>
+<p>(sample_size, width, height, color_depth) = 4D</p>
+</blockquote>
+<p>我们来看看一些多维张量存储模型的例子：</p>
+<p><strong>时间序列数据</strong></p>
+<p>用<code>3D张量</code>来模拟时间序列会非常有效！</p>
+<p>医学扫描——我们可以将脑电波（EEG）信号编码成3D张量，因为它可以由这三个参数来描述：</p>
+<blockquote>
+<p>(time, frequency, channel)</p>
+</blockquote>
+<p>这种转化看起来就像这样：</p>
+<p>如果我们有多个病人的脑电波扫描图，那就形成了一个4D张量：</p>
+<blockquote>
+<p>(sample_size, time, frequency, channel)</p>
+</blockquote>
+<p><strong>Stock Prices</strong></p>
+<p>在交易中，股票每分钟有最高、最低和最终价格。如下图的蜡烛图所示：</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/53.png" title="股票"></div></p>
+<div>
+
+<p>纽交所开市时间从早上9:30到下午4:00，即6.5个小时，总共有6.5 x 60 = 390分钟。如此，我们可以将每分钟内最高、最低和最终的股价存入一个2D张量（390,3）。如果我们追踪一周（五天）的交易，我们将得到这么一个3D张量：</p>
+<blockquote>
+<p>(week_of_data, minutes, high_low_price)</p>
+<p>即：(5,390,3)</p>
+</blockquote>
+<p>同理，如果我们观测10只不同的股票，观测一周，我们将得到一个4D张量</p>
+<blockquote>
+<p>(10,5,390,3)</p>
+</blockquote>
+<p>假设我们在观测一个由25只股票组成的共同基金，其中的每只股票由我们的4D张量来表示。那么，这个共同基金可以有一个5D张量来表示：</p>
+<blockquote>
+<p>(25,10,5,390,3)</p>
+</blockquote>
+<p><strong>文本数据</strong></p>
+<p>我们也可以用3D张量来存储文本数据，我们来看看推特的例子。</p>
+<p>首先，推特有<strong>140</strong>个字的限制。其次，推特使用UTF-8编码标准，这种编码标准能表示百万种字符，但实际上我们只对<strong>前128个字符</strong>感兴趣，因为他们与ASCII码相同。所以，一篇推特文可以包装成一个2D向量：</p>
+<blockquote>
+<p>（140,128）</p>
+</blockquote>
+<p>如果我们下载了一百万篇川普哥的推文（印象中他一周就能推这么多），我们就会用3D张量来存：</p>
+<blockquote>
+<p>(number_of_tweets_captured, tweet, character)</p>
+</blockquote>
+<p>这意味着，我们的川普推文集合看起来会是这样：</p>
+<blockquote>
+<p>(1000000,140,128)</p>
+</blockquote>
+<p><strong>图片</strong></p>
+<p>4D张量很适合用来存诸如JPEG这样的图片文件。之前我们提到过，一张图片有三个参数：高度、宽度和颜色深度。一张图片是3D张量，一个图片集则是4D，第四维是样本大小。</p>
+<p>著名的MNIST数据集是一个手写的数字序列，作为一个图像识别问题，曾在几十年间困扰许多数据科学家。现在，计算机能以99%或更高的准确率解决这个问题。即便如此，这个数据集仍可以当做一个优秀的校验基准，用来测试新的机器学习算法应用，或是用来自己做实验。</p>
+<p>Keras 甚至能用以下语句帮助我们自动导入MNIST数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"></span><br><span class="line">(train_images, train_labels), (test_images, test_labels) = mnist.load_data()</span><br></pre></td></tr></table></figure>
+<p>这个数据集被分成两个部分：训练集和测试集。数据集中的每张图片都有一个标签。这个标签写有正确的读数，例如3,7或是9，这些标签都是通过人工判断并填写的。</p>
+<p>训练集是用来训练神经网络学习算法，测试集则用来校验这个学习算法。</p>
+<p>MNIST图片是<strong>黑白</strong>的，这意味着它们可以用<strong>2D张量</strong>来编码，但我们习惯于将所有的图片用3D张量来编码，多出来的第三个维度代表了图片的颜色深度。</p>
+<p>MNIST数据集有60,000张图片，它们都是28 x 28像素，它们的颜色深度为1，即只有灰度。</p>
+<p>TensorFlow这样存储图片数据：</p>
+<p>(sample_size, height, width, color_depth).</p>
+<p>于是我们可以认为，MNIST数据集的4D张量是这样的：</p>
+<p>(60000,28,28,1)</p>
+<p><strong>彩色图片</strong></p>
+<p>彩色图片有不同的颜色深度，这取决于它们的色彩（注：跟分辨率没有关系）编码。一张典型的JPG图片使用RGB编码，于是它的颜色深度为3，分别代表红、绿、蓝。</p>
+<p>这是一张我美丽无边的猫咪（Dove）的照片，750 x750像素，这意味着我们能用一个3D张量来表示它：</p>
+<blockquote>
+<p>(750,750,3)</p>
+</blockquote>
+<p><div><br> <img src="/2019/10/14/DL-note-1/54.png" title="cat"></div></p>
+<div>
+
+<p>这样，我可爱的Dove将被简化为一串冷冰冰的数字，就好像它变形或<strong>流动</strong>起来了。</p>
+<p><div><br> <img src="/2019/10/14/DL-note-1/55.png" title="cat变成张量流动起来"></div></p>
+<div>
+
+<p>然后，如果我们有一大堆不同类型的猫咪图片（虽然都没有Dove美），也许是100,000张吧，不是DOVE它的，750 x750像素的。我们可以在Keras中用4D张量来这样定义：</p>
+<blockquote>
+<p>(10000,750,750,3)</p>
+</blockquote>
+<p><div><br> <img src="/2019/10/14/DL-note-1/56.png" title="4D图片张量"></div></p>
+<div>
+
+<p><strong>5D张量</strong></p>
+<p>5D张量可以用来存储视频数据。TensorFlow中，视频数据将如此编码：</p>
+<p>（sample_size, frames, width, height, color_depth)</p>
+<p>如果我们考察一段5分钟（300秒），1080pHD（1920 x 1080像素），每秒15帧（总共4500帧），颜色深度为3的视频，我们可以用4D张量来存储它：</p>
+<blockquote>
+<p>(4500,1920,1080,3)</p>
+</blockquote>
+<p>当我们有多段视频的时候，张量中的第五个维度将被使用。如果我们有10段这样的视频，我们将得到一个5D张量：</p>
+<blockquote>
+<p>(10,4500,1920,1080,3)</p>
+</blockquote>
+<p>实际上这个例子太疯狂了！</p>
+<p>这个张量的大是很荒谬的，超过1TB。我们姑且考虑下这个例子以便说明一个问题：在现实世界中，我们有时需要<strong>尽可能的缩小样本数据以方便的进行处理计算</strong>，除非你有无尽的时间。</p>
+<p>这个5D张量中值的数量为：</p>
+<blockquote>
+<p>10 x 4500 x 1920 x 1080 x 3 = 279,936,000,000</p>
+</blockquote>
+<p>在Keras中，我们可以用一个叫<code>dype</code>的数据类型来存储32bits或64bits的浮点数</p>
+<p>我们5D张量中的每一个值都将用32 bit来存储，现在，我们以TB为单位来进行转换：</p>
+<blockquote>
+<p>279,936,000,000 x 32 = 8,957,952,000,000 bit = 1.119744 TB</p>
+</blockquote>
+<p>这还只是保守估计，或许用32bit来储存根本就不够（谁来计算一下如果用64bit来存储会怎样），所以，减小你的样本吧朋友。</p>
+<p>事实上，我举出这最后一个疯狂的例子是有特殊目的的。我们刚学过数据预处理和数据压缩。你不能什么工作也不做就把大堆数据扔向你的AI模型。你必须清洗和缩减那些数据让后续工作更简洁更高效。</p>
+<p>降低分辨率，去掉不必要的数据（也就是去重处理），这大大缩减了帧数，等等这也是数据科学家的工作。如果你不能很好地对数据做这些预处理，那么你几乎做不了任何有意义的事。</p>
+<p><strong>结论</strong></p>
+<p>好了，现在你已经对张量和用张量如何对接不同类型数据有了更好的了解。</p>
+<hr>
+<p>参考：<a href="https://www.cnblogs.com/abella/p/10142935.html" target="_blank" rel="noopener">张量的通俗理解</a><br>char_num, embedding_size, padding_idx=padding_idx</p>
+<h3 id="Pytorch中contiguous的理解"><a href="#Pytorch中contiguous的理解" class="headerlink" title="Pytorch中contiguous的理解"></a>Pytorch中contiguous的理解</h3><p>在pytorch中，只有很少几个操作是不改变tensor的内容本身，而只是重新定义下标与元素的对应关系的。换句话说，这种操作不进行数据拷贝和数据的改变，变的是元数据。</p>
+<p>这些操作是：</p>
+<blockquote>
+<p>narrow()，view()，expand()和transpose()</p>
+</blockquote>
+<p>举个栗子，在使用transpose()进行转置操作时，pytorch并不会创建新的、转置后的tensor，而是修改了tensor中的一些属性（也就是元数据），使得此时的offset和stride是与转置tensor相对应的。转置的tensor和原tensor的内存是共享的！</p>
+<p>为了证明这一点，我们来看下面的代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = torch.randn(<span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line">y = x.transpose(x, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">x[<span class="number">0</span>, <span class="number">0</span>] = <span class="number">233</span></span><br><span class="line">print(y[<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line"><span class="comment"># print 233</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到，改变了y的元素的值的同时，x的元素的值也发生了变化。</p>
+<p>也就是说，经过上述操作后得到的tensor，它内部数据的布局方式和从头开始创建一个这样的常规的tensor的布局方式是不一样的！于是…这就有contiguous()的用武之地了。</p>
+<p>在上面的例子中，x是contiguous的，但y不是（因为内部数据不是通常的布局方式）。注意不要被contiguous的字面意思“连续的”误解，tensor中数据还是在内存中一块区域里，只是布局的问题！</p>
+<p>当调用contiguous()时，会强制拷贝一份tensor，让它的布局和从头创建的一毛一样。</p>
+<p>一般来说这一点不用太担心，如果你没在需要调用contiguous()的地方调用contiguous()，运行时会提示你：</p>
+<blockquote>
+<p>RuntimeError: input is not contiguous</p>
+</blockquote>
+<p>只要看到这个错误提示，加上contiguous()就好啦～</p>
+<hr>
+<p>参考：<a href="https://blog.csdn.net/gdymind/article/details/82662502" target="_blank" rel="noopener">Pytorch中contiguous的理解</a></p>
+</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年11月07日 14:50</p>
+        <p>最后更新： 2019年12月17日 03:19</p>
         <p>原始链接： <a class="post-url" href="/2019/10/14/DL-note-1/" title="【DL】学习笔记(持续更新)">/2019/10/14/DL-note-1/</a></p>
         <footer>
             <a href="">
@@ -529,7 +893,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Logistic回归"><span class="post-toc-text">Logistic回归</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结："><span class="post-toc-text">总结：</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#神经网络详解"><span class="post-toc-text">神经网络详解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是神经网络"><span class="post-toc-text">什么是神经网络</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#神经网络的“两个传播”："><span class="post-toc-text">神经网络的“两个传播”：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#前向传播"><span class="post-toc-text">前向传播</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反向传播"><span class="post-toc-text">反向传播</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#深层神经网络（Deep-Neural-Network）"><span class="post-toc-text">深层神经网络（Deep Neural Network）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#超快速理解深度学习的概念"><span class="post-toc-text">超快速理解深度学习的概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优化器-Optimizer-加速神经网络训练过程"><span class="post-toc-text">优化器 Optimizer - 加速神经网络训练过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么需要激活函数-Activation-Functions"><span class="post-toc-text">为什么需要激活函数 Activation Functions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么要特征标准化-Feature-Normalization？"><span class="post-toc-text">为什么要特征标准化 Feature Normalization？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么要-批标准化-Batch-Normalization"><span class="post-toc-text">为什么要 批标准化 Batch Normalization?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是卷积神经网络-Convolutional-Neural-Network"><span class="post-toc-text">什么是卷积神经网络 Convolutional Neural Network</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是循环神经网络-Recurrent-Neural-Network"><span class="post-toc-text">什么是循环神经网络 Recurrent Neural Network</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-LSTM-RNN？"><span class="post-toc-text">什么是 LSTM RNN？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是自编码-Autoencoder-？"><span class="post-toc-text">什么是自编码 Autoencoder ？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是超参数"><span class="post-toc-text">什么是超参数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是消融实验（Ablation-experiment"><span class="post-toc-text">什么是消融实验（Ablation experiment)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是encoder-decoder模型框架？"><span class="post-toc-text">什么是encoder-decoder模型框架？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Seq2Seq？"><span class="post-toc-text">什么是Seq2Seq？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Attention模型？"><span class="post-toc-text">什么是Attention模型？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是dropout"><span class="post-toc-text">什么是dropout</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-beam-search"><span class="post-toc-text">什么是 beam search?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是end2end"><span class="post-toc-text">什么是end2end</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Scheduled-Sampling"><span class="post-toc-text">什么是Scheduled Sampling</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是反向传播算法（BP）？"><span class="post-toc-text">什么是反向传播算法（BP）？</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Logistic回归"><span class="post-toc-text">Logistic回归</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结："><span class="post-toc-text">总结：</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#神经网络详解"><span class="post-toc-text">神经网络详解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是神经网络"><span class="post-toc-text">什么是神经网络</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#神经网络的“两个传播”："><span class="post-toc-text">神经网络的“两个传播”：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#前向传播"><span class="post-toc-text">前向传播</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反向传播"><span class="post-toc-text">反向传播</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#深层神经网络（Deep-Neural-Network）"><span class="post-toc-text">深层神经网络（Deep Neural Network）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#超快速理解深度学习的概念"><span class="post-toc-text">超快速理解深度学习的概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优化器-Optimizer-加速神经网络训练过程"><span class="post-toc-text">优化器 Optimizer - 加速神经网络训练过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么需要激活函数-Activation-Functions"><span class="post-toc-text">为什么需要激活函数 Activation Functions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么要特征标准化-Feature-Normalization？"><span class="post-toc-text">为什么要特征标准化 Feature Normalization？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么要-批标准化-Batch-Normalization"><span class="post-toc-text">为什么要 批标准化 Batch Normalization?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是卷积神经网络-Convolutional-Neural-Network"><span class="post-toc-text">什么是卷积神经网络 Convolutional Neural Network</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是循环神经网络-Recurrent-Neural-Network"><span class="post-toc-text">什么是循环神经网络 Recurrent Neural Network</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-LSTM-RNN？"><span class="post-toc-text">什么是 LSTM RNN？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是自编码-Autoencoder-？"><span class="post-toc-text">什么是自编码 Autoencoder ？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是超参数"><span class="post-toc-text">什么是超参数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是消融实验（Ablation-experiment"><span class="post-toc-text">什么是消融实验（Ablation experiment)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是encoder-decoder模型框架？"><span class="post-toc-text">什么是encoder-decoder模型框架？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Seq2Seq？"><span class="post-toc-text">什么是Seq2Seq？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Attention模型？"><span class="post-toc-text">什么是Attention模型？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是dropout"><span class="post-toc-text">什么是dropout</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-beam-search"><span class="post-toc-text">什么是 beam search?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是end2end"><span class="post-toc-text">什么是end2end</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Scheduled-Sampling"><span class="post-toc-text">什么是Scheduled Sampling</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是反向传播算法（BP）？"><span class="post-toc-text">什么是反向传播算法（BP）？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是Word-Embedding？"><span class="post-toc-text">什么是Word Embedding？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是准确率、精确率、召回率、F1？"><span class="post-toc-text">什么是准确率、精确率、召回率、F1？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TP、TN、FP、FN"><span class="post-toc-text">TP、TN、FP、FN</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#准确率-Accuracy"><span class="post-toc-text">准确率 Accuracy</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#精确率-Precision"><span class="post-toc-text">精确率 Precision</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#召回率-Recall"><span class="post-toc-text">召回率 Recall</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#F1值（H-mean值）"><span class="post-toc-text">F1值（H-mean值）</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-word2vec"><span class="post-toc-text">什么是 word2vec?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是强化学习？"><span class="post-toc-text">什么是强化学习？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-定义"><span class="post-toc-text">1.定义</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-和监督式学习-非监督式学习的区别"><span class="post-toc-text">2.和监督式学习, 非监督式学习的区别</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-主要算法和分类"><span class="post-toc-text">3.主要算法和分类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#此外还可以从不同角度使分类更细一些："><span class="post-toc-text">此外还可以从不同角度使分类更细一些：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主要算法有下面几种，今天先只是简述："><span class="post-toc-text">主要算法有下面几种，今天先只是简述：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-应用举例"><span class="post-toc-text">4. 应用举例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Tensor的通俗理解"><span class="post-toc-text">Tensor的通俗理解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#tensor（张量）是什么？"><span class="post-toc-text">tensor（张量）是什么？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#0维张量-标量"><span class="post-toc-text">0维张量/标量</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1维张量-向量"><span class="post-toc-text">1维张量/向量</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2维张量-矩阵"><span class="post-toc-text">2维张量/矩阵</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3维张量"><span class="post-toc-text">3维张量</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#存储在张量数据中的公用数据类型"><span class="post-toc-text">存储在张量数据中的公用数据类型</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Pytorch中contiguous的理解"><span class="post-toc-text">Pytorch中contiguous的理解</span></a></li></ol></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -578,7 +942,7 @@
       <p>
         Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
         Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
-      &copy; 2019 MaxYu<br>
+      &copy; 2020 MaxYu<br>
       </p>
     </div>
   </div>
@@ -611,10 +975,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/NLP/">NLP</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -647,7 +1011,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.5px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.83px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.17px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.33px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.17px;">字符串</a> <a href="/tags/学习笔记/" style="font-size: 11.67px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.67px;">数学</a> <a href="/tags/数组/" style="font-size: 18.33px;">数组</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.67px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 15.83px;">笔记</a> <a href="/tags/简单/" style="font-size: 16.67px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 10.83px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 15.83px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.5px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
         </div>
     </div>
 </div>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Character-level Convolutional Networks for Text Classification | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要 Abstract本文提供了使用字符级卷积网络（ConvNets）进行文本分类的实证研究。我们构建了几个大型数据集，以表明字符集卷积网络可以达到最高水平或具有竞争力的结果。提供了于传统模型（例如词袋，n-gram及其TFIDF变体），深度学习模型（例如word-based ConvNets和RNN）。 作者想解决什么问题？  文本分类问题(待补充)  作者通过什么理论/模型来解决这个问题？">
+<meta name="keywords" content="笔记,论文,NLP,文本分类,字符级">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Character-level Convolutional Networks for Text Classification">
+<meta property="og:url" content="/2019/12/28/char-cnn-2015-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要 Abstract本文提供了使用字符级卷积网络（ConvNets）进行文本分类的实证研究。我们构建了几个大型数据集，以表明字符集卷积网络可以达到最高水平或具有竞争力的结果。提供了于传统模型（例如词袋，n-gram及其TFIDF变体），深度学习模型（例如word-based ConvNets和RNN）。 作者想解决什么问题？  文本分类问题(待补充)  作者通过什么理论/模型来解决这个问题？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/12/28/char-cnn-2015-note/1.png">
+<meta property="og:image" content="/2019/12/28/char-cnn-2015-note/2.png">
+<meta property="og:image" content="/2019/12/28/char-cnn-2015-note/3.png">
+<meta property="og:image" content="/2019/12/28/char-cnn-2015-note/4.png">
+<meta property="og:updated_time" content="2019-12-28T19:42:27.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Character-level Convolutional Networks for Text Classification">
+<meta name="twitter:description" content="摘要 Abstract本文提供了使用字符级卷积网络（ConvNets）进行文本分类的实证研究。我们构建了几个大型数据集，以表明字符集卷积网络可以达到最高水平或具有竞争力的结果。提供了于传统模型（例如词袋，n-gram及其TFIDF变体），深度学习模型（例如word-based ConvNets和RNN）。 作者想解决什么问题？  文本分类问题(待补充)  作者通过什么理论/模型来解决这个问题？">
+<meta name="twitter:image" content="/2019/12/28/char-cnn-2015-note/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-char-cnn-2015-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Character-level Convolutional Networks for Text Classification
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/NLP/">NLP</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-12-28
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要-Abstract"><a href="#摘要-Abstract" class="headerlink" title="摘要 Abstract"></a>摘要 Abstract</h2><p>本文提供了使用字符级卷积网络（ConvNets）进行文本分类的实证研究。我们构建了几个大型数据集，以表明字符集卷积网络可以达到最高水平或具有竞争力的结果。提供了于传统模型（例如词袋，n-gram及其TFIDF变体），深度学习模型（例如word-based ConvNets和RNN）。</p>
+<p><strong>作者想解决什么问题？</strong></p>
+<blockquote>
+<p>文本分类问题(待补充)</p>
+</blockquote>
+<p><strong>作者通过什么理论/模型来解决这个问题？</strong></p>
+<blockquote>
+<p>字符级的CNN</p>
+</blockquote>
+<p><strong>作者给出的答案是什么？</strong></p>
+<blockquote>
+<p>可以达到最好或者有竞争力的结果。</p>
+</blockquote>
+<h2 id="总结与展望-Conclusion-and-Outlook"><a href="#总结与展望-Conclusion-and-Outlook" class="headerlink" title="总结与展望 Conclusion and Outlook"></a>总结与展望 Conclusion and Outlook</h2><p>本文提供了针对字符级别的卷积网络进行文本分类的实证研究。我们使用几个大型数据集的大量传统和深度学习模型进行了比较。一方面，分析表明字符集的ConvNet是一种有效的方法。另一方面，我们的模型在比较中的表现如何取决于许多因素，例如数据集大小，文本是否经过整理以及字符的选择。</p>
+<p>在未来，我们希望将字符集的ConvNets用于更广泛的语言处理任务，尤其是在需要结构化输出的情况下。</p>
+<h2 id="1-引言-Introduction"><a href="#1-引言-Introduction" class="headerlink" title="1.引言 Introduction"></a>1.引言 Introduction</h2><p>卷积神经网络可用于从原始信号中提取信息，从计算机视觉应用到语音识别等。特别是，深度学习研究的早期使用的延时网络本质上是对顺序数据进行建模的卷积网络。</p>
+<p>在本文中，我们探索<strong>将文本视作一种字符级别(character-level)的原始信号，并将一维卷积应用于此。</strong>本文中仅仅使用分类任务来说明ConvNets理解文本的能力。ConvNets通常需要大规模数据集才能工作，因此我们也建立了几个这样的数据集。与传统模型和其他深度学习模型进行了广泛的比较。</p>
+<p>在文献中探索了将卷积网络应用于文本分类或自然语言处理。已经证明，<strong>ConvNets能够直接应用于单词的分布式or离散嵌入，而无需了解语言的句法或语义结构</strong>。这些方法已经被证明与传统模型相比具有竞争力。</p>
+<p>也有一些使用字符级特征进行语言处理的相关工作。包括使用带有线性分类器的字符级n-gram，以及将字符级特征合并到ConvNets。特别是，这些ConvNet方法使用words作为基础，在单词或单词n-gram级别提取的字符级特征形成了分布式表示。观察到词性标注和信息检索的改进。</p>
+<p>本文是第一个仅将ConvNets应用于字符的文章。我们发现，<strong>在大规模数据集上训练时，深层的ConvNet除了不需要句法和语义结构的知识之外，也不需要单词的知识</strong>.这种工程的简化对于<strong>可以适用于多个语言的</strong>单个系统至关重要，因为字符始终构成一个必要的结构，而不管是否可以分割成单词。仅处理字符还具有以下优点：可以自然地学习诸如拼写错误和表情符号之类的<strong>异常字符组合</strong>。</p>
+<h2 id="2-字符级的卷积网络-Character-level-Convolutional-Networks"><a href="#2-字符级的卷积网络-Character-level-Convolutional-Networks" class="headerlink" title="2.字符级的卷积网络 Character-level Convolutional Networks"></a>2.字符级的卷积网络 Character-level Convolutional Networks</h2><p>在本节中，我们介绍用于文本分类的字符级ConvNets的设计。设计是模块化的，其中通过反向传播获得梯度以执行优化。</p>
+<h3 id="2-1-主要模块-Key-Modules"><a href="#2-1-主要模块-Key-Modules" class="headerlink" title="2.1 主要模块 Key Modules"></a>2.1 主要模块 Key Modules</h3><p>主要组件是时间卷积模块，它仅计算一维卷积。</p>
+<h3 id="2-2-字符量化-Character-quantization"><a href="#2-2-字符量化-Character-quantization" class="headerlink" title="2.2 字符量化 Character quantization"></a>2.2 字符量化 Character quantization</h3><p>模型接受一系列编码的字符作为输入。encoding是通过为输入语言规定大小为m的字母表，然后使用<code>1-of-m</code>encoding(或者one-hot encoding）量化每个字符。然后，将字符序列转换成这种m大小的向量，其有固定长度为$l_0$。任何超过长度$l_0$的字符将被忽略，不在字母表中的（包括空白字符）将被量化为全0向量。字符量化顺序是向后的，因此最新的字符的读取始终位于输出的开头附近，这使得全连接层很容易将权重与最新读取关联起来。</p>
+<p>整个模型使用的字母表包括70个字符，26个英文字母，10个数字，33个其他字符，以及new line 字符。非空格字符为：</p>
+<p><div><br> <img src="/2019/12/28/char-cnn-2015-note/1.png" title="non-space character"></div></p>
+<div>
+
+<p>后边与使用不同字母的模型进行了比较，该模型中我们区分了大小写字母。</p>
+<h3 id="2-3-模型设计-Model-Design"><a href="#2-3-模型设计-Model-Design" class="headerlink" title="2.3 模型设计 Model Design"></a>2.3 模型设计 Model Design</h3><p>我们设计了2个ConvNets，一大一小。它们都有9层，6个卷积层和3个全连接层。图一给出了说明。</p>
+<p><div><br> <img src="/2019/12/28/char-cnn-2015-note/2.png" title="model"></div></p>
+<div>
+
+<p>由于我们的字符量化方法，输入的特征数量等于70，输入特征长度为1014。1014个字符似乎已经可以捕获大多数感兴趣的文本。我们还在3个全连接层中间插入两个dropout模块以进行正则化，他们的dropout概率是0.5。表1列出了卷积层的配置，表2列出了全连接层的配置。</p>
+<p><div><br> <img src="/2019/12/28/char-cnn-2015-note/3.png" title="table 1"></div></p>
+<div>
+
+<p>我们使用高斯分布来初始化权重。用与初始化模型的平均值和标准差对于大模型为(0,0.02)，小模型（0，0.05)</p>
+<p><div><br> <img src="/2019/12/28/char-cnn-2015-note/4.png" title="table 2"></div></p>
+<div>
+
+<p>对于不同的问题，输入长度可能不同（例如，在我们的情况下，l0 = 1014），frame长度也是如此。从我们的模型设计中，很容易知道，给定输入长度$l_0$，最后一个卷积层之后的输出frame长度（在所有全连接层之前）是$l_6 = (l_0 - 96) / 27$。这个数字乘以第6层的frame大小将得出第一个全连接层接受输入维度。</p>
+<h3 id="2-4-Data-Augmentation-using-Thesaurus"><a href="#2-4-Data-Augmentation-using-Thesaurus" class="headerlink" title="2.4 Data Augmentation using Thesaurus"></a>2.4 Data Augmentation using Thesaurus</h3></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年12月29日 03:42</p>
+        <p>原始链接： <a class="post-url" href="/2019/12/28/char-cnn-2015-note/" title="【论文笔记】Character-level Convolutional Networks for Text Classification">/2019/12/28/char-cnn-2015-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/12/28/char-cnn-2015-note/&title=《【论文笔记】Character-level Convolutional Networks for Text Classification》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/57.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/12/28/char-cnn-2015-note/&title=《【论文笔记】Character-level Convolutional Networks for Text Classification》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/12/28/char-cnn-2015-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Character-level Convolutional Networks for Text Classification》 — Fishwinwin&url=/2019/12/28/char-cnn-2015-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/12/28/char-cnn-2015-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/12/28/char-cnn-2015-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/文本分类/" class="color5">文本分类</a>
+      
+    <a href="/tags/字符级/" class="color4">字符级</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要-Abstract"><span class="post-toc-text">摘要 Abstract</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结与展望-Conclusion-and-Outlook"><span class="post-toc-text">总结与展望 Conclusion and Outlook</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-引言-Introduction"><span class="post-toc-text">1.引言 Introduction</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-字符级的卷积网络-Character-level-Convolutional-Networks"><span class="post-toc-text">2.字符级的卷积网络 Character-level Convolutional Networks</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-主要模块-Key-Modules"><span class="post-toc-text">2.1 主要模块 Key Modules</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-字符量化-Character-quantization"><span class="post-toc-text">2.2 字符量化 Character quantization</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-3-模型设计-Model-Design"><span class="post-toc-text">2.3 模型设计 Model Design</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-4-Data-Augmentation-using-Thesaurus"><span class="post-toc-text">2.4 Data Augmentation using Thesaurus</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/12/02/reinforcement-learning-2019/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【论文笔记】A Hierarchical Framework for Relation Extractionwith Reinforcement Learning</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/NLP/">NLP</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

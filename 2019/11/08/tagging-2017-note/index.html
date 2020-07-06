@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>【论文笔记】Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme | Fishwinwin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Fishwinwin">
+  
+  <meta name="description" content="摘要作者想解决什么问题？  实体和关系的联合抽取。  作者通过什么理论/模型来解决这个问题？  首次提出新颖的序列标注方案，能够将联合抽取任务转换为序列标注问题。  作者给出的答案是什么？  将该序列标注方案应用于多种end-to-end模型（直接抽取实体间的关系，而不是先进行命名实体识别，再进行关系抽取），在远程监督方法生成的数据集上进行了实验，结果表明基于tagging的方法优于大多数现有的p">
+<meta name="keywords" content="笔记,论文,NLP,关系抽取,联合抽取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme">
+<meta property="og:url" content="/2019/11/08/tagging-2017-note/index.html">
+<meta property="og:site_name" content="Fishwinwin">
+<meta property="og:description" content="摘要作者想解决什么问题？  实体和关系的联合抽取。  作者通过什么理论/模型来解决这个问题？  首次提出新颖的序列标注方案，能够将联合抽取任务转换为序列标注问题。  作者给出的答案是什么？  将该序列标注方案应用于多种end-to-end模型（直接抽取实体间的关系，而不是先进行命名实体识别，再进行关系抽取），在远程监督方法生成的数据集上进行了实验，结果表明基于tagging的方法优于大多数现有的p">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/1.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/2.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/3.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/4.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/5.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/6.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/7.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/8.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/9.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/10.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/11.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/12.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/13.png">
+<meta property="og:image" content="/2019/11/08/tagging-2017-note/14.png">
+<meta property="og:updated_time" content="2019-11-20T09:02:27.828Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme">
+<meta name="twitter:description" content="摘要作者想解决什么问题？  实体和关系的联合抽取。  作者通过什么理论/模型来解决这个问题？  首次提出新颖的序列标注方案，能够将联合抽取任务转换为序列标注问题。  作者给出的答案是什么？  将该序列标注方案应用于多种end-to-end模型（直接抽取实体间的关系，而不是先进行命名实体识别，再进行关系抽取），在远程监督方法生成的数据集上进行了实验，结果表明基于tagging的方法优于大多数现有的p">
+<meta name="twitter:image" content="/2019/11/08/tagging-2017-note/1.png">
+  
+  
+    <link rel="icon" href="/head2.jpeg">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">玻璃晴朗，橘子辉煌</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="//">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/head2.jpeg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        玻璃晴朗，橘子辉煌
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        Leetcode|Develop|吐槽|日记
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Fishwinwin" target="_blank" href="//fishwinwin.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/yuyingyingmax">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/u/1979757487">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-tagging-2017-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      【论文笔记】Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/知识图谱/">知识图谱</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-11-08
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p><strong>作者想解决什么问题？</strong></p>
+<blockquote>
+<p>实体和关系的联合抽取。</p>
+</blockquote>
+<p><strong>作者通过什么理论/模型来解决这个问题？</strong></p>
+<blockquote>
+<p>首次提出新颖的序列标注方案，能够将联合抽取任务转换为序列标注问题。</p>
+</blockquote>
+<p><strong>作者给出的答案是什么？</strong></p>
+<blockquote>
+<p>将该序列标注方案应用于多种end-to-end模型（直接抽取实体间的关系，而不是先进行命名实体识别，再进行关系抽取），在远程监督方法生成的数据集上进行了实验，结果表明基于tagging的方法优于大多数现有的pipeline方法以及联合学习方法。<br>此外，本文提出的end-to-end方法（其实只是对之前模型的小改进），在公共数据集上也有最好的表现。</p>
+</blockquote>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p><strong>这篇文章存在哪些缺陷？</strong></p>
+<blockquote>
+<p>虽然实验结果证明了该方法的有效性，但在重叠关系的识别上仍然有缺点。<br>未来工作中，将会在输出层将<code>softmax</code>函数替换成<code>多分类器</code>，这样一个单词就能有多个标签。这样，一个单词可以出现在多个三元组中，能够解决重叠关系问题。<br>尽管我们的模型能够增强实体标签的效果，两个相应实体间的关联仍然需要在接下来的工作中进行完善。</p>
+</blockquote>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>实体和关系的联合抽取是为了同时从非结构化文本中探测实体指代以及识别它们间语义关系。如图1所示。与公开信息抽取（关系词是从给定句子中抽取的）不同（Banko，2007），在该任务中，关系词是从预定义的关系集合中抽取的（可能不出现在给定句子中）。这是知识抽取和知识库自动构建的重要任务。</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/1.png" title="figure 1"></div></p>
+<p><div><br><strong>以往关系抽取方法总结：</strong></div></p>
+<p><strong>pipeline方法</strong></p>
+<ul>
+<li>先抽取实体（Nadeau and Sekine，2007），再识别关系（Rink，2010）。</li>
+</ul>
+<p>这种框架使得任务更容易处理，并且每个组件更佳灵活，<strong>但是忽略了这两个子任务间的相关性，每个子任务是独立的模型。会影响性能</strong></p>
+<ul>
+<li>实体识别的结果可能会影响关系分类的性能，并导致误差传递（Li and Ji，2014）</li>
+</ul>
+<p><strong>联合学习框架则使用单个模型同时抽取实体以及关系，这能够有效结合实体和关系的信息，并且在该任务中达到了最佳结果。</strong></p>
+<ul>
+<li>然而，<strong>大部分已有的联合学习方法是基于特征的结构化系统</strong>（Li and Ji，2014；Miwa and Sasaki，2014；Yu and Lam，2010；Ren et al., 2017）,<strong>需要复杂的特征工程，并且很依赖其他NLP工具，这也会导致误差传播。</strong></li>
+</ul>
+<p>为了减少特征抽取中的手工工作，最近提出了神经网络来做关系抽取。</p>
+<ul>
+<li>(Miwa and Bansal, 2016)为end-to-end实体和关系抽取提出了基于神经网络的方法。</li>
+</ul>
+<p><strong>尽管联合模型能够在单个模型中使用共享参数同时表达实体和关系，但它仍然是分开抽取实体和关系，并且会产生冗余信息</strong>。例如，图一的句子包含3个实体：“United States”，“Trump”以及“Apple Inc”.但只有“United States”和“Trump”有固定关系“Country-President”，实体”Apple Inc”在这个句子中和其他实体没有明显的关系（Apple Inc 和Trump被当做实体抽取出来了，但是在句子中并没啥明显关系）。因此该句子的抽取结果是{$United States_{e1}, Country-President_{r}, Trump_{e2}$}，这里称为三元组。</p>
+<p>本文中，我们专注于三元组（两个实体以及其关系组成）的抽取。因此我们可以直接对三元组建模，而不是分别抽取实体和关系。基于该动机，<strong>我们提出了一种与end-to-end模型结合的标注方案，我们定义了一种新的标签，包含实体信息以及他们的关系。基于这种tagging方案，实体和关系的联合抽取问题可以转换成序列标注问题，仍然能够使用神经网络对任务建模而无须复杂的特征工程</strong>。</p>
+<p>基于LSTM的end-to-end模型：</p>
+<ul>
+<li>LSTM用于end-to-end（Hochreiter and Schmidhuber，1997）</li>
+<li>命名实体识别（Lample et al., 2016)</li>
+<li>CCG Supertagging (Vaswani et al., 2016) 注：CCG组合范畴语法</li>
+<li>序列分块（Zhai et al., 2017)</li>
+</ul>
+<p>LSTM能学习长依赖，这对于序列建模任务是有益的，因此<strong>基于我们的标注方案，引入不同种类的基于LSTM的end-to-end模型联合抽取实体和关系，同时，改进了decoding方法，加入偏置损失来适配我们的特殊标签。</strong></p>
+<p>我们的方法是监督学习算法，在实际中，手动标记包含大量实体和关系的训练集代价昂贵并且容易出错，因此我们在公开数据集（由Ren et a., 2017 通过远程监督产生的数据集）做实验并验证方法。<strong>实验结果证明我们的标注方案对该任务是有效果的，此外，我们的end-to-end模型在公开数据集上达到了最好的效果</strong>。</p>
+<p><strong>论文主要贡献</strong></p>
+<ol>
+<li>为联合抽取实体和关系提出了新颖的标注方案，很容易将抽取问题转换为序列标注问题</li>
+<li>基于这种标注方案，应用在多种end-to-end模型上解决问题，基于tagging的方法比大部分已有pipeline和joint学习方法都好。</li>
+<li>提出带偏置损失函数的end-to-end模型以适配标注方案。能够增强有关系的实体间的联系。</li>
+</ol>
+<hr>
+<p><strong>作者为什么研究这个课题？</strong></p>
+<blockquote>
+<p>pipeline方法先抽实体再抽关系，用两个独立模型完成两个独立的任务，导致误差传递。</p>
+<p>联合学习虽然使用单个模型同时抽取实体和关系，但大部分都是基于特征的，需要复杂的特征工程，并且依赖NLP工具，也会导致误差传播。</p>
+<p>为减少手工误差，因此提出了用神经网络来做抽取，虽然能够在单个模型中使用共享参数同时表达实体和关系，但仍然是分开抽取实体和关系，并且会产生冗余信息。</p>
+<p>因此，提出end-to-end模型结合的标注方案，将关系抽取问题转换为序列标注问题。</p>
+</blockquote>
+<p><strong>目前这个课题的研究进行到了哪一阶段？</strong></p>
+<blockquote>
+</blockquote>
+<p><strong>作者使用理论基于哪些假设？（现在也许有点明白了，不明白再去查）</strong></p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>(leetcode ： 141， 360)</p>
+<p>本文提出新颖的标注方案以及带偏执目标函数的end-to-end模型来联合抽取实体和关系，<strong>该部分首先介绍如何将抽取问题转换为基于tagging方法的序列标注问题，然后详细的描述模型</strong>。</p>
+<h3 id="标注方案"><a href="#标注方案" class="headerlink" title="标注方案"></a>标注方案</h3><p><div class="image-size-100"><br> <img src="/2019/11/08/tagging-2017-note/2.png" title="figure 2"></div></p>
+<div>
+
+<p>每个单词都被分配一个标签（有助于提取结果）</p>
+<ul>
+<li>O：“Other”，对应单词与提取结果无关</li>
+<li>非O标签由3部分组成： <ol>
+<li>实体中单词位置，BIES(Begin, Inside, End, Single)</li>
+<li>关系类型：从预定义关系集合中获得</li>
+<li>关系角色：1表示实体在三元组的前部，2表示实体在三元组的后部 $(Entity_1, RelationType, Entity_2)$</li>
+</ol>
+</li>
+</ul>
+<p>tag的总数$N_t = 2 \times 4 \times |R| + 1$，其中$|R|$是预定义关系集合的大小。</p>
+<h3 id="从标签序列到抽取结果"><a href="#从标签序列到抽取结果" class="headerlink" title="从标签序列到抽取结果"></a>从标签序列到抽取结果</h3><p><strong>我们将具有相同关系类型的实体组合成一个3元组得到最终结果</strong>。因此<code>&quot;Trump&quot;</code> 和 <code>&quot;United States&quot;</code>能够被组合起来，关系是<code>&quot;Country-President&quot;</code>。因为<code>&quot;Trump&quot;</code>的关系角色是<code>&quot;2&quot;</code>而<code>&quot;United States&quot;</code>是<code>&quot;1&quot;</code>。最终结果为<strong>{United States, Country-President, Trump}。</strong></p>
+<p>此外，<strong>如果一个句子中包含相同关系类型的2个及以上三元组，我们将按照就近原则，将实体两两组合到三元组中。</strong> 例如，图2中的关系类型<code>&quot;Country-President&quot;</code>如果是<code>&quot;Company-Founder&quot;</code>的话，那么句子中就会有4个实体拥有相同的关系类型，<code>&quot;United States&quot;</code>和<code>&quot;Trump&quot;</code>距离近，<code>&quot;Apple Inc&quot;</code> 和 <code>&quot;Jobs&quot;</code>距离近，那么结果将会是<strong>{United States, Company-Founder, Trump},{Apple Inc, Company-Founder, Steven Paul Jobs}</strong></p>
+<p><strong>本文中只考虑实体属于一个三元组的情况，将标识重叠关系留给以后的工作。</strong></p>
+<h3 id="End-to-end-模型"><a href="#End-to-end-模型" class="headerlink" title="End-to-end 模型"></a>End-to-end 模型</h3><p>近年来，基于NN的end-to-end模型广泛用于序列标注任务。本文我们研究了end-to-end模型来产生标签序列，如图3所示。</p>
+<p>模型主要是两部分：</p>
+<ol>
+<li><strong>双向LSTM(Bi-LSTM)层用来encode输入的句子</strong></li>
+<li><strong>包含偏置损失的基于LSTM的decode层，biased loss能够增强实体标签的相关性</strong></li>
+</ol>
+<p><div class="image-size-100"><br> <img src="/2019/11/08/tagging-2017-note/3.png" title="figure 3"></div></p>
+<div>
+
+<h4 id="Bi-LSTM-Encoding-层"><a href="#Bi-LSTM-Encoding-层" class="headerlink" title="Bi-LSTM Encoding 层"></a>Bi-LSTM Encoding 层</h4><p>在序列标注问题中，<code>Bi-LSTM encoding层</code>已经显示出捕获每个单词语义信息的有效性。它包含<code>前向lstm层</code>，<code>后向lstm层</code>以及<code>连接层</code>。</p>
+<p><code>word embedding层</code>将 用one-hot表示的单词转换成embedding向量。因此，单词序列可以表示为$W = \{ w_1,…w_t,w_{t+1}…w_n\}$,其中$w_t \in \Bbb R^d$是d维单词向量，对应句子中的第<code>t</code>个单词，$n$是给定句子的长度。在<code>word embedding层</code>之后，有两个并行的LSTM层：<code>正向LSTM层</code>和<code>反向LSTM层</code>。LSTM架构由一组循环连接的子网组成，名为存储单元(memory blocks)。每个时间步都是一个LSTM存储单元。<code>Bi-LSTM encoding层</code>的LSTM 存储单元是用来计算当前隐藏向量$h_t$的,基于前一时刻隐藏向量$h_{t-1}$，上一刻细胞状态$c_{t-1}$以及当前输入word embedding $W_t$。它的结构如图3(b)所示，详细操作定义如下：</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/4.png" title="Bi-LSTM公式"></div></p>
+<div>
+
+<p>$i$:输入门<br>$f$:遗忘门<br>$o$:输出门<br>$b$:偏置项<br>$c$：细胞记忆<br>$W(.)$:参数</p>
+<p>对于每个单词$w_t$，前向LSTM层通过考虑从$w_1$到$w_t$的上下文信息（标记为$\overrightarrow{h_t}$）对$w_t$进行编码。同样地，后向LSTM层基于从$w_n$到$w_t$的上下文信息（标记为$\overleftarrow{h_t}$）对$w_t$进行编码。最后，链接$\overrightarrow{h_t}$和$\overleftarrow{h_t}$来表示单词$t$的encoding信息，表示为$h_t = [\overrightarrow{h_t},\overleftarrow{h_t}]$ </p>
+<h4 id="LSTM-Decoding层"><a href="#LSTM-Decoding层" class="headerlink" title="LSTM Decoding层"></a>LSTM Decoding层</h4><p><strong>我们也采用LSTM结构来产生标签序列。</strong> 当探测出单词$w_t$的标签时，decoding层的输入为:从<code>Bi-LSTM encoding层</code>获取的$h_t$，前一刻预测的标签嵌入（tag embedding）$T_{t-1}$，前一刻细胞值$c_{t-1}$以及前一刻decoding层的隐藏向量$h_{t-1}$，$\bf LSTM_d$中存储单元的结构如图3(c)所示，详细操作定义如下：</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/5.png" title="LSTM公式1"></div></p>
+<div>
+
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/6.png" title="LSTM公式2"></div></p>
+<div>
+
+<p>最后的<code>softmax层</code>根据标签预测向量$T_t$计算归一化的实体标签概率：</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/7.png" title="softmax公式"></div></p>
+<div>
+
+<p>其中$W_y$是softmax矩阵，$N_t$是标签总数。由于T和tag embedding类似，且LSTM能够学习长依赖，因此解码(decoding)方法能够对标签交互进行建模。</p>
+<h4 id="偏置目标函数-Bias-Objective-Function"><a href="#偏置目标函数-Bias-Objective-Function" class="headerlink" title="偏置目标函数 Bias Objective Function"></a>偏置目标函数 Bias Objective Function</h4><p>我们训练模型<code>最大化数据的对数似然</code>，使用的优化方法是<code>RMSprop</code>，是Hinton在(Tieleman and Hinton, 2012)提出的。目标函数定义如下：</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/8.png" title="目标函数"></div></p>
+<div>
+
+<p>其中$|\Bbb D|$是训练集的大小，$L_j$是句子$x_j$的长度，$y_t^{(j)}$是句子$x_j$中单词$t$的标签，$p_t^{(j)}$是标签的正则化概率，在公式15中定义。此外，$I(O)$是一个开关函数，用于区分标签’O’和关系标签的损失，定义如下：</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/9.png" title="I(O)函数"></div></p>
+<div>
+
+<p>$\alpha$ 是偏置权重，$\alpha$ 越大，关系标签对模型的影响越大。</p>
+<hr>
+<p><strong>基于什么假设？</strong></p>
+<blockquote>
+<p>本文只考虑实体属于一个三元组的情况，将标识重叠关系留给以后的工作。</p>
+</blockquote>
+<p><strong>模型分哪几步？</strong></p>
+<blockquote>
+<ol>
+<li>输入句子 Input Sentence</li>
+<li>Embedding 层，将用one-hot表示的单词转换成embedding向量</li>
+<li>Bi-LSTM Encoding 层，包含前向lstm层，后向lstm层，连接层。对于每个单词，前向LSTM层考虑从w1到wt的上下文信息对单词编码，后向LSTM层考率从wt到w1的上下文信息进行编码，最后链接它们共同表示单词的encoding信息。</li>
+<li>LSTM Decoding 层，用来产生标签序列</li>
+<li>softmax层根据标签预测向量T计算归一化的实体标签概率。</li>
+</ol>
+</blockquote>
+<p>每一步分别得出了什么结论？</p>
+<blockquote>
+<p>目前没有提，看下实验部分。</p>
+</blockquote>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="实验设置"><a href="#实验设置" class="headerlink" title="实验设置"></a>实验设置</h3><h4 id="数据集-Dataset"><a href="#数据集-Dataset" class="headerlink" title="数据集 Dataset"></a>数据集 Dataset</h4><p><strong>NYT</strong>：远程监督方法生成（Ren et al., 2017)，远程监督方法能够生成大连训练数据而无须手工标注，<strong>测试集是人工标注的（为了保证质量)</strong><br>训练数据包含353k个三元组，测试集包含3880三元组，此外，关系集合大小是24。</p>
+<h4 id="评价指标-Evaluation"><a href="#评价指标-Evaluation" class="headerlink" title="评价指标 Evaluation"></a>评价指标 Evaluation</h4><p><strong>精度(Prec),召回(Rec),F1 score。</strong></p>
+<p>与经典方法不同，<strong>我们的方法能够在不知道实体类型的情况下抽取三元组</strong>，换句话说，我们没有使用实体类型的标签来训练模型，因此在评估中不需要考虑实体类型。<strong>当三元组的关系类型和两个对应实体的头部偏移都正确时，认为该三元组是正确的。</strong>此外，给出了<code>ground-truth</code>（真实有效值）关系的提及，排除“None”标签，如（Ren et al., 2017; Li and Ji,2014; Miwa and Bansal,2016)所做。</p>
+<p>基于（Ren et al., 2017)的建议，<strong>验证集使用10%的测试集数据</strong>，并用剩余数据评估。每个实验运行10次然后报告平均结果和标准偏差，如表1所示。</p>
+<p><div class="image-size-100"><br> <img src="/2019/11/08/tagging-2017-note/10.png" title="表1"></div></p>
+<div>
+
+<h4 id="超参数-Hyperparameters"><a href="#超参数-Hyperparameters" class="headerlink" title="超参数 Hyperparameters"></a>超参数 Hyperparameters</h4><p>我们的模型由<code>Bi-LSTM</code> encoding层以及带偏置目标函数的<code>LSTM</code>decoding层组成。在encoding部分用到的<code>word embeddings</code>是在NYT训练语料库上运行<code>word2vec</code>初始化的。word embeddings的维度是$d = 300$，我们在<code>embedding层</code>使用<code>dropout</code>来规范网络，dropout率为0.5。<code>encoding层</code>的lstm单元数：300，<code>decoding层</code>的单元数是600。表1结果对应的偏置参数$\alpha$是10.</p>
+<h4 id="基线-Baselines"><a href="#基线-Baselines" class="headerlink" title="基线 Baselines"></a>基线 Baselines</h4><p>将我们的方法与一些传统的三元组抽取方法对比，这些方法可分为以下类别：</p>
+<p>1.pipeline方法<br>2.联合抽取方法<br>3.基于tagging方案的end-to-end方法。</p>
+<p>对于<code>pipeline方法</code>，我们遵循（Ren et al., 2017)的设置：NER结果从CoType(Ren et al., 2017)获取，然后使用一些经典关系分类方法来探测关系。这些方法是：</p>
+<p>(1)DS-logistic(Mintz et al., 2009)是远程监督和基于特征的方法，结合了有监督信息抽取和无监督信息抽取特征的优点<br>(2)LINE(Tang et al., 2015)是网络嵌入方法，适用于任意类型的信息网络<br>(3)FCM(Gormley et al., 2015)是一个组合模型，结合词汇化的语言上下文以及word embeddings用于关系抽取。</p>
+<p>使用的<code>jointly抽取方法</code>如下：</p>
+<p>(4)DS-Joint(Li and Ji, 2014)是有监督方法，在人工标注数据集上使用结构化感知器联合抽取实体和关系<br>(5)MultiR(Hoffmann et al., 2011)是基于多实例学习算法（对抗噪声训练数据）的传统远程监督方法。<br>(6)CoType(Ren et al., 2017)是一个领域无关的框架，通过将entity mentions，relation mentions，文本特征以及类型标签<strong>共同嵌入</strong>有意义的表示形式。</p>
+<p>此外，还将本方法与两个传统<code>end-to-end</code>tagging模型比较:</p>
+<p>LSTM-CRF(Lample et al., 2016):通过使用双向LSTM编码输入句子和条件随机场来预测实体标签序列<br>LSTM-LSTM(Vaswani et al., 2016):与LSTM-CRF不同，使用LSTM层（而不是CRF）解码标签序列。</p>
+<p>这两个模型是第一次用于实体和实体关系联合抽取(都使用本文的序列标注方案)。</p>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><p>表1得到的结论：</p>
+<p>1.在<code>F1值</code>上，LSTM-LSTM-Bias比所有方法都好，且比CoType改进了3%。<br>2.联合抽取方法比pipeline方法好，tagging方法比大多数联合抽取方法好，证明了本文提出的将联合抽取问题转换为序列标注问题是可行的。</p>
+<p>与传统方法相比，<strong>end-to-end模型的精度大大提高</strong>，但只有<code>LSTM-LSTM-Bias</code>能够更好balance精度和召回。原因可能是，<strong>这些end-to-end模型都使用Bi-LSTM编码输入句子，以及不同的神经网络解码结果。基于神经网络的方法能够很好的fit数据，因此，它们能够很好地学习训练集的公共特征，并且导致较低的可扩展性。</strong> </p>
+<p>我们还发现，基于我们的tagging方案，<code>LSTM-LSTM</code>模型比<code>LSTM-CRF</code>模型要好。因为，LSTM能够学习长依赖，CRF（Lafferty et al., 2001）擅长捕获整个标签序列的联合概率。相关的tags也许距离很远，因此，LSTM解码方式比CRF要好点。 <code>LSTM-LSTM-Bias</code>添加了偏置权重来增强实体标签的作用并减弱无效标签的作用。因此，在该tagging方案下，我们的方法能够比普通LSTM解码方法好。</p>
+<hr>
+<p><strong>研究的数据从哪里来？</strong></p>
+<blockquote>
+<p>NYT语料库用word2vec初始化</p>
+</blockquote>
+<p><strong>研究中用到的重要指标有哪些？</strong></p>
+<blockquote>
+<p>精度，召回率，F1值</p>
+</blockquote>
+<p><strong>实验方法参照上面的介绍，实验结果在上面“实验结果”部分总结的较好了</strong></p>
+<h2 id="分析与讨论"><a href="#分析与讨论" class="headerlink" title="分析与讨论"></a>分析与讨论</h2><h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><p>为了找出影响end-to-end模型结果的因素，我们对分析了 预测三元组中每个元素的性能，如表2所示。</p>
+<p><div class="image-size-100"><br> <img src="/2019/11/08/tagging-2017-note/11.png" title="table 2"></div></p>
+<div>
+
+<p>$E1$和$E2$分别代表对每个实体的预测，如果第一个实体的头部偏移正确，那么$E1$的实例正确，$E2$同样。无论关系类型如何，如果两个实体对应的头部偏移都正确，那么($E1,E2$)的实例正确。</p>
+<p>如图2，($E1,E2$)比$E1$和$E2$的精确率（Precision）要高，但她的召回率比$E1$和$E2$的要低。这意味着，有些预测的实体没有成对出现，也就是说有时候只找到一个实体还有另一个对应的没找到，不能组成实体对。因此，这导致了能够预测更多的单一实体$E$，更少的实体对($E1,E2$),因此，实体对的precision比单一实体高。</p>
+<p>此外，表2中($E1,E2$)的预测结果比表1中高3%，意味着，测试数据的3%预测错了，因为关系类型预测错了。</p>
+<h3 id="Biased-Loss分析"><a href="#Biased-Loss分析" class="headerlink" title="Biased Loss分析"></a>Biased Loss分析</h3><p>我们的方法偏向于使用关系标签来增强实体间的联系。</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/12.png" title="图4"></div></p>
+<div>
+
+<p>这个图是对于预测到的实体中，单个实体占的比重，本文的模型ratio最低，说明我们有效利用了实体间的关系。能够有效地将两个实体联系起来。</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/13.png" title="图5"></div></p>
+<div>
+
+<p>调整偏置参数，$\alpha$从1-20，$\alpha$太大会影响预测准确率，$\alpha$太小，召回率降低，当$\alpha = 10$，LSTM-LSTM-Bias能够平衡精确率和召回率，达到最好的F1.</p>
+<h3 id="Case-Study"><a href="#Case-Study" class="headerlink" title="Case Study"></a>Case Study</h3><p>举了3个例子来说明优缺点。</p>
+<p><div><br> <img src="/2019/11/08/tagging-2017-note/14.png" title="表3"></div></p>
+<div>
+
+<p>$S1$是两个实体距离较远的情况，我们的LSTM-LSTM-Bias能够正确识别。</p>
+<p>$S2$是个反例，这些方法也许会错误预测某个实体。Germany和Nurmberg之间没有表明关系的次，且” a <em> of </em>“能误导模型学习到”Contains”关系。<br><strong>通过在训练集中添加一些这种类型的表达pattern就可以解决该问题。</strong></p>
+<p>$S3$是说，模型能够正确预测实体的偏移，但关系角色错误。LSTM-LSTM把这两个实体当作实体E1，虽然LSTM-LSTM-Bias能够识别实体对，但是关系角色预测的不对，说明在区分这两个实体之间的关系方面还有待改进。</p>
+</div></div></div></div></div></div></div></div></div></div></div></div></div>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年11月20日 17:02</p>
+        <p>原始链接： <a class="post-url" href="/2019/11/08/tagging-2017-note/" title="【论文笔记】Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme">/2019/11/08/tagging-2017-note/</a></p>
+        <footer>
+            <a href="">
+                <img src="/images/head2.jpeg" alt="MaxYu">
+                MaxYu
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/11/08/tagging-2017-note/&title=《【论文笔记】Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme》 — Fishwinwin&pic=https://github.com/yuyingyingmax/Images/blob/master/53.jpg?raw=true" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/11/08/tagging-2017-note/&title=《【论文笔记】Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme》 — Fishwinwin&source=Fishwinwin��blog" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/11/08/tagging-2017-note/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《【论文笔记】Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme》 — Fishwinwin&url=/2019/11/08/tagging-2017-note/&via=" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/11/08/tagging-2017-note/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/11/08/tagging-2017-note/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/笔记/" class="color3">笔记</a>
+      
+    <a href="/tags/论文/" class="color3">论文</a>
+      
+    <a href="/tags/NLP/" class="color4">NLP</a>
+      
+    <a href="/tags/关系抽取/" class="color5">关系抽取</a>
+      
+    <a href="/tags/联合抽取/" class="color5">联合抽取</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要"><span class="post-toc-text">摘要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结论"><span class="post-toc-text">结论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引言"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Method"><span class="post-toc-text">Method</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#标注方案"><span class="post-toc-text">标注方案</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从标签序列到抽取结果"><span class="post-toc-text">从标签序列到抽取结果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#End-to-end-模型"><span class="post-toc-text">End-to-end 模型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Bi-LSTM-Encoding-层"><span class="post-toc-text">Bi-LSTM Encoding 层</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#LSTM-Decoding层"><span class="post-toc-text">LSTM Decoding层</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#偏置目标函数-Bias-Objective-Function"><span class="post-toc-text">偏置目标函数 Bias Objective Function</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验"><span class="post-toc-text">实验</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实验设置"><span class="post-toc-text">实验设置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数据集-Dataset"><span class="post-toc-text">数据集 Dataset</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#评价指标-Evaluation"><span class="post-toc-text">评价指标 Evaluation</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#超参数-Hyperparameters"><span class="post-toc-text">超参数 Hyperparameters</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#基线-Baselines"><span class="post-toc-text">基线 Baselines</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实验结果"><span class="post-toc-text">实验结果</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析与讨论"><span class="post-toc-text">分析与讨论</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#误差分析"><span class="post-toc-text">误差分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Biased-Loss分析"><span class="post-toc-text">Biased Loss分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Case-Study"><span class="post-toc-text">Case Study</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/11/11/dairy-20191111/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          【日记】十一月
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/11/07/leetcode-5250/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">【LeetCode】5250.检查好数组</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 MaxYu<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 0
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/DL/">DL</a><a class="category-link" href="/categories/LeetCode/">LeetCode</a><a class="category-link" href="/categories/NLP/">NLP</a><a class="category-link" href="/categories/Problems/">Problems</a><a class="category-link" href="/categories/数据库/">数据库</a><a class="category-link" href="/categories/日记/">日记</a><a class="category-link" href="/categories/知识图谱/">知识图谱</a><a class="category-link" href="/categories/移动Web/">移动Web</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="//">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Anaconda/" style="font-size: 10px;">Anaconda</a> <a href="/tags/DL/" style="font-size: 10px;">DL</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/LeetCode/" style="font-size: 20px;">LeetCode</a> <a href="/tags/Mobile-Web/" style="font-size: 10px;">Mobile Web</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NLP/" style="font-size: 16.43px;">NLP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/中等/" style="font-size: 17.86px;">中等</a> <a href="/tags/关系抽取/" style="font-size: 15.71px;">关系抽取</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/动态规划/" style="font-size: 10.71px;">动态规划</a> <a href="/tags/双指针/" style="font-size: 19.29px;">双指针</a> <a href="/tags/哈希表/" style="font-size: 10px;">哈希表</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/困难/" style="font-size: 13.57px;">困难</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/字符串/" style="font-size: 14.29px;">字符串</a> <a href="/tags/字符级/" style="font-size: 10px;">字符级</a> <a href="/tags/学习笔记/" style="font-size: 11.43px;">学习笔记</a> <a href="/tags/心情/" style="font-size: 10.71px;">心情</a> <a href="/tags/括号匹配/" style="font-size: 10px;">括号匹配</a> <a href="/tags/数学/" style="font-size: 11.43px;">数学</a> <a href="/tags/数组/" style="font-size: 18.57px;">数组</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/日记/" style="font-size: 10.71px;">日记</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/滑动窗口/" style="font-size: 11.43px;">滑动窗口</a> <a href="/tags/笔记/" style="font-size: 17.14px;">笔记</a> <a href="/tags/简单/" style="font-size: 15px;">简单</a> <a href="/tags/联合抽取/" style="font-size: 12.86px;">联合抽取</a> <a href="/tags/论文/" style="font-size: 17.14px;">论文</a> <a href="/tags/调优/" style="font-size: 10px;">调优</a> <a href="/tags/贪心法/" style="font-size: 10px;">贪心法</a> <a href="/tags/链表/" style="font-size: 12.14px;">链表</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+  <!-- ��ը����Ч�� -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
